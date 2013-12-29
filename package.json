@@ -9,7 +9,8 @@
   "dependencies" : {
     "coffee-script"  : "1.6.0",
     "optimist": "~0.6.0",
-    "esprima": "~1.0"
+    "esprima": "~1.0",
+    "lodash" : "~2.4.1"
   },
   "devDependencies": {
     "mocha": "~1.6.0",
