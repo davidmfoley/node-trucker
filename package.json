@@ -7,7 +7,8 @@
   "main" : "",
   "description" : "",
   "dependencies" : {
-    "optimist": "~0.6.0"
+    "optimist": "~0.6.0",
+    "esprima": "~1.0"
   },
   "devDependencies": {
     "coffee-script"  : "1.6.0",
