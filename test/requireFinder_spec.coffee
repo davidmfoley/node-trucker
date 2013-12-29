@@ -22,7 +22,7 @@ describe 'RequireFinder', ->
       expect(requires.length).to.eql 1
       expect(requires[0].path).to.equal './foo'
 
-    xit 'sets location correctly', ->
+    it 'sets location correctly', ->
       code = "var foo = require( './foo' );\n"
       requires = RequireFinder.find('js', code)
       req = requires[0]
@@ -47,7 +47,7 @@ describe 'RequireFinder', ->
       expect(requires.length).to.eql 1
       expect(requires[0].path).to.equal './foo'
 
-    xit 'sets location correctly', ->
+    it 'sets location correctly', ->
       code = "foo = require( './foo' )\n"
       requires = RequireFinder.find('coffee', code)
       req = requires[0]
