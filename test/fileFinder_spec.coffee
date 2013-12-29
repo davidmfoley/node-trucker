@@ -38,3 +38,4 @@ describe 'fileFinder', ->
       expect(catelyn.fullPath).to.equal(path.normalize(tullyPath + '/catelyn.js'))
       expect(catelyn.filetype).to.equal('js')
       expect(catelyn.relativePath).to.equal('tully/catelyn.js')
+
