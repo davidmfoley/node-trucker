@@ -19,7 +19,9 @@ describe 'sourceFileAnalyzer', ->
     it 'decorates require in a different location with full path', ->
       expected = path.normalize(path.join(examplePath, 'tully/catelyn'))
       expect(requires[1].fullPath).to.equal(expected)
+      expect(requires[1].resolvedFile).to.equal(expected + '.js')
 
     it 'decorates require in the same location with full path', ->
       expected = path.normalize(path.join(examplePath, 'stark/robb'))
       expect(requires[0].fullPath).to.equal(expected)
+      expect(requires[0].resolvedFile).to.equal(expected + '.coffee')
