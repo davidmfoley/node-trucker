@@ -1,4 +1,3 @@
-_ = require 'lodash'
 path = require 'path'
 fileFinder = require '../lib/fileFinder'
 examplePath = path.normalize(path.join(__dirname, '../examples'))
@@ -6,10 +5,12 @@ starkPath = path.join(examplePath, '/stark')
 tullyPath = path.join(examplePath, '/tully')
 result = null
 
+byFullPath = (a,b) -> a.fullPath > b.fullPath
+
 describe 'fileFinder', ->
   describe 'in a single directory', ->
     before ->
-      result = _.sortBy(fileFinder(starkPath), 'fullPath')
+      result = fileFinder(starkPath).sort byFullPath
 
     it 'can find eddard',  ->
       eddard = result[0]
@@ -25,7 +26,7 @@ describe 'fileFinder', ->
 
   describe 'recursively', ->
     before ->
-      result = _.sortBy(fileFinder(examplePath), 'fullPath')
+      result = fileFinder(examplePath).sort byFullPath
 
     it 'can find eddard',  ->
       eddard = result[0]
