@@ -20,6 +20,7 @@ describe 'FileLocationCalculator', ->
       newLoc = calc(path.join(starkPath, '/catelyn.js'))
       expect(newLoc.isMoved).to.equal false
       expect(newLoc.fullPath).to.equal(path.join(starkPath, '/catelyn.js'))
+      expect(newLoc.requirePath).to.equal(path.join(starkPath, '/catelyn'))
 
   describe 'moving a file with a directory as "to"', ->
     before ->
@@ -31,19 +32,23 @@ describe 'FileLocationCalculator', ->
       expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))
 
   describe 'moving a directory', ->
-    before ->
-      calc = fileLocationCalculator(starkPath, deceasedPath )
-
     it 'returns new location for a file being moved', ->
+      calc = fileLocationCalculator(starkPath, deceasedPath )
       newLoc = calc(path.join(starkPath, '/eddard.js'))
       expect(newLoc.isMoved).to.equal true
       expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))
+      expect(newLoc.requirePath).to.equal(path.join(deceasedPath, '/eddard'))
+
+    it 'returns new location for a file being moved, handling trailing slash', ->
+      calc = fileLocationCalculator(starkPath + '/', deceasedPath )
+      newLoc = calc(path.join(starkPath, '/eddard.js'))
+      expect(newLoc.isMoved).to.equal true
+      expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))
+      expect(newLoc.requirePath).to.equal(path.join(deceasedPath, '/eddard'))
 
   describe 'moving a directory into another directory', ->
-    before ->
-      calc = fileLocationCalculator(starkPath, deceasedPath + '/' )
-
     it 'returns new location for a file being moved', ->
+      calc = fileLocationCalculator(starkPath, deceasedPath + '/' )
       newLoc = calc(path.join(starkPath, '/eddard.js'))
       expect(newLoc.isMoved).to.equal true
       expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/stark/eddard.js'))
