@@ -1,5 +1,5 @@
 var path = require('path');
-var changedRequiresByFile = require('changedRequiresByFile');
+var changedRequiresByFile = require('./lib/changedRequiresByFile');
 
 module.exports = function(options) {
   var base = process.cwd();
