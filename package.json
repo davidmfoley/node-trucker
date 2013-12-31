@@ -2,7 +2,7 @@
   "name": "trucker",
   "version": "0.0.1",
   "bin" : {
-    "trucker": "cli.js"
+    "trucker": "./cli"
   },
   "main" : "",
   "description" : "",
