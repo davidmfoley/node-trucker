@@ -1,24 +1,24 @@
-requireFinder = require '../lib/requireFinder'
+findRequires = require '../lib/findRequires'
 describe 'RequireFinder', ->
   describe 'with javascript', ->
     it 'handles a file with no requires', ->
-      expect(requireFinder('js', "")).to.eql []
+      expect(findRequires('js', "")).to.eql []
 
     it 'handles a javascript file with a single require', ->
       code = "var foo = require( './foo' );\n"
-      requires = requireFinder('js', code)
+      requires = findRequires('js', code)
       expect(requires.length).to.eql 1
       expect(requires[0].path).to.equal './foo'
 
     it 'ignores npm modules that are required', ->
       code = "var bar = require('bar');\nvar foo = require( './foo' );\n"
-      requires = requireFinder('js', code)
+      requires = findRequires('js', code)
       expect(requires.length).to.eql 1
       expect(requires[0].path).to.equal './foo'
 
     it 'sets location correctly', ->
       code = "var foo = require( './foo' );\n"
-      requires = requireFinder('js', code)
+      requires = findRequires('js', code)
       req = requires[0]
       # 1-based, seems natural
       expect(req.loc.line).to.equal 1
@@ -28,23 +28,23 @@ describe 'RequireFinder', ->
   describe 'with coffeescript', ->
     describe 'assigning to a variable', ->
       it 'handles a file with no requires', ->
-        expect(requireFinder('coffee', "")).to.eql []
+        expect(findRequires('coffee', "")).to.eql []
 
       it 'handles a coffee file with a single require', ->
         code = "foo = require( './foo' )\n"
-        requires = requireFinder('coffee', code)
+        requires = findRequires('coffee', code)
         expect(requires.length).to.eql 1
         expect(requires[0].path).to.equal './foo'
 
       it 'ignores npm modules that are required', ->
         code = "bar = require 'bar'\nfoo = require './foo'\n"
-        requires = requireFinder('coffee', code)
+        requires = findRequires('coffee', code)
         expect(requires.length).to.eql 1
         expect(requires[0].path).to.equal './foo'
 
       it 'sets location correctly', ->
         code = "foo = require( './foo' )\n"
-        requires = requireFinder('coffee', code)
+        requires = findRequires('coffee', code)
         req = requires[0]
         # 1-based, seems natural
         expect(req.loc.line).to.equal 1
@@ -54,13 +54,13 @@ describe 'RequireFinder', ->
     describe 'without assignment', ->
       it 'handles requires without left hand assignment', ->
         code = "require( './foo' )\n"
-        requires = requireFinder('coffee', code)
+        requires = findRequires('coffee', code)
         expect(requires.length).to.eql 1
         expect(requires[0].path).to.equal './foo'
 
       it 'sets location correctly', ->
         code = "\nrequire( './foo' )\n"
-        requires = requireFinder('coffee', code)
+        requires = findRequires('coffee', code)
         req = requires[0]
         # 1-based, seems natural
         expect(req.loc.line).to.equal 2
