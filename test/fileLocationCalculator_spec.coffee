@@ -23,10 +23,14 @@ describe 'FileLocationCalculator', ->
       expect(newLoc.requirePath).to.equal(path.join(starkPath, '/catelyn'))
 
   describe 'moving a file with a directory as "to"', ->
-    before ->
+    it 'returns new location for the file being moved', ->
       calc = fileLocationCalculator(path.join(starkPath, '/eddard.js'), deceasedPath + '/')
+      newLoc = calc(path.join(starkPath, '/eddard.js'))
+      expect(newLoc.isMoved).to.equal true
+      expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))
 
     it 'returns new location for the file being moved', ->
+      calc = fileLocationCalculator(path.join(starkPath, '/eddard.js'), deceasedPath)
       newLoc = calc(path.join(starkPath, '/eddard.js'))
       expect(newLoc.isMoved).to.equal true
       expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))
@@ -51,4 +55,4 @@ describe 'FileLocationCalculator', ->
       calc = fileLocationCalculator(starkPath, deceasedPath + '/' )
       newLoc = calc(path.join(starkPath, '/eddard.js'))
       expect(newLoc.isMoved).to.equal true
-      expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/stark/eddard.js'))
+      expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))

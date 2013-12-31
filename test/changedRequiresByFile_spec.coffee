@@ -41,7 +41,7 @@ describe 'changedRequiresByFile', ->
 
   describe 'moving a directory outside the base', ->
     before ->
-      files = changedRequiresByFile(p('tully/'), p('/../'), examplePath)
+      files = changedRequiresByFile(p('tully/'), p('/../tully'), examplePath)
       files = files.sort (a,b) -> a.from > b.from
 
     it 'fixes the inbound require in a referencing file', ->
