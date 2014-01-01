@@ -57,18 +57,18 @@ describe 'FileLocationCalculator', ->
       expect(newLoc.isMoved).to.equal true
       expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))
 
-  describe 'moving files with globbing', ->
+  describe 'moving multiple files', ->
     before ->
-      calc = fileLocationCalculator(path.join(starkPath, '/*.js'), path.join(starkPath,'/deceased/'))
+      calc = fileLocationCalculator([path.join(starkPath, '/eddard.js'), path.join(starkPath, '/robb.coffee')], path.join(starkPath,'/deceased/'))
 
     it 'returns new location for eddard', ->
       newLoc = calc(path.join(starkPath, '/eddard.js'))
       expect(newLoc.isMoved).to.equal true
       expect(newLoc.fullPath).to.equal(path.join(starkPath, 'deceased/eddard.js'))
 
-    it 'returns no change for robb (coffee)', ->
+    it 'returns new location for robb', ->
       newLoc = calc(path.join(starkPath, '/robb.coffee'))
-      expect(newLoc.isMoved).to.equal false
+      expect(newLoc.isMoved).to.equal true
 
-    it 'throws if from is globby and to is a file', ->
-      expect( -> fileLocationCalculator(path.join(starkPath, '/*.js'), path.join(starkPath,'/eddard.js'))).to.throw(Error)
+    it 'throws if multiple froms and to is a file', ->
+      expect( -> fileLocationCalculator([path.join(starkPath, '/eddard.js'), path.join(starkPath, '/robb.coffee')], path.join(starkPath,'/eddard.js'))).to.throw(Error)

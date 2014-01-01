@@ -34,11 +34,15 @@ describe 'changedRequiresByFile', ->
       files = files.sort (a,b) -> a.from > b.from
 
     it 'fixes the inbound require in a referencing file', ->
-      expect(files.length).to.equal 1
+      expect(files.length).to.equal 2
       expect(files[0].requires.length).to.equal 1
       inbound = files[0].requires[0]
       expect(inbound.path).to.equal '../tully/catelyn'
       expect(inbound.newPath).to.equal '../deceased/catelyn'
+
+    it 'includes the file that is moving', ->
+      expect(files.length).to.equal 2
+      expect(files[1].requires.length).to.equal 0
 
   describe 'moving a directory outside the base', ->
     before ->
