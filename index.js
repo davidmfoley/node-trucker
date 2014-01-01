@@ -6,9 +6,8 @@ var buildJob = require('./lib/buildJob');
 module.exports = function(options) {
   var job = buildJob(options);
 
-  var changes = changedRequiresByFile(job.from, job.to, job.base);
+  var changes = changedRequiresByFile(job);
 
   var handler = handleFileChanges(job.dryRun);
   handler(job, changes);
 };
-

@@ -3,13 +3,14 @@ path = require 'path'
 
 examplePath = path.normalize(path.join(__dirname, '../examples/'))
 p = (subPath) -> path.normalize(path.join(examplePath, subPath))
+job =(from, to) -> {from: p(from), to: p(to), base: examplePath}
 
 files = null
 
 describe 'changedRequiresByFile', ->
   describe 'moving a file', ->
     before ->
-      files = changedRequiresByFile(p('stark/robb.coffee'), p('deceased/'), examplePath)
+      files = changedRequiresByFile(job('stark/robb.coffee', 'deceased/'))
       files = files.sort (a,b) -> a.from > b.from
 
     it 'has the correct fixes', ->
@@ -29,7 +30,7 @@ describe 'changedRequiresByFile', ->
 
   describe 'moving a directory', ->
     before ->
-      files = changedRequiresByFile(p('tully/'), p('deceased'), examplePath)
+      files = changedRequiresByFile(job('tully/', 'deceased'))
       files = files.sort (a,b) -> a.from > b.from
 
     it 'fixes the inbound require in a referencing file', ->
@@ -41,7 +42,7 @@ describe 'changedRequiresByFile', ->
 
   describe 'moving a directory outside the base', ->
     before ->
-      files = changedRequiresByFile(p('tully/'), p('/../tully'), examplePath)
+      files = changedRequiresByFile(job('tully/', '/../tully'))
       files = files.sort (a,b) -> a.from > b.from
 
     it 'fixes the inbound require in a referencing file', ->
