@@ -1,11 +1,22 @@
 {
   "name": "trucker",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "bin" : {
     "trucker": "./cli"
   },
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/davidmfoley/node-trucker.git"
+  },
+  "keywords": [
+    "developer",
+    "file",
+    "mv",
+    "cli",
+    "refactor"
+  ],
   "main" : "",
-  "description" : "",
+  "description" : "Hauls your files around without breaking require dependencies",
   "dependencies" : {
     "coffee-script"  : "1.6.0",
     "optimist": "~0.6.0",
