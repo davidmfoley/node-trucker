@@ -56,3 +56,21 @@ describe 'FileLocationCalculator', ->
       newLoc = calc(path.join(starkPath, '/eddard.js'))
       expect(newLoc.isMoved).to.equal true
       expect(newLoc.fullPath).to.equal(path.join(deceasedPath, '/eddard.js'))
+
+  describe 'moving files with globbing', ->
+    before ->
+      calc = fileLocationCalculator(path.join(starkPath, '/*.js'), path.join(starkPath,'/deceased/'))
+
+    it 'returns new location for eddard', ->
+      newLoc = calc(path.join(starkPath, '/eddard.js'))
+      expect(newLoc.isMoved).to.equal true
+      expect(newLoc.fullPath).to.equal(path.join(starkPath, 'deceased/eddard.js'))
+
+    it 'returns new location for catelyn', ->
+      newLoc = calc(path.join(starkPath, '/catelyn.js'))
+      expect(newLoc.isMoved).to.equal true
+      expect(newLoc.fullPath).to.equal(path.join(starkPath, 'deceased/catelyn.js'))
+
+    it 'returns no change for robb (coffee)', ->
+      newLoc = calc(path.join(starkPath, '/robb.coffee'))
+      expect(newLoc.isMoved).to.equal false
