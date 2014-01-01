@@ -13,7 +13,7 @@ describe 'applyToFile', ->
   it 'works with a single require', ->
     contents = "\nvar foo = require('./bar');\n"
     exampleEdits = [{
-      loc: {line: 2, column:20, length: 5}
+      loc: {line: 2, start:20, length: 5}
       newPath: './bar/baz42'
     }]
     applyToFile('foo.js', exampleEdits, fs)
@@ -23,10 +23,10 @@ describe 'applyToFile', ->
   it 'works with multiple requires on a line', ->
     contents = "\nvar foo = require('./foo'), bar = require('./bar');\nfunction blah(){}"
     exampleEdits = [{
-      loc: {line: 2, column:20, length: 5}
+      loc: {line: 2, start:20, length: 5}
       newPath: '../foo/baz42'
     },{
-      loc: {line: 2, column:44, length: 5}
+      loc: {line: 2, start:44, length: 5}
       newPath: '../bar/baz42'
     }]
     applyToFile('foo.js', exampleEdits, fs)
