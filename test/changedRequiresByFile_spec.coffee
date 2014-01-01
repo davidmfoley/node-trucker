@@ -1,4 +1,4 @@
-changedRequiresByFile = require '../lib/changedRequiresByFile'
+changedRequiresByFile = require '../lib/findChangedRequires/changedRequiresByFile'
 path = require 'path'
 
 examplePath = path.normalize(path.join(__dirname, '../examples/'))
