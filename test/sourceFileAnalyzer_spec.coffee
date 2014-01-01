@@ -1,5 +1,5 @@
 path = require 'path'
-sourceFileAnalyzer = require '../lib/sourceFileAnalyzer'
+sourceFileAnalyzer = require '../lib/analyzeFiles/sourceFileAnalyzer'
 examplePath = path.normalize(path.join(__dirname, '../examples'))
 result = requires = null
 
