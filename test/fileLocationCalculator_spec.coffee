@@ -66,11 +66,6 @@ describe 'FileLocationCalculator', ->
       expect(newLoc.isMoved).to.equal true
       expect(newLoc.fullPath).to.equal(path.join(starkPath, 'deceased/eddard.js'))
 
-    it 'returns new location for catelyn', ->
-      newLoc = calc(path.join(starkPath, '/catelyn.js'))
-      expect(newLoc.isMoved).to.equal true
-      expect(newLoc.fullPath).to.equal(path.join(starkPath, 'deceased/catelyn.js'))
-
     it 'returns no change for robb (coffee)', ->
       newLoc = calc(path.join(starkPath, '/robb.coffee'))
       expect(newLoc.isMoved).to.equal false

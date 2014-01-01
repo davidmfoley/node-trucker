@@ -4,7 +4,7 @@ Trucker is a command-line tool for developers using Node that helps you to move 
 
 It hauls your files around without breaking them.
 
-You can think of it as a require-aware wrapper for a *subset* of ```mv```. (See limitations section below).
+You can think of it as a require-aware wrapper similar to rename or mv.
 
 #Installation
 
@@ -14,7 +14,26 @@ You can think of it as a require-aware wrapper for a *subset* of ```mv```. (See 
 
 #Usage
 
-trucker [flags] [source] [destination]
+```trucker [flags] [source] [destination]```
+
+
+##Examples
+in the examples directory (provided), you can try the following (add ```-n``` for dry run mode if desired):
+
+- Move a single file:
+```trucker stark/eddard.js deceased/```
+
+- Move a single file, specifying destination path:
+```trucker stark/eddard.js deceased/ned.js```
+
+- Move multiple files with globbing
+```trucker stark/* deceased/```
+
+- Move a directory:
+```trucker stark deceased/stark```
+
+- Paths are automatically created:
+```trucker stark/eddard.js deceased/in/book1/```
 
 ##Options
 ```-h, --help``` prints the help
@@ -23,6 +42,7 @@ trucker [flags] [source] [destination]
 
 ```-s, --scope``` can be used to expand or contract the set of files that trucker searches for dependencies. This defaults to the present working directory. If you have a very large project you may wish to constrain the scope for performance reasons (analysis takes time), or in some cases you may wish to expand the scope beuyon the current directory. Use ```--scope``` for this.
 
+```-q, --quiet``` suppress output
 
 # Supported file types
 
@@ -30,18 +50,17 @@ Trucker supports javascript and coffeescript source files. It can handle project
 
 # Limitations
 
-## no globbing (yet)
-As compared with ```mv```, you can't do this:
-```
-trucker lib/foo*.js lib/foo
-```
+## Tested on OSX
+
+Should also work on other platforms. Let me know if you have a problem.
 
 ## require syntax
+
 Trucker only recognizes basic require syntax.
 
 Trucker doesn't recognize this, for example:
 ```javascript
-var x = '../foo/bar'
+var x = '../foo/bar';
 var y = require(x);
 ```
 
