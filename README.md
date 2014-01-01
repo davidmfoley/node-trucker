@@ -26,9 +26,6 @@ in the examples directory (provided), you can try the following (add ```-n``` fo
 - Move a single file, specifying destination path:
 ```trucker stark/eddard.js deceased/ned.js```
 
-- Move multiple files with globbing
-```trucker stark/* deceased/```
-
 - Move multiple files explicitly
 ```trucker stark/eddard.js tully/catelyn.js deceased/```
 
