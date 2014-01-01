@@ -74,3 +74,6 @@ describe 'FileLocationCalculator', ->
     it 'returns no change for robb (coffee)', ->
       newLoc = calc(path.join(starkPath, '/robb.coffee'))
       expect(newLoc.isMoved).to.equal false
+
+    it 'throws if from is globby and to is a file', ->
+      expect( -> fileLocationCalculator(path.join(starkPath, '/*.js'), path.join(starkPath,'/eddard.js'))).to.throw(Error)
