@@ -14,7 +14,7 @@ You can think of it as a require-aware wrapper similar to rename or mv.
 
 #Usage
 
-```trucker [flags] [source] [destination]```
+```trucker [flags] source [additional sources...] destination```
 
 
 ##Examples
