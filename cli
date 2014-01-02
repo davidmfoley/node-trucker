@@ -3,7 +3,7 @@ var optimist = require('optimist');
 var trucker = require('./index');
 
 var options = optimist
-  .usage("Move CommonJS source files or directories without breaking your app.\nFixes requires in javascript and coffeescript files.\n$0 [source paths or pattern] [destination] [flags]")
+  .usage("Move CommonJS source files or directories without breaking your app.\nFixes requires in javascript and coffeescript files.\n$0 source [additional sources...] destination [flags]")
   .boolean('h')
   .alias('h', 'help')
   .describe('h', 'Show help')
@@ -24,5 +24,5 @@ if (argv.h || argv._.length < 2) {
   process.exit();
 }
 
-trucker(argv);
-process.exit();
+var result = trucker(argv);
+process.exit(result);
