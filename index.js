@@ -1,5 +1,4 @@
-var path = require('path');
-var changedRequiresByFile = require('./lib/findChangedRequires/changedRequiresByFile');
+var changedRequiresByFile = require('./lib/findChangedRequires');
 var handleFileChanges = require('./lib/handleFileChanges');
 var buildJob = require('./lib/buildJob');
 
