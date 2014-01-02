@@ -1,5 +1,5 @@
 path = require 'path'
-fileLocationCalculator = require '../lib/fileLocationCalculator'
+fileLocationCalculator = require '../lib/findChangedRequires/fileLocationCalculator'
 examplePath = path.normalize(path.join(__dirname, '../examples'))
 starkPath = path.join(examplePath, '/stark')
 tullyPath = path.join(examplePath, '/tully')

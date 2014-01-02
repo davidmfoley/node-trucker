@@ -1,4 +1,4 @@
-findRequires = require '../lib/findRequires'
+findRequires = require '../lib/analyzeFiles/findRequires'
 describe 'RequireFinder', ->
   describe 'with javascript', ->
     it 'handles a file with no requires', ->
