@@ -3,7 +3,7 @@ path = require 'path'
 
 examplePath = path.normalize(path.join(__dirname, '../examples/'))
 p = (subPath) -> path.normalize(path.join(examplePath, subPath))
-job =(from, to) -> {from: p(from), to: p(to), base: examplePath}
+job =(from, to) -> {from: [p(from)], to: p(to), base: examplePath}
 
 files = null
 
