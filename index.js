@@ -25,7 +25,6 @@ function moveFiles(job) {
 var findSourceFiles = require('./lib/findSourceFiles');
 var printDependencies = require('./lib/printDependencies');
 function showInfo(job) {
-
   var requires = findSourceFiles(job);
   printDependencies(requires, job);
 }

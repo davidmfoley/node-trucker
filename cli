@@ -10,6 +10,9 @@ var options = optimist
   .boolean('i')
   .alias('i', 'info')
   .describe('i', 'Show dependencies of files passed')
+  .boolean('m')
+  .alias('m', 'move')
+  .describe('m', 'Move one or more source files while fixing up any changed require paths')
   .boolean('n')
   .alias('n', 'dry-run')
   .describe('n', 'Print out changes to be made but don\'t change anything (try this first!)')
@@ -23,6 +26,9 @@ var options = optimist
 var argv = options.argv,
   fileCount = argv._length,
   requiredFileCount = argv.i ? 1 : 2;
+
+if (! (argv.h | argv.i | argv.m | argv.n)) {
+}
 
 if (argv.h || fileCount < requiredFileCount) {
   options.showHelp();
