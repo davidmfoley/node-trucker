@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/davidmfoley/node-trucker.svg?branch=master)](https://travis-ci.org/davidmfoley/node-trucker)
 #trucker
 
 Trucker is a command-line tool for developers using Node that helps you to move source files without breaking inter-file ```require``` dependencies.
