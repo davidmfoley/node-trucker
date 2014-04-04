@@ -21,11 +21,11 @@ Why is it called trucker? Becuase it hauls your files around without breaking th
 
 To move files:
 
-```trucker [flags] source [additional sources...] destination```
+```trucker  --move [flags] source [additional sources...] destination```
 
 To get info about files:
 
-```trucker -i [optional file paths]```
+```trucker --info [optional file paths]```
 
 If no paths are passed, trucker will spit out information for all files in the `base` path (see options below).
 
@@ -33,7 +33,7 @@ If no paths are passed, trucker will spit out information for all files in the `
 
 in the examples directory (provided), you can try the following (add ```-n``` for dry run mode if desired):
 
-- Get info about all dependencies in the current directory and all sub dierctories
+- Get info about all dependencies in the current directory and all sub directories
 ```trucker --info```
 
 - Get dependencies for just one subdirectory
