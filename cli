@@ -20,9 +20,11 @@ var options = optimist
   .alias('q', 'quiet')
   .describe('q', 'Suppress output');
 
-var argv = options.argv;
+var argv = options.argv,
+  fileCount = argv._length,
+  requiredFileCount = argv.i ? 1 : 2;
 
-if (argv.h || argv._.length < 2) {
+if (argv.h || fileCount < requiredFileCount) {
   options.showHelp();
   process.exit();
 }

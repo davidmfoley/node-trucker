@@ -24,5 +24,5 @@ function moveFiles(job) {
 }
 
 function showInfo(job) {
-  throw('not implemented');
+  throw new Error('not implemented');
 }
