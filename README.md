@@ -1,25 +1,43 @@
 [![Build Status](https://travis-ci.org/davidmfoley/node-trucker.svg?branch=master)](https://travis-ci.org/davidmfoley/node-trucker)
 #trucker
 
-Trucker is a command-line tool for developers using Node that helps you to move source files without breaking inter-file ```require``` dependencies.
+Trucker is a command-line tool that helps manage "require" dependencies between files that conform to CommonJS (for example: node.js or browserify source files).
+
+It has two main functions:
+
+1. Show all inbound and outbound dependencies for javascript and coffeescript source files that use require to manage those dependencies.
+
+1. Move/rename source files while fixing up the paths used in requires.
 
 It hauls your files around without breaking them.
-
-You can think of it as a require-aware wrapper similar to rename or mv.
 
 #Installation
 
 ```npm install -g trucker```
 
-(note: trucker requires node.js and npm)
+(trucker requires node.js and npm)
 
 #Usage
 
+To move files:
+
 ```trucker [flags] source [additional sources...] destination```
 
+To get info about files:
+
+```trucker -i [optional file paths]```
+
+If no paths are passed, trucker will spit out information for all files in the `base` path (see options below).
 
 ##Examples
+
 in the examples directory (provided), you can try the following (add ```-n``` for dry run mode if desired):
+
+- Get info about all dependencies in the current directory and all sub dierctories
+```trucker --info```
+
+- Get dependencies for just one subdirectory
+```trucker -i stark/```
 
 - Move a single file:
 ```trucker stark/eddard.js deceased/```
