@@ -59,7 +59,7 @@ in the examples directory (provided), you can try the following (add ```-n``` fo
 
 ```-n, --dry-run``` tells trucker not to move any files, but to instead print out a list of all of the changes that would have been made if this option was not set.
 
-```-s, --scope``` can be used to expand or contract the set of files that trucker searches for dependencies. This defaults to the present working directory. If you have a very large project you may wish to constrain the scope for performance reasons (analysis takes time), or in some cases you may wish to expand the scope beuyon the current directory. Use ```--scope``` for this.
+```-s, --scope``` can be used to expand or contract the set of files that trucker searches for dependencies. This defaults to the present working directory. If you have a very large project you may wish to constrain the scope for performance reasons (analysis takes time), or in some cases you may wish to expand the scope beyond the current directory. Use ```--scope``` for this.
 
 ```-q, --quiet``` suppress output
 
