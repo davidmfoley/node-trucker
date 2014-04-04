@@ -1,5 +1,5 @@
 path = require 'path'
-fileFinder = require '../lib/findChangedRequires/findFiles'
+fileFinder = require '../lib/findFiles'
 examplePath = path.normalize(path.join(__dirname, '../examples'))
 starkPath = path.join(examplePath, '/stark')
 tullyPath = path.join(examplePath, '/tully')

@@ -24,5 +24,11 @@ function moveFiles(job) {
 }
 
 function showInfo(job) {
+  var matchingRequires = require('./lib/matchingRequires')(job);
+
+  var requires = matchingRequires(job);
+  printRequires(requires);
   throw new Error('not implemented');
 }
+
+
