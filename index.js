@@ -22,11 +22,11 @@ function moveFiles(job) {
   handler(job, changes);
 }
 
-var matchingRequires = require('./lib/matchingRequires');
+var findSourceFiles = require('./lib/findSourceFiles');
 var printDependencies = require('./lib/printDependencies');
 function showInfo(job) {
 
-  var requires = matchingRequires(job);
+  var requires = findSourceFiles(job);
   printDependencies(requires, job);
 }
 
