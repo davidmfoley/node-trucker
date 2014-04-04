@@ -5,11 +5,11 @@ Trucker is a command-line tool that helps manage "require" dependencies between 
 
 It has two main functions:
 
-1. Show all inbound and outbound dependencies for javascript and coffeescript source files that use require to manage those dependencies.
+1. Show all inbound and outbound dependencies for javascript and coffeescript source files that use require to manage those dependencies. (```--info``` or ```-i```)
 
-1. Move/rename source files while fixing up the paths used in requires.
+1. Move/rename source files while fixing up the paths used in requires. (```--move``` or ```-m```)
 
-It hauls your files around without breaking them.
+Why is it called trucker? Becuase it hauls your files around without breaking them.
 
 #Installation
 
@@ -40,19 +40,19 @@ in the examples directory (provided), you can try the following (add ```-n``` fo
 ```trucker -i stark/```
 
 - Move a single file:
-```trucker stark/eddard.js deceased/```
+```trucker --move stark/eddard.js deceased/```
 
 - Move a single file, specifying destination path:
-```trucker stark/eddard.js deceased/ned.js```
+```trucker -m stark/eddard.js deceased/ned.js```
 
 - Move multiple files explicitly
-```trucker stark/eddard.js tully/catelyn.js deceased/```
+```trucker -m stark/eddard.js tully/catelyn.js deceased/```
 
 - Move a directory:
-```trucker stark deceased/stark```
+```trucker -m stark deceased/stark```
 
 - Paths are automatically created:
-```trucker stark/eddard.js deceased/in/book1/```
+```trucker -m stark/eddard.js deceased/in/book1/```
 
 ##Options
 ```-h, --help``` prints the help
