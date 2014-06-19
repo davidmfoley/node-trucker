@@ -34,8 +34,14 @@ describe 'fileFinder', ->
       expect(eddard.filetype).to.equal('js')
       expect(eddard.relativePath).to.equal('stark/eddard.js')
 
+    it 'can find sansa',  ->
+      sansa = result[2]
+      expect(sansa.fullPath).to.equal(path.normalize(starkPath + '/sansa.coffee'))
+      expect(sansa.filetype).to.equal('coffee')
+      expect(sansa.relativePath).to.equal('stark/sansa.coffee')
+
     it 'can find catelyn',  ->
-      catelyn = result[2]
+      catelyn = result[3]
       expect(catelyn.fullPath).to.equal(path.normalize(tullyPath + '/catelyn.js'))
       expect(catelyn.filetype).to.equal('js')
       expect(catelyn.relativePath).to.equal('tully/catelyn.js')

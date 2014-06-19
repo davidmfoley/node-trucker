@@ -14,7 +14,7 @@ describe 'changedRequiresByFile', ->
       files = files.sort (a,b) -> a.from > b.from
 
     it 'has the correct fixes', ->
-      expect(files.length).to.equal 2
+      expect(files.length).to.equal 3
 
     it 'fixes the outbound require in the file', ->
       expect(files[1].requires.length).to.equal 1
@@ -27,6 +27,12 @@ describe 'changedRequiresByFile', ->
       inbound = files[0].requires[0]
       expect(inbound.path).to.equal './robb'
       expect(inbound.newPath).to.equal '../deceased/robb'
+
+    it 'keeps the extension in a referencing file', ->
+      expect(files[2].requires.length).to.equal 1
+      inbound = files[2].requires[0]
+      expect(inbound.path).to.equal './robb.coffee'
+      expect(inbound.newPath).to.equal '../deceased/robb.coffee'
 
   describe 'moving a directory', ->
     before ->
