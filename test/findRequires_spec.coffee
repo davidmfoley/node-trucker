@@ -15,6 +15,7 @@ describe 'RequireFinder', ->
       requires = findRequires('js', code)
       expect(requires.length).to.eql 1
       expect(requires[0].path).to.equal './foo'
+      expect(requires[0].loc.line).to.equal(2);
 
     it 'ignores npm modules that are required', ->
       code = "var bar = require('bar');\nvar foo = require( './foo' );\n"
