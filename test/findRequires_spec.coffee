@@ -10,6 +10,12 @@ describe 'RequireFinder', ->
       expect(requires.length).to.eql 1
       expect(requires[0].path).to.equal './foo'
 
+    it 'handles a shebanged javascript file', ->
+      code = "#! /usr/bin/env node\nvar foo = require( './foo' );\n"
+      requires = findRequires('js', code)
+      expect(requires.length).to.eql 1
+      expect(requires[0].path).to.equal './foo'
+
     it 'ignores npm modules that are required', ->
       code = "var bar = require('bar');\nvar foo = require( './foo' );\n"
       requires = findRequires('js', code)
