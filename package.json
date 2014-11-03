@@ -19,9 +19,10 @@
   "description": "Hauls your files around without breaking require dependencies",
   "dependencies": {
     "coffee-script": "1.6.0",
-    "optimist": "~0.6.0",
     "esprima": "~1.0",
     "mkdirp": "~0.3",
+    "mocha-fengshui-reporter": "^1.0.0",
+    "optimist": "~0.6.0",
     "progress": "~1.1"
   },
   "devDependencies": {
