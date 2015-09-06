@@ -1,5 +1,31 @@
 findRequires = require '../lib/analyzeFiles/findRequires'
+
 describe 'RequireFinder', ->
+  describe 'with es6 imports', ->
+    it 'handles a file with no requires', ->
+      expect(findRequires('js', "")).to.eql []
+
+    it 'handles a single require', ->
+      code = "import * as x from './y';";
+      requires = findRequires('js', code)
+      expect(requires.length).to.eql 1
+      expect(requires[0].path).to.equal './y'
+
+    it 'ignores npm modules that are required', ->
+      code = "import bar from 'bar';\nimport foo from './foo' ;\n"
+      requires = findRequires('js', code)
+      expect(requires.length).to.eql 1
+      expect(requires[0].path).to.equal './foo'
+
+    it 'sets location correctly', ->
+      code = "import * as foo from './foo'";
+      requires = findRequires('js', code)
+      req = requires[0]
+      # 1-based, seems natural
+      expect(req.loc.line).to.equal 1
+      expect(req.loc.start).to.equal 23
+      expect(req.loc.length).to.equal 5
+
   describe 'with javascript', ->
     it 'handles a file with no requires', ->
       expect(findRequires('js', "")).to.eql []
