@@ -38,6 +38,7 @@
   },
   "scripts": {
     "lint": "eslint lib/",
-    "test": "MOCHA_FENGSHUI_MODE=minimal mocha test/ -R mocha-fengshui-reporter"
+    "test": "MOCHA_FENGSHUI_MODE=minimal mocha test/ -R mocha-fengshui-reporter",
+    "cover": "MOCHA_FENGSHUI_MODE=minimal istanbul cover _mocha test/ && open coverage/lcov-report/index.html"
   }
 }
