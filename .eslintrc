@@ -10,6 +10,7 @@
     "comma-dangle": 0,
     "comma-style": [2, "last"],
     "constructor-super": 2,
+    "curly": [2, "multi-line"],
     "dot-location": [2, "property"],
     "eol-last": 2,
     "eqeqeq": [2, "allow-null"],
@@ -89,11 +90,15 @@
     "valid-typeof": 2,
     "wrap-iife": [2, "any"],
     "yoda": [2, "never"],
-
-
   },
   "env": {
-    "node": true
+    "es6": true,
+    "node": true,
+    "mocha": true
   },
+  "ecmaFeatures": {
+    "modules": true,
+    "jsx": false,
+  }}
   "extends": "eslint:recommended",
 }
