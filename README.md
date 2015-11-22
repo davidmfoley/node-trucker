@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/davidmfoley/node-trucker.svg?branch=master)](https://travis-ci.org/davidmfoley/node-trucker)
-#trucker
+# trucker
 
 Trucker is a command-line tool that helps manage dependencies between javascript files
 
@@ -13,7 +13,7 @@ It has two main functions:
 
 Why is it called trucker? Because it hauls your files around without breaking them.
 
-#Installation
+# Installation
 
 ```npm install -g trucker```
 
@@ -21,7 +21,7 @@ Trucker requires node.js 0.12 or greater.
 
 The unit tests use block scoping and arrow functions, so they require Node 4+.
 
-#Usage
+# Usage
 
 To move files:
 
@@ -33,7 +33,7 @@ To get info about files:
 
 If no paths are passed, trucker will spit out information for all files in the `base` path (see options below).
 
-##Examples
+## Examples
 
 in the examples directory (provided), you can try the following (add ```-n``` for dry run mode if desired):
 
@@ -58,7 +58,7 @@ in the examples directory (provided), you can try the following (add ```-n``` fo
 - Paths are automatically created:
 ```trucker -m stark/eddard.js deceased/in/book1/```
 
-##Options
+## Options
 ```-h, --help``` prints the help
 
 ```-n, --dry-run``` tells trucker not to move any files, but to instead print out a list of all of the changes that would have been made if this option was not set.
@@ -70,6 +70,10 @@ in the examples directory (provided), you can try the following (add ```-n``` fo
 # Supported file types
 
 Trucker supports javascript and coffeescript source files. It can handle projects that have both of these file types intermixed.
+
+# Ignored files
+
+Trucker ignores files using the first .gitignore it finds, starting from the base directory (usually cwd), and ascending to the root.
 
 # Limitations
 
@@ -86,3 +90,4 @@ Trucker doesn't recognize this, for example:
 var x = '../foo/bar';
 var y = require(x);
 ```
+
