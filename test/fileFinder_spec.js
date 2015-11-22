@@ -1,21 +1,17 @@
 'use strict';
-var byFullPath, examplePath, fileFinder, path, result, starkPath, tullyPath;
+let expect = require('chai').expect;
 
-path = require('path');
+let path = require('path');
+let fileFinder = require('../lib/findFiles');
+let examplePath = path.normalize(path.join(__dirname, '../examples'));
+let starkPath = path.join(examplePath, '/stark');
+let tullyPath = path.join(examplePath, '/tully');
 
-fileFinder = require('../lib/findFiles');
+let result;
 
-examplePath = path.normalize(path.join(__dirname, '../examples'));
-
-starkPath = path.join(examplePath, '/stark');
-
-tullyPath = path.join(examplePath, '/tully');
-
-result = null;
-
-byFullPath = function(a, b) {
+function byFullPath(a, b) {
   return a.fullPath > b.fullPath;
-};
+}
 
 describe('fileFinder', function() {
   describe('in a single directory', function() {

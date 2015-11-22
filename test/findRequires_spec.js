@@ -1,7 +1,7 @@
 'use strict';
-var findRequires;
+let expect = require('chai').expect;
 
-findRequires = require('../lib/analyzeFiles/findRequires');
+let findRequires = require('../lib/analyzeFiles/findRequires');
 
 describe('RequireFinder', function() {
   describe('with es6 imports', function() {

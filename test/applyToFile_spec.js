@@ -1,18 +1,18 @@
-'use strict'; 
-let applyToFile, contents, fs, path, written;
+'use strict';
 
-path = require('path');
+let expect = require('chai').expect;
 
-applyToFile = require('../lib/handleFileChanges/applyToFile');
+let applyToFile = require('../lib/handleFileChanges/applyToFile');
 
-contents = written = "";
+let contents;
+let written;
 
-fs = {
+let fs = {
   readFileSync: function() {
     return contents;
   },
   writeFileSync: function(_, data) {
-    return written = data;
+    written = data;
   }
 };
 

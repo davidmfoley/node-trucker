@@ -1,4 +1,5 @@
 'use strict';
+let expect = require('chai').expect;
 
 let changedRequiresByFile = require('../lib/findChangedRequires');
 
@@ -8,7 +9,7 @@ let examplePath = path.normalize(path.join(__dirname, '../examples/'));
 
 function p(subPath) {
   return path.normalize(path.join(examplePath, subPath));
-};
+}
 
 function job(from, to) {
   return {
@@ -16,7 +17,7 @@ function job(from, to) {
     to: p(to),
     base: examplePath
   };
-};
+}
 
 
 describe('changedRequiresByFile', function() {

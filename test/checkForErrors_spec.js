@@ -1,9 +1,7 @@
 'use strict';
-var checkForErrors, errors;
-
-checkForErrors = require('../lib/handleFileChanges/checkForErrors');
-
-errors = null;
+let checkForErrors = require('../lib/handleFileChanges/checkForErrors');
+let expect = require('chai').expect;
+let errors;
 
 describe('checkForErrors', function() {
   describe('with no changes', function() {

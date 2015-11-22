@@ -1,13 +1,11 @@
 'use strict';
-var examplePath, path, requires, result, sourceFileAnalyzer;
-
-path = require('path');
-
-sourceFileAnalyzer = require('../lib/analyzeFiles/sourceFileAnalyzer');
-
-examplePath = path.normalize(path.join(__dirname, '../examples'));
+let expect = require('chai').expect;
+let path = require('path');
+let sourceFileAnalyzer = require('../lib/analyzeFiles/sourceFileAnalyzer');
+let examplePath = path.normalize(path.join(__dirname, '../examples'));
 
 describe('sourceFileAnalyzer', function() {
+  var requires, result;
   describe('analyzing a sourcefile', function() {
     before(function() {
       result = sourceFileAnalyzer({
