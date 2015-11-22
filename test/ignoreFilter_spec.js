@@ -4,34 +4,43 @@ let expect = require('chai').expect;
 var ignoreFilter = require('../lib/ignoreFilter');
 
 describe('ignoreFilter', function() {
-  it('handles no ignores', () => {
-    var files = ['foo.js', 'bar.js'];
-    var result = ignoreFilter([], files);
-    expect(result).to.eql(files);
-  });
-
   it('handles double-star', () => {
-    var files = ['foo/bar/baz.js', 'bar.js'];
-    var result = ignoreFilter(['foo/**/*.js'], files);
-    expect(result).to.eql(['bar.js']);
+    var files = testFiles(['foo/bar/baz.js', 'bar.js']);
+    var result = ignoreFilter('/src', ['foo/**/*.js'], files);
+    expect(result.length).to.eql(1);
+    expect(result[0].fullPath).to.eql('/src/bar.js');
   });
 
   it('handles glob with no slash', () => {
-    var files = ['foo.js', 'baz/foo.js', 'bar.js'];
-    var result = ignoreFilter(['foo.js'], files);
-    expect(result).to.eql(['bar.js']);
+    var files = testFiles(['foo.js', 'baz/foo.js', 'bar.js']);
+    var result = ignoreFilter('/src', ['foo.js'], files);
+    expect(result.length).to.eql(1);
+    expect(result[0].fullPath).to.eql('/src/bar.js');
+  });
+
+  it('handles directory match of two levels', () => {
+    var files = testFiles(['foo/bar/baz.js', 'bar.js']);
+    var result = ignoreFilter('/src', ['foo/bar'], files);
+    expect(result.length).to.eql(1);
+    expect(result[0].fullPath).to.eql('/src/bar.js');
   });
 
   it('handles negation', () => {
-    var files = ['foo/bar/baz.js', 'bar.js'];
-    var result = ignoreFilter(['foo/**/*.js'], files);
-    expect(result).to.eql(['bar.js']);
+    var files = testFiles(['foo/bar/baz.js', 'bar.js']);
+    var result = ignoreFilter('/src', ['foo/**/*.js'], files);
+    expect(result.length).to.eql(1);
+    expect(result[0].fullPath).to.eql('/src/bar.js');
   });
 
   it('handles multiple ignores', () => {
     var ignores = ['foo.js', 'bar.*'];
-    var files = ['foo/bar/baz.js', 'bar.js', 'baz/foo.js'];
-    var result = ignoreFilter(ignores, files);
-    expect(result).to.eql(['foo/bar/baz.js']);
+    var files = testFiles(['foo/bar/baz.js', 'bar.js', 'baz/foo.js']);
+    var result = ignoreFilter('/src', ignores, files);
+    expect(result.length).to.eql(1);
+    expect(result[0].fullPath).to.eql('/src/foo/bar/baz.js');
   });
 });
+
+function testFiles(names) {
+  return names.map(name => { return {fullPath: '/src/' + name}} );
+}
