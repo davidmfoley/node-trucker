@@ -32,6 +32,6 @@ describe('ignoreFilter', function() {
     var ignores = ['foo.js', 'bar.*'];
     var files = ['foo/bar/baz.js', 'bar.js', 'baz/foo.js'];
     var result = ignoreFilter(ignores, files);
-    expect(result).to.eql(['bar.js']);
+    expect(result).to.eql(['foo/bar/baz.js']);
   });
 });
