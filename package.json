@@ -20,6 +20,7 @@
   "dependencies": {
     "babel-core": "^5.8.23",
     "coffee-script": "1.6.0",
+    "minimatch": "^3.0.0",
     "mkdirp": "~0.3",
     "optimist": "~0.6.0",
     "progress": "~1.1"
