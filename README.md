@@ -17,7 +17,9 @@ Why is it called trucker? Because it hauls your files around without breaking th
 
 ```npm install -g trucker```
 
-(trucker requires node.js and npm)
+Trucker requires node.js 0.12 or greater.
+
+The unit tests use block scoping and arrow functions, so they require Node 4+.
 
 #Usage
 
