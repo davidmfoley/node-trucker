@@ -9,7 +9,10 @@ var options = optimist
   .describe('h', 'Show help')
   .boolean('i')
   .alias('i', 'info')
-  .describe('i', 'Show dependencies of files passed')
+  .describe('i', 'Print dependency information for a file or path')
+  .boolean('u')
+  .alias('u', 'unused')
+  .describe('u', 'Find files that are not required from any other files')
   .boolean('m')
   .alias('m', 'move')
   .describe('m', 'Move one or more source files while fixing up any changed require paths')
@@ -27,7 +30,7 @@ var argv = options.argv,
   fileCount = argv._length,
   requiredFileCount = argv.i ? 1 : 2;
 
-if (! (argv.h | argv.i | argv.m | argv.n)) {
+if (! (argv.h || argv.i || argv.m || argv.n || argv.u)) {
 }
 
 if (argv.h || fileCount < requiredFileCount) {

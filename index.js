@@ -1,9 +1,10 @@
 var buildJob = require('./lib/buildJob');
+var printUnused = require('./lib/printUnused');
 
 module.exports = function(options) {
   try {
     var job = buildJob(options);
-    var action = job.info ? showInfo : moveFiles;
+    var action = getAction(job);
     action(job);
     return 0;
   }
@@ -15,6 +16,12 @@ module.exports = function(options) {
 
 var changedRequiresByFile = require('./lib/findChangedRequires');
 var handleFileChanges = require('./lib/handleFileChanges');
+
+function getAction(job) {
+  if (job.unused) return showUnused;
+  if (job.info) return showInfo;
+  return moveFiles;
+}
 
 function moveFiles(job) {
   var changes = changedRequiresByFile(job);
@@ -29,3 +36,7 @@ function showInfo(job) {
   printDependencies(requires, job);
 }
 
+function showUnused(job) {
+  var files = findSourceFiles(job);
+  printUnused(job, files);
+}

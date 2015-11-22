@@ -23,15 +23,25 @@ The unit tests use block scoping and arrow functions, so they require Node 4+.
 
 # Usage
 
+### Move files
+
 To move files:
 
 ```trucker  --move [flags] source [additional sources...] destination```
+
+### Get dependency info about files
 
 To get info about files:
 
 ```trucker --info [optional file paths]```
 
 If no paths are passed, trucker will spit out information for all files in the `base` path (see options below).
+
+### Find unused files
+
+Find files that are not required by any other source files in given path
+
+```trucker --unused [path]```
 
 ## Examples
 
