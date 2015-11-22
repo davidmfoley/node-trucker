@@ -1,17 +1,32 @@
 [![Build Status](https://travis-ci.org/davidmfoley/node-trucker.svg?branch=master)](https://travis-ci.org/davidmfoley/node-trucker)
 # trucker
 
-Trucker is a command-line tool that helps manage dependencies between javascript files
+Trucker is a tool that helps manage dependencies between javascript files
 
-It works with CommonJS ```require``` (for example: node.js or browserify source files) and with ECMAScript 6 ```import```.
 
-It has two main functions:
+It has three main functions:
 
 1. Show all inbound and outbound dependencies for javascript and coffeescript source files. (```trucker --info filename.js``` or ```trucker -i filename.js```)
 
 1. Move/rename source files while fixing up the paths used in requires. (```trucker --move source destination``` or ```trucker -m source destination```)
 
+1. Find unused files (files that are not required by any other files). (```trucker --unused``` or ```trucker -u```)
+
 Why is it called trucker? Because it hauls your files around without breaking them.
+
+# Support
+
+## Languages
+
+* Javascript, as parsed by babel (up to ES7)
+
+* Coffeescript
+
+## Module systems
+
+* CommonJS - i.e. ```module.exports``` and ```require``` (for example: node.js or browserify source files)
+
+* ECMAScript 6 - i.e. ```export``` and ```import```.
 
 # Installation
 
