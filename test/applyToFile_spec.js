@@ -8,11 +8,11 @@ let contents;
 let written;
 
 let fs = {
-  readFileSync: function() {
-    return contents;
+  readLines: function() {
+    return [''].concat(contents.split('\n'));
   },
-  writeFileSync: function(_, data) {
-    written = data;
+  writeLines: function(_, data) {
+    written = data.slice(1).join('\n');
   }
 };
 
