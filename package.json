@@ -1,6 +1,6 @@
 {
   "name": "trucker",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "bin": {
     "trucker": "./cli"
   },
