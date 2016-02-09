@@ -24,13 +24,20 @@ var options = optimist
   .describe('s', 'Set top "scope" directory for scanning for dependencies (default: pwd)')
   .string('q')
   .alias('q', 'quiet')
-  .describe('q', 'Suppress output');
+  .describe('q', 'Suppress output')
+  .string('e')
+  .alias('e', 'exclude')
+  .describe('e', 'Add file glob pattern to exclude (repeatable)');
 
 var argv = options.argv,
   fileCount = argv._length,
   requiredFileCount = argv.i ? 1 : 2;
 
 if (! (argv.h || argv.i || argv.m || argv.n || argv.u)) {
+}
+
+if (argv.exclude && (typeof argv.exclude === 'string')) {
+  argv.e = argv.exclude = [argv.exclude]
 }
 
 if (argv.h || fileCount < requiredFileCount) {
