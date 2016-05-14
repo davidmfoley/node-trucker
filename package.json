@@ -18,7 +18,7 @@
   "main": "",
   "description": "Hauls your files around without breaking require dependencies",
   "dependencies": {
-    "babel-core": "^5.8.23",
+    "babylon": "^6.8.0",
     "coffee-script": "1.6.0",
     "ignore": "^2.2.19",
     "minimatch": "^3.0.0",
