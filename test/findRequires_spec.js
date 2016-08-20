@@ -10,32 +10,30 @@ describe('RequireFinder', () =>  {
     });
 
     it('handles a single require',  () =>  {
-      var code, requires;
-      code = "import * as x from './y';";
-      requires = findRequires('js', code);
+      const code = "import * as x from './y';";
+      const requires = findRequires('js', code);
       expect(requires.length).to.eql(1);
       expect(requires[0].path).to.equal('./y');
     });
 
     it('ignores npm modules that are required', () =>  {
-      var code, requires;
-      code = "import bar from 'bar';\nimport foo from './foo' ;\n";
-      requires = findRequires('js', code);
+      const code = "import bar from 'bar';\nimport foo from './foo' ;\n";
+      const requires = findRequires('js', code);
       expect(requires.length).to.eql(1);
       expect(requires[0].path).to.equal('./foo');
     });
 
     it('sets location correctly', () =>  {
-      var code, req, requires;
-      code = "import * as foo from './foo'";
-      requires = findRequires('js', code);
-      req = requires[0];
+      const code = "import * as foo from './foo'";
+      const requires = findRequires('js', code);
+      const req = requires[0];
       expect(req.loc.line).to.equal(1);
       expect(req.loc.start).to.equal(23);
       expect(req.loc.length).to.equal(5);
     });
 
-    it('ignores npm modules that are required', () =>  {
+    it('handles async functions', () =>  {
+      // https://github.com/davidmfoley/node-trucker/issues/10
       const code = `
 import Foo from './foo';
 export const fetchLookup = query =>
@@ -61,35 +59,31 @@ export const fetchLookup = query =>
     });
 
     it('handles a javascript file with a single require', () =>  {
-      var code, requires;
-      code = "var foo = require( './foo' );\n";
-      requires = findRequires('js', code);
+      const code = "var foo = require( './foo' );\n";
+      const requires = findRequires('js', code);
       expect(requires.length).to.eql(1);
       expect(requires[0].path).to.equal('./foo');
     });
 
     it('handles a shebanged javascript file', () =>  {
-      var code, requires;
-      code = "#! /usr/bin/env node\nvar foo = require( './foo' );\n";
-      requires = findRequires('js', code);
+      const code = "#! /usr/bin/env node\nvar foo = require( './foo' );\n";
+      const requires = findRequires('js', code);
       expect(requires.length).to.eql(1);
       expect(requires[0].path).to.equal('./foo');
       expect(requires[0].loc.line).to.equal(2);
     });
 
     it('ignores npm modules that are required', () =>  {
-      var code, requires;
-      code = "var bar = require('bar');\nvar foo = require( './foo' );\n";
-      requires = findRequires('js', code);
+      const code = "var bar = require('bar');\nvar foo = require( './foo' );\n";
+      const requires = findRequires('js', code);
       expect(requires.length).to.eql(1);
       expect(requires[0].path).to.equal('./foo');
     });
 
     it('sets location correctly', () =>  {
-      var code, req, requires;
-      code = "var foo = require( './foo' );\n";
-      requires = findRequires('js', code);
-      req = requires[0];
+      const code = "var foo = require( './foo' );\n";
+      const requires = findRequires('js', code);
+      const req = requires[0];
       expect(req.loc.line).to.equal(1);
       expect(req.loc.start).to.equal(21);
       expect(req.loc.length).to.equal(5);
@@ -106,26 +100,23 @@ export const fetchLookup = query =>
       });
 
       it('handles a coffee file with a single require', () =>  {
-        var code, requires;
-        code = "foo = require( './foo' )\n";
-        requires = findRequires('coffee', code);
+        const code = "foo = require( './foo' )\n";
+        const requires = findRequires('coffee', code);
         expect(requires.length).to.eql(1);
         expect(requires[0].path).to.equal('./foo');
       });
 
       it('ignores npm modules that are required', () =>  {
-        var code, requires;
-        code = "bar = require 'bar'\nfoo = require './foo'\n";
-        requires = findRequires('coffee', code);
+        const code = "bar = require 'bar'\nfoo = require './foo'\n";
+        const requires = findRequires('coffee', code);
         expect(requires.length).to.eql(1);
         expect(requires[0].path).to.equal('./foo');
       });
 
       it('sets location correctly', () =>  {
-        var code, req, requires;
-        code = "foo = require( './foo' )\n";
-        requires = findRequires('coffee', code);
-        req = requires[0];
+        const code = "foo = require( './foo' )\n";
+        const requires = findRequires('coffee', code);
+        const req = requires[0];
         expect(req.loc.line).to.equal(1);
         expect(req.loc.start).to.equal(17);
         expect(req.loc.length).to.equal(5);
@@ -134,18 +125,16 @@ export const fetchLookup = query =>
 
     describe('without assignment', () =>  {
       it('handles requires without left hand assignment', () =>  {
-        var code, requires;
-        code = "require( './foo' )\n";
-        requires = findRequires('coffee', code);
+        const code = "require( './foo' )\n";
+        const requires = findRequires('coffee', code);
         expect(requires.length).to.eql(1);
         expect(requires[0].path).to.equal('./foo');
       });
 
       it('sets location correctly', () =>  {
-        var code, req, requires;
-        code = "\nrequire( './foo' )\n";
-        requires = findRequires('coffee', code);
-        req = requires[0];
+        const code = "\nrequire( './foo' )\n";
+        const requires = findRequires('coffee', code);
+        const req = requires[0];
         expect(req.loc.line).to.equal(2);
         expect(req.loc.start).to.equal(11);
         expect(req.loc.length).to.equal(5);
