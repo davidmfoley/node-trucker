@@ -34,6 +34,25 @@ describe('RequireFinder', () =>  {
       expect(req.loc.start).to.equal(23);
       expect(req.loc.length).to.equal(5);
     });
+
+    it('ignores npm modules that are required', () =>  {
+      const code = `
+import Foo from './foo';
+export const fetchLookup = query =>
+  async dispatch => {
+    const fetchUsers = {
+      type: DD_FETCH_USERS,
+      queue: DD_FETCH_USERS,
+      query
+    }
+  }
+    `;
+
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./foo');
+    });
+
   });
 
   describe('with javascript', () =>  {
