@@ -51,6 +51,8 @@ export const fetchLookup = query =>
       expect(requires[0].path).to.equal('./foo');
     });
 
+
+
   });
 
   describe('with javascript', () =>  {
@@ -64,6 +66,27 @@ export const fetchLookup = query =>
       expect(requires.length).to.eql(1);
       expect(requires[0].path).to.equal('./foo');
     });
+
+    it('handles import in a file that babylon can\'t fully parse',  () =>  {
+      const code = `import * as x from './y';
+let foo;
+foo = foo || () => {}; //babylon can't handle this for some reason
+      `;
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./y');
+    });
+
+    it('handles require in a file that babylon can\'t fully parse',  () =>  {
+      const code = `const x = require('./y');
+let foo;
+foo = foo || () => {}; //babylon can't handle this for some reason
+      `;
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./y');
+    });
+
 
     it('handles a shebanged javascript file', () =>  {
       const code = "#! /usr/bin/env node\nvar foo = require( './foo' );\n";
