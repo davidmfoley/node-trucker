@@ -51,6 +51,22 @@ export const fetchLookup = query =>
       expect(requires[0].path).to.equal('./foo');
     });
 
+    it('handles flow annotations', () => {
+      // https://github.com/davidmfoley/node-trucker/issues/11
+      const code = `
+// @flow
+import moduleA from './module-a'
+import moduleB from './module-b'
+
+export default (a: string): Object => moduleB(moduleA(a))
+      `;
+      const requires = findRequires('js', code);
+
+      expect(requires.length).to.eql(2);
+      expect(requires[0].path).to.equal('./module-a');
+      expect(requires[1].path).to.equal('./module-b');
+    })
+
 
 
   });
