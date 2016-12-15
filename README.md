@@ -92,6 +92,8 @@ in the examples directory (provided), you can try the following (add ```-n``` fo
 
 ```-q, --quiet``` suppress output
 
+```-e, --exclude``` Add file glob pattern to ignore to those found in the `.gitignore` file. Repeat this options to add many patterns.
+
 # Supported file types
 
 Trucker supports javascript and coffeescript source files. It can handle projects that have both of these file types intermixed.
@@ -99,6 +101,8 @@ Trucker supports javascript and coffeescript source files. It can handle project
 # Ignored files
 
 Trucker ignores files using the first .gitignore it finds, starting from the base directory (usually cwd), and ascending to the root.
+
+See too the `--exclude` option above.
 
 # Limitations
 
@@ -115,4 +119,3 @@ Trucker doesn't recognize this, for example:
 var x = '../foo/bar';
 var y = require(x);
 ```
-
