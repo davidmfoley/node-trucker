@@ -69,22 +69,26 @@ export const fetchLookup = query =>
 
     it('handles import in a file that babylon can\'t fully parse',  () =>  {
       const code = `import * as x from './y';
+import z from './z';
 let foo;
 foo = foo || () => {}; //babylon can't handle this for some reason
       `;
       const requires = findRequires('js', code);
-      expect(requires.length).to.eql(1);
+      expect(requires.length).to.eql(2);
       expect(requires[0].path).to.equal('./y');
+      expect(requires[1].path).to.equal('./z');
     });
 
     it('handles require in a file that babylon can\'t fully parse',  () =>  {
       const code = `const x = require('./y');
+const z = require('./z');
 let foo;
 foo = foo || () => {}; //babylon can't handle this for some reason
       `;
       const requires = findRequires('js', code);
-      expect(requires.length).to.eql(1);
+      expect(requires.length).to.eql(2);
       expect(requires[0].path).to.equal('./y');
+      expect(requires[1].path).to.equal('./z');
     });
 
 
