@@ -16,6 +16,13 @@ describe('RequireFinder', () =>  {
       expect(requires[0].path).to.equal('./y');
     });
 
+    it('handles immediately exported import',  () =>  {
+      const code = "export * from './y';";
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./y');
+    });
+
     it('ignores npm modules that are required', () =>  {
       const code = "import bar from 'bar';\nimport foo from './foo' ;\n";
       const requires = findRequires('js', code);
@@ -65,10 +72,7 @@ export default (a: string): Object => moduleB(moduleA(a))
       expect(requires.length).to.eql(2);
       expect(requires[0].path).to.equal('./module-a');
       expect(requires[1].path).to.equal('./module-b');
-    })
-
-
-
+    });
   });
 
   describe('with javascript', () =>  {
