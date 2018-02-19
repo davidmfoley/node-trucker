@@ -39,6 +39,21 @@ describe('RequireFinder', () =>  {
       expect(req.loc.length).to.equal(5);
     });
 
+    it('falls back to regex parsing if babel fails to parse', () =>  {
+      const code=`'use strict';
+
+var theThing = require('./thing');
+this is garbage ())((((/.
+`;
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      const req = requires[0];
+      expect(req.path).to.equal('./thing');
+      expect(req.loc.line).to.equal(3);
+      expect(req.loc.start).to.equal(25);
+      expect(req.loc.length).to.equal(7);
+    });
+
     it('handles async functions', () =>  {
       // https://github.com/davidmfoley/node-trucker/issues/10
       const code = `
