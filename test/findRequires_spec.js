@@ -39,19 +39,45 @@ describe('RequireFinder', () =>  {
       expect(req.loc.length).to.equal(5);
     });
 
-    it('falls back to regex parsing if babel fails to parse', () =>  {
-      const code=`'use strict';
+    // cheese factor high
+    describe('with regex finder', () => {
+      it('falls back to regex parsing if babel fails to parse', () =>  {
+        const code=`'use strict';
 
 var theThing = require('./thing');
+import theOther from   './other';
 this is garbage ())((((/.
 `;
-      const requires = findRequires('js', code);
-      expect(requires.length).to.eql(1);
-      const req = requires[0];
-      expect(req.path).to.equal('./thing');
-      expect(req.loc.line).to.equal(3);
-      expect(req.loc.start).to.equal(25);
-      expect(req.loc.length).to.equal(7);
+        const requires = findRequires('js', code);
+        expect(requires.length).to.eql(2);
+
+        const [ thing, other ] = requires;
+
+        expect(thing.path).to.equal('./thing');
+        expect(thing.loc.line).to.equal(3);
+        expect(thing.loc.start).to.equal(25);
+        expect(thing.loc.length).to.equal(7);
+
+        expect(other.path).to.equal('./other');
+        expect(other.loc.line).to.equal(4);
+        expect(other.loc.start).to.equal(25);
+        expect(other.loc.length).to.equal(7);
+      });
+      it('does not include module refs', () =>  {
+        const code=`'use strict';
+
+var theThing = require('./thing');
+var module = require('module');
+this is garbage ())((((/.
+`;
+        const requires = findRequires('js', code);
+        expect(requires.length).to.eql(1);
+        const req = requires[0];
+        expect(req.path).to.equal('./thing');
+        expect(req.loc.line).to.equal(3);
+        expect(req.loc.start).to.equal(25);
+        expect(req.loc.length).to.equal(7);
+      });
     });
 
     it('handles async functions', () =>  {
