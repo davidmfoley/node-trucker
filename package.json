@@ -31,8 +31,8 @@
     "eslint": "^1.3.1",
     "istanbul": "^0.4.0",
     "jshint": "2.4.0",
-    "mocha": "~1.6.0",
-    "mocha-fengshui-reporter": "^1.0.0"
+    "mocha": "^5.2.0",
+    "mocha-concise-reporter": "^1.2.0"
   },
   "engines": {
     "node": "0.10.x",
@@ -40,7 +40,7 @@
   },
   "scripts": {
     "lint": "eslint lib/",
-    "test": "MOCHA_FENGSHUI_MODE=minimal mocha test/ -R mocha-fengshui-reporter",
-    "cover": "MOCHA_FENGSHUI_MODE=minimal istanbul cover _mocha test/ && open coverage/lcov-report/index.html"
+    "test": "MOCHA_CONCISE_MODE=minimal mocha test/ -R mocha-concise-reporter",
+    "cover": "istanbul cover _mocha test/ && open coverage/lcov-report/index.html"
   }
 }
