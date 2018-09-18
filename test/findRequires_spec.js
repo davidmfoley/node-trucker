@@ -23,6 +23,13 @@ describe('RequireFinder', () =>  {
       expect(requires[0].path).to.equal('./y');
     });
 
+    it('ignores a jsx tag on same line as export', () => {
+      const code = `import React from 'react'
+export default () => <a href="/">Test</a>;`;
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(0);
+    });
+
     it('ignores npm modules that are required', () =>  {
       const code = "import bar from 'bar';\nimport foo from './foo' ;\n";
       const requires = findRequires('js', code);
