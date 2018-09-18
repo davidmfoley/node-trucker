@@ -30,6 +30,17 @@ export default () => <a href="/">Test</a>;`;
       expect(requires.length).to.eql(0);
     });
 
+    it('handles flow and js imports on multiline', () => {
+      const code = `import MyModule, {
+        type FlowTypeA,
+        type FlowTypeB
+      } from './MyModule'
+      `;
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./MyModule');
+    });
+
     it('ignores npm modules that are required', () =>  {
       const code = "import bar from 'bar';\nimport foo from './foo' ;\n";
       const requires = findRequires('js', code);
