@@ -21,7 +21,6 @@
     "babylon": "^6.9.0",
     "coffee-script": "1.6.0",
     "ignore": "^2.2.19",
-    "minimatch": "^3.0.0",
     "mkdirp": "~0.3",
     "optimist": "~0.6.0",
     "progress": "~1.1"
