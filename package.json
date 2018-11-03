@@ -23,7 +23,8 @@
     "ignore": "^2.2.19",
     "mkdirp": "~0.3",
     "optimist": "~0.6.0",
-    "progress": "~1.1"
+    "progress": "~1.1",
+    "typescript": "^3.1.6"
   },
   "devDependencies": {
     "chai": "^1.9.2",
