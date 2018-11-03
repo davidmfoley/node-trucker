@@ -77,5 +77,11 @@ describe('RequireFinder', () =>  {
       const requires = findRequires('ts', code, 'foo.ts');
       expect(requires.length).to.eql(0);
     });
+
+    it('ignores npm package import',  () =>  {
+      const code = "import foo from 'foo';";
+      const requires = findRequires('ts', code, 'foo.ts');
+      expect(requires.length).to.eql(0);
+    });
   });
 });
