@@ -23,11 +23,15 @@ Why is it called trucker? Because it hauls your files around without breaking th
 
 * Coffeescript
 
+* Typescript (experimental support)
+
+
 ## Module systems
 
-* CommonJS - i.e. ```module.exports``` and ```require``` (for example: node.js or browserify source files)
 
 * ECMAScript 6 - i.e. ```export``` and ```import```.
+
+* TypeScript - i.e. ```export``` and ```import```.
 
 # Installation
 
