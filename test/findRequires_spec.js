@@ -57,6 +57,20 @@ export default () => <a href="/">Test</a>;`;
       expect(req.loc.length).to.equal(5);
     });
 
+    it('ignores a string that looks like a path in the body', () => {
+      const code = `import MyModule, {
+        type FlowTypeA,
+        type FlowTypeB
+      } from './MyModule'
+
+      const example = './MyModule';
+      `;
+
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./MyModule');
+    });
+
     // cheese factor high
     describe('with regex finder', () => {
       it('falls back to regex parsing if babel fails to parse', () =>  {
