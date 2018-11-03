@@ -36,6 +36,7 @@ describe('RequireFinder', () =>  {
       expect(requires[0].loc.start).to.equal(23);
       expect(requires[0].loc.length).to.equal(22);
     });
+
     it('handles import on multiple lines', () => {
       const code = `import {
   Foo,
@@ -48,6 +49,13 @@ describe('RequireFinder', () =>  {
       expect(requires[0].loc.line).to.equal(4);
       expect(requires[0].loc.start).to.equal(9);
       expect(requires[0].loc.length).to.equal(22);
+    });
+
+    it('handles immediately exported import',  () =>  {
+      const code = "export * from './y';";
+      const requires = findRequires('ts', code, 'foo.ts');
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./y');
     });
   });
 });
