@@ -57,5 +57,25 @@ describe('RequireFinder', () =>  {
       expect(requires.length).to.eql(1);
       expect(requires[0].path).to.equal('./y');
     });
+
+    it('handles import with alias',  () =>  {
+      const code = "import { Foo as Bar } from './y';";
+      const requires = findRequires('ts', code, 'foo.ts');
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./y');
+    });
+
+    it('handles import with require',  () =>  {
+      const code = "import foo = require('./foo');";
+      const requires = findRequires('ts', code, 'foo.ts');
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./foo');
+    });
+
+    it('does not treat an exported string as a file',  () =>  {
+      const code = "export const foo = './y';";
+      const requires = findRequires('ts', code, 'foo.ts');
+      expect(requires.length).to.eql(0);
+    });
   });
 });
