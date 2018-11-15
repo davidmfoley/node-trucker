@@ -57,6 +57,21 @@ To get info about files:
 
 If no paths are passed, trucker will spit out information for all files in the `base` path (see options below).
 
+###  Build a graph of dependencies using graphviz
+(experimental)
+
+To get info about files:
+
+```trucker --info --format dot [optional file paths]```
+
+This will output a graphviz-compatible dot file that can be rendered into an image file by the `dot` tool that is part of graphviz.
+
+```
+trucker -i -f dot > /tmp/dependencies.dot
+dot -Tpng -o /tmp/dependencies.png /tmp/dependencies.dot
+open dependencies.png
+```
+
 ### Find unused files
 
 Find files that are not required by any other source files in given path
@@ -98,10 +113,6 @@ in the examples directory (provided), you can try the following (add ```-n``` fo
 ```-q, --quiet``` suppress output
 
 ```-e, --exclude``` Add file glob pattern to ignore to those found in the `.gitignore` file. Repeat this options to add many patterns.
-
-# Supported file types
-
-Trucker supports javascript and coffeescript source files. It can handle projects that have both of these file types intermixed.
 
 # Ignored files
 
