@@ -83,5 +83,13 @@ describe('RequireFinder', () =>  {
       const requires = findRequires('ts', code, 'foo.ts');
       expect(requires.length).to.eql(0);
     });
+
+    it('handles unassigned import',  () =>  {
+      const code = "import './y';";
+      const requires = findRequires('ts', code, 'foo.ts');
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./y');
+    });
+
   });
 });
