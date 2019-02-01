@@ -16,6 +16,13 @@ describe('RequireFinder', () =>  {
       expect(requires[0].path).to.equal('./y');
     });
 
+    it('handles unassigned import',  () =>  {
+      const code = "import './y';";
+      const requires = findRequires('js', code);
+      expect(requires.length).to.eql(1);
+      expect(requires[0].path).to.equal('./y');
+    });
+
     it('handles immediately exported import',  () =>  {
       const code = "export * from './y';";
       const requires = findRequires('js', code);
