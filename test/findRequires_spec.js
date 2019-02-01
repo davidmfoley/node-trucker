@@ -102,6 +102,29 @@ this is garbage ())((((/.
         expect(other.loc.start).to.equal(25);
         expect(other.loc.length).to.equal(7);
       });
+
+      it('handles unassigned imports and requires', () =>  {
+        const code=`use strict;
+import   './thing';
+require( './other' );
+this is garbage ())((((/.
+`;
+        const requires = findRequires('js', code);
+        expect(requires.length).to.eql(2);
+
+        const [ thing, other ] = requires;
+
+        expect(thing.path).to.equal('./thing');
+        expect(thing.loc.line).to.equal(2);
+        expect(thing.loc.length).to.equal(7);
+        expect(thing.loc.start).to.equal(11);
+
+        expect(other.path).to.equal('./other');
+        expect(other.loc.line).to.equal(3);
+        expect(other.loc.length).to.equal(7);
+        expect(other.loc.start).to.equal(11);
+      });
+
       it('does not include module refs', () =>  {
         const code=`'use strict';
 
