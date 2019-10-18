@@ -29,6 +29,8 @@ Why is it called trucker? Because it hauls your files around without breaking th
 ## Module systems
 
 
+* CommonJS 6 - i.e. ```module.exports``` and ```require()```.
+
 * ECMAScript 6 - i.e. ```export``` and ```import```.
 
 * TypeScript - i.e. ```export``` and ```import```.
