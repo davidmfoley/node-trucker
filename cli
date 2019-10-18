@@ -12,7 +12,7 @@ var options = optimist
   .describe('i', 'Print dependency information for a file or path')
   .string('f')
   .alias('f', 'format')
-  .describe('f', 'Set format for info output (default or viz)')
+  .describe('f', 'Set format for info output ("default" or "dot" for graphviz-compatible dot output)')
   .boolean('u')
   .alias('u', 'unused')
   .describe('u', 'Find files that are not required from any other files')
@@ -37,6 +37,8 @@ var argv = options.argv,
   requiredFileCount = argv.i ? 1 : 2;
 
 if (! (argv.h || argv.i || argv.m || argv.n || argv.u)) {
+  options.showHelp();
+  process.exit();
 }
 
 if (argv.exclude && (typeof argv.exclude === 'string')) {
