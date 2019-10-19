@@ -16,6 +16,42 @@ describe('decorateRequire', () => {
     expect(result.filePath).to.eq('src/example.js');
   });
 
+  it('finds a file with matching name', function() {
+    const filePath = '/src/example.js';
+
+    var result = decorateRequire(
+      {
+        existsSync: p => p === filePath,
+        statSync: (p) => ({ isFile: () => p === filePath })
+      },
+      () => null
+    )({
+      fullPath: '/src/index.js',
+    }, {
+      path: './example',
+    });
+
+    expect(result.filePath).to.eq('/src/example.js');
+  });
+
+  it('finds an index file with matching name', function() {
+    const filePath = '/src/example/index.tsx';
+
+    var result = decorateRequire(
+      {
+        existsSync: p => p === filePath,
+        statSync: (p) => ({ isFile: () => p === filePath })
+      },
+      () => null
+    )({
+      fullPath: '/src/index.js',
+    }, {
+      path: './example',
+    });
+
+    expect(result.filePath).to.eq('/src/example/index.tsx');
+  });
+
   it('tries all the extensions in order if require resolve fails', function() {
     let existsArgs = [];
     var result = decorateRequire(
