@@ -42,5 +42,5 @@ describe('filterExcludedFiles', function() {
 });
 
 function testFiles(names) {
-  return names.map(name => { return {fullPath: '/src/' + name}} );
+  return names.map(name => ({fullPath: '/src/' + name}) );
 }
