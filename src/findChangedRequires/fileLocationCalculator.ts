@@ -1,5 +1,5 @@
 import path from 'path';
-import FileInfo from '../fileInfo';
+import FileInfo from './fileInfo';
 import { LocationCalculator } from './types';
 
 export default (from: string[], to: string, fileInfo?: typeof FileInfo): LocationCalculator => {

@@ -2,7 +2,7 @@ import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
 
 import path from 'path';
-import readIgnores from '../src/readIgnores';
+import readIgnores from '../src/buildJob/readIgnores';
 
 describe('readIgnores', function() {
   it('works here', function() {

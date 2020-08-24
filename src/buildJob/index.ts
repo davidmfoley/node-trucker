@@ -1,6 +1,6 @@
 import path from 'path';
 import readIgnores from './readIgnores';
-import { TruckerJob, TruckerOptions } from './types';
+import { TruckerJob, TruckerOptions } from '../types';
 
 export default function(options: TruckerOptions): TruckerJob {
   var scopePresent =  (options.scope && options.scope.length);

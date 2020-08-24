@@ -1,5 +1,5 @@
 import path from 'path';
-import fileInfo from '../fileInfo';
+import fileInfo from './fileInfo';
 import { LocationCalculator } from './types';
 import { ChangedRequire } from '../types';
 
