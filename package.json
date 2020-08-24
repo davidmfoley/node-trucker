@@ -26,7 +26,7 @@
     "mkdirp": "~0.3",
     "optimist": "~0.6.0",
     "progress": "~1.1",
-    "typescript": "^3.6.4"
+    "typescript": "^4.0.2"
   },
   "devDependencies": {
     "chai": "^1.9.2",
