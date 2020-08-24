@@ -49,6 +49,7 @@
     "test": "MOCHA_CONCISE_MODE=minimal ts-mocha -p tsconfig.test.json test/* -- -R mocha-concise-reporter",
     "prettier": "prettier -c '{src,test}/**/*.ts'",
     "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
-    "cover": "istanbul cover _mocha test/ && open coverage/lcov-report/index.html"
+    "cover": "istanbul cover _mocha test/ && open coverage/lcov-report/index.html",
+    "ci": "yarn build && yarn test && yarn prettier"
   }
 }
