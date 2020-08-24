@@ -1,7 +1,8 @@
 import ProgressBar from 'progress';
 import analyzer from './sourceFileAnalyzer';
+import { SourceFile } from '../types';
 
-export default function(job, fileInfos) {
+export default function(job, fileInfos: SourceFile[]) {
   var analyze = fileInfos.length > 100 && !job.quiet ? withBar : noBar;
   return analyze(fileInfos);
 };

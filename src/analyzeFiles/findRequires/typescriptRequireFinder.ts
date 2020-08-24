@@ -1,6 +1,6 @@
 import ts from 'typescript';
 import requirePathFilter from './requirePathFilter';
-import { RequireInfo } from './types';
+import { RequireInfo } from '../types';
 type TypescriptToken = any
 
 export default function(contents: string, filename: string): RequireInfo[] {

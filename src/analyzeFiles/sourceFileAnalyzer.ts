@@ -1,18 +1,29 @@
 import sourceFile from '../handleFileChanges/sourceFile';
 import findRequires from './findRequires';
 import DecorateRequire from './decorateRequire';
+import { FileRequireInfo, RequireInfo } from './types';
+
 const decorateRequire = DecorateRequire();
 
-export default function(fileInfo) {
+interface SourceFile {
+  fullPath: string,
+  filetype: string
+}
+
+type SourceFileWithRequires = SourceFile & {
+  requires: FileRequireInfo[]
+}
+
+export default (fileInfo: SourceFile): SourceFileWithRequires => {
   var contents = sourceFile.readContents(fileInfo.fullPath);
 
-  var requires;
+  let requires: RequireInfo[] = []
+
   try {
     requires = findRequires(fileInfo.filetype, contents, fileInfo.fullPath);
   }
   catch(err) {
     printAnalyzeError(fileInfo, err);
-    requires = [];
   }
 
   return {
@@ -26,7 +37,7 @@ export default function(fileInfo) {
   }
 };
 
-function printAnalyzeError(fileInfo, err) {
+function printAnalyzeError(fileInfo: SourceFile, err: Error) {
   console.warn('');
   console.warn('error processing ' + fileInfo.fullPath);
   console.warn(err);

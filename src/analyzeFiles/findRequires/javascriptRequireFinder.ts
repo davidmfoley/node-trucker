@@ -1,6 +1,6 @@
 import * as babelParser from '@babel/parser';
 import requirePathFilter from './requirePathFilter';
-import { RequireInfo } from './types';
+import { RequireInfo } from '../types';
 
 type BabelToken = any
 

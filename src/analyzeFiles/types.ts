@@ -7,3 +7,8 @@ export interface RequireInfo {
   path: string;
   loc: RequireLocation;
 }
+
+export type FileRequireInfo = RequireInfo & {
+  fullPath: string
+  filePath: string
+}
