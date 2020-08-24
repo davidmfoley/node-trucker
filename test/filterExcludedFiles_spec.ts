@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 
-import filterExcludedFiles from '../src/filterExcludedFiles';
+import filterExcludedFiles from '../src/findSourceFiles/filterExcludedFiles';
 
 describe('filterExcludedFiles', function() {
   it('handles double-star', () => {

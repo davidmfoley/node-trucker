@@ -2,7 +2,7 @@ import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
 
 import path from 'path';
-import fileFinder from '../src/findFiles';
+import fileFinder from '../src/findSourceFiles/findFiles';
 
 let examplePath = path.normalize(path.join(__dirname, '../examples'));
 let starkPath = path.join(examplePath, '/stark');
