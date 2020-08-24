@@ -1,7 +1,10 @@
 import * as babelParser from '@babel/parser';
 import requirePathFilter from './requirePathFilter';
+import { RequireInfo } from './types';
 
-export default function(contents, filename) {
+type BabelToken = any
+
+export default (contents: string, filename: string): RequireInfo[] => {
   contents = handleShebang(contents);
   try {
     return babelFinder(contents);
@@ -12,7 +15,7 @@ export default function(contents, filename) {
   }
 };
 
-function regexFinder(contents) {
+function regexFinder(contents: string) : RequireInfo[]{
   var lines = contents.split('\n');
   var requires = [];
   var importRegex = /((import|export) (.+? from)?|require\s*\()\s*['"`]/g;
@@ -38,7 +41,7 @@ function regexFinder(contents) {
   return requires;
 }
 
-function babelFinder(contents) {
+function babelFinder(contents: string): RequireInfo[] {
 
   // kitchen-sink approach, since we just want to find requires/imports/etc.
   var bbl = babelParser.parse(contents, {
@@ -82,20 +85,20 @@ function babelFinder(contents) {
 
   //var ast = result.ast;
 
-  var requires = [];
+  var requires: RequireInfo[] = [];
   scan(bbl.tokens || [], requires);
   return requires;
 }
 
-function isFrom(token) {
+function isFrom(token: BabelToken) {
   return token.type.label === 'name' && token.value === 'from';
 }
 
-function isString(token) {
+function isString(token: BabelToken) {
   return token.type.label === 'string';
 }
 
-function scan(tokens, requires) {
+function scan(tokens: BabelToken[], requires: RequireInfo[]) {
   for(var i = 0; i < tokens.length; i++) {
     var token = tokens[i];
     var type = token.type;
@@ -116,7 +119,7 @@ function scan(tokens, requires) {
   }
 }
 
-function addIfMatch(requires, pathToken) {
+function addIfMatch(requires: RequireInfo[], pathToken: BabelToken) {
   if (! (pathToken && pathToken.value)) return;
   if (!requirePathFilter(pathToken.value)) return;
   var loc = pathToken.loc;
@@ -133,7 +136,7 @@ function addIfMatch(requires, pathToken) {
 }
 
 
-function handleShebang(contents) {
+function handleShebang(contents: string): string {
   if (contents[0] === '#' && contents[1] === '!')
     return "//" + contents;
 

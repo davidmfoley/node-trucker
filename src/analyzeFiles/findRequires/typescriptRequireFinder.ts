@@ -1,7 +1,9 @@
 import ts from 'typescript';
 import requirePathFilter from './requirePathFilter';
+import { RequireInfo } from './types';
+type TypescriptToken = any
 
-export default function(contents, filename) {
+export default function(contents: string, filename: string): RequireInfo[] {
   // Parse a file
   let sourceFile = ts.createSourceFile(
     filename,
@@ -10,7 +12,7 @@ export default function(contents, filename) {
     /*setParentNodes */ true
   );
 
-  var requires = [];
+  const requires: RequireInfo[] = [];
   findRequires(requires, sourceFile);
   return requires;
 
@@ -35,7 +37,7 @@ export default function(contents, filename) {
     return requires;
   }
 
-  function pushRequire(requires, statement) {
+  function pushRequire(requires: RequireInfo[], statement: TypescriptToken) {
     ts.forEachChild(statement, function (child: any) {
       var lineAndChar = sourceFile.getLineAndCharacterOfPosition(
         child.getStart()

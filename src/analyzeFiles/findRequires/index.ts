@@ -1,8 +1,12 @@
 import javascript from './javascriptRequireFinder';
 import typescript from './typescriptRequireFinder';
 import coffee from './coffeescriptRequireFinder';
+import { RequireInfo } from './types';
 
-var parsers = {
+type RequireFinder = (contents: string, filename: string) => RequireInfo[]
+type Parsers = { [key: string]: RequireFinder }
+
+var parsers: Parsers = {
   js: javascript,
   mjs: javascript,
   jsx: javascript,
