@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/davidmfoley/node-trucker.svg?branch=master)](https://travis-ci.org/davidmfoley/node-trucker)
 [![NPM Version](https://img.shields.io/npm/v/trucker.svg)](https://www.npmjs.com/package/trucker)
 # trucker
 
