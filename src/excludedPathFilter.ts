@@ -1,12 +1,14 @@
 import path from 'path';
 import ignore from 'ignore';
 
-export default function excludedFileFilter(ignoreBase, ignorePatterns) {
+type PathFilter = (path: string) => boolean
+
+export default (ignoreBase: string, ignorePatterns: string[]): PathFilter => {
   var filter = ignore({ twoGlobstars: true })
     .addPattern(ignorePatterns)
     .createFilter();
 
-  return function(filepath) {
+  return (filepath: string) => {
     var relativeToBase = path.relative(ignoreBase, filepath);
 
     // don't exclude files above ignore file
