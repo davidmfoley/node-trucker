@@ -22,7 +22,7 @@ Why is it called trucker? Because it hauls your files around without breaking th
 
 * Coffeescript
 
-* Typescript (experimental support)
+* Typescript
 
 
 ## Module systems
