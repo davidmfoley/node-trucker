@@ -1,13 +1,14 @@
 import checkForErrors from './checkForErrors';
 import printChanges from './printChanges';
 import applyChanges from './applyChanges';
+import { MoveInfo, TruckerMoveJob } from '../types';
 
 export default function(isDryRun: boolean) {
   if (isDryRun) console.log('DRY RUN - no changes will be made.');
 
   var handler =  isDryRun ? printChanges : applyChanges;
 
-  return function(job, changes) {
+  return function(job: TruckerMoveJob, changes: MoveInfo[]) {
     var errors = checkForErrors(changes);
     if (errors.length) {
       console.error('Unable to continue! ' + errors.length + ' errors occurred:');

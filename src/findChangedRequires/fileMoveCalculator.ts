@@ -1,6 +1,7 @@
 import changedRequiresForSingleFile from './changedRequiresForSingleFile';
-import { MoveInfo, LocationCalculator } from './types';
+import { LocationCalculator } from './types';
 import { SourceFileWithRequires } from '../analyzeFiles/types';
+import { MoveInfo } from '../types';
 
 export default (
   fileInfos: SourceFileWithRequires[],

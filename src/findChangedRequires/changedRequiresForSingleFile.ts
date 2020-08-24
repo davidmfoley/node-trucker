@@ -1,6 +1,7 @@
 import path from 'path';
 import fileInfo from '../fileInfo';
-import { LocationCalculator, ChangedRequire } from './types';
+import { LocationCalculator } from './types';
+import { ChangedRequire } from '../types';
 
 type Location = any
 

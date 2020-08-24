@@ -5,13 +5,14 @@ import decorateRequire from '../src/analyzeFiles/decorateRequire';
 describe('decorateRequire', () => {
   it('uses require.resolve location if found', function() {
     var result = decorateRequire(
-      {},
+      {} as any,
       () => 'src/example.js'
     )({
+      filetype: '',
       fullPath: '/src',
     }, {
       path: './example',
-    });
+    } as any);
 
     expect(result.filePath).to.eq('src/example.js');
   });
@@ -23,13 +24,13 @@ describe('decorateRequire', () => {
       {
         existsSync: p => p === filePath,
         statSync: (p) => ({ isFile: () => p === filePath })
-      },
+      } as any,
       () => null
     )({
       fullPath: '/src/index.js',
-    }, {
+    } as any, {
       path: './example',
-    });
+    } as any);
 
     expect(result.filePath).to.eq('/src/example.js');
   });
@@ -41,13 +42,13 @@ describe('decorateRequire', () => {
       {
         existsSync: p => p === filePath,
         statSync: (p) => ({ isFile: () => p === filePath })
-      },
+      } as any,
       () => null
     )({
       fullPath: '/src/index.js',
-    }, {
+    } as any, {
       path: './example',
-    });
+    } as any);
 
     expect(result.filePath).to.eq('/src/example/index.tsx');
   });
@@ -58,13 +59,13 @@ describe('decorateRequire', () => {
       {
         existsSync: a => { existsArgs.push(a); return false; },
         statSync: () => ({ isFile: () => false })
-      },
+      } as any,
       () => null
     )({
       fullPath: '/src',
-    }, {
+    } as any, {
       path: './example',
-    });
+    } as any);
 
     expect(result).to.be.undefined();
 

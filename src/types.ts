@@ -13,3 +13,15 @@ export interface SourceFile {
   fullPath: string,
   filetype: string
 }
+
+export interface MoveInfo {
+  from: string;
+  to: string;
+  requires: ChangedRequire[]
+}
+export interface ChangedRequire {
+  filePath: string
+  newPath: string,
+  loc: Location,
+  path: string
+}

@@ -11,7 +11,6 @@ describe('sourceFileAnalyzer', function() {
     before(function() {
       result = sourceFileAnalyzer({
         fullPath: path.join(examplePath, 'stark/eddard.js'),
-        relativePath: 'stark/eddard.js',
         filetype: 'js'
       });
       requires = result.requires.sort(function(a, b) {
