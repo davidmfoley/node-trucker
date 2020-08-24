@@ -2,7 +2,7 @@ import path from 'path'
 import nodeFs from 'fs'
 
 import { SourceFile } from '../types'
-import { RequireInfo, FileRequireInfo } from './types'
+import { RequireInfo, FileRequireInfo } from '../types'
 
 const requireResolve = (path, opts) => require.resolve(path, opts)
 

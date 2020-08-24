@@ -1,6 +1,6 @@
 import coffee from 'coffee-script'
 import requirePathFilter from './requirePathFilter'
-import { RequireInfo } from '../types'
+import { RequireInfo } from '../../types'
 
 type CoffeeNode = any
 

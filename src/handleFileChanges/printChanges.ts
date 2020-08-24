@@ -1,5 +1,5 @@
 import path from 'path'
-import sourceFile from './sourceFile'
+import sourceFile from '../sourceFile'
 import editLine from './editLine'
 import getLineEdits from './getLineEdits'
 

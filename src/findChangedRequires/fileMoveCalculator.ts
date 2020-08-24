@@ -1,6 +1,6 @@
 import changedRequiresForSingleFile from './changedRequiresForSingleFile'
 import { LocationCalculator } from './types'
-import { SourceFileWithRequires } from '../analyzeFiles/types'
+import { SourceFileWithRequires } from '../types'
 import { FileModification } from '../types'
 
 export default (

@@ -1,7 +1,7 @@
-import sourceFile from '../handleFileChanges/sourceFile'
+import sourceFile from '../sourceFile'
 import findRequires from './findRequires'
 import DecorateRequire from './decorateRequire'
-import { FileRequireInfo, RequireInfo, SourceFileWithRequires } from './types'
+import { FileRequireInfo, RequireInfo, SourceFileWithRequires } from '../types'
 import { SourceFile } from '../types'
 
 const decorateRequire = DecorateRequire()

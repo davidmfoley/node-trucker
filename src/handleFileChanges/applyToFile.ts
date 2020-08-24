@@ -1,6 +1,6 @@
 import getLineEdits from './getLineEdits'
 import editLine from './editLine'
-import importedSourceFile from './sourceFile'
+import importedSourceFile from '../sourceFile'
 
 function applyToFile(
   filePath,
