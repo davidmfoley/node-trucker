@@ -12,6 +12,7 @@ describe('readIgnores', function() {
       'node_modules',
       'tmp',
       'coverage',
+      'lib'
     ]);
 
     expect(ignore.base).to.equal(path.normalize(__dirname + '/..'));
