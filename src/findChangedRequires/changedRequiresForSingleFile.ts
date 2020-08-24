@@ -1,5 +1,6 @@
 import path from 'path';
 import fileInfo from '../fileInfo';
+import { LocationCalculator, ChangedRequire } from './types';
 
 type Location = any
 
@@ -15,15 +16,9 @@ interface SourceFile {
   requires: RequireInfo[]
 }
 
-interface ChangedRequire {
-  filePath: string
-  newPath: string,
-  loc: Location,
-  path: string
-}
 
 
-export default (f: SourceFile, getNewLocation): ChangedRequire[] => {
+export default (f: SourceFile, getNewLocation: LocationCalculator): ChangedRequire[] => {
   var changedRequires = [];
   var newFileLocation = getNewLocation(f.fullPath);
 

@@ -11,4 +11,5 @@ export type TruckerMoveJob = TruckerJob & {
 
 export interface SourceFile {
   fullPath: string,
+  filetype: string
 }

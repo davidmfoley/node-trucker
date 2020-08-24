@@ -1,13 +1,6 @@
 import path from 'path';
 import FileInfo from '../fileInfo';
-
-interface MoveInfo {
-  isMoved: boolean;
-  fullPath: string;
-  requirePath: string;
-}
-
-type LocationCalculator = (fullPath: string) => MoveInfo
+import { LocationCalculator } from './types';
 
 export default (from: string[], to: string, fileInfo?: typeof FileInfo): LocationCalculator => {
   fileInfo = fileInfo || FileInfo
@@ -55,7 +48,7 @@ const requirePath = (filePath: string): string  => {
   return req;
 }
 
-const moveInfo = (isMoved: boolean, fullPath: string): MoveInfo => {
+const moveInfo = (isMoved: boolean, fullPath: string) => {
   const filePath = path.normalize(fullPath);
   return {
     isMoved,

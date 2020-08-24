@@ -1,7 +1,11 @@
 import changedRequiresForSingleFile from './changedRequiresForSingleFile';
-import { MoveInfo } from './types';
+import { MoveInfo, LocationCalculator } from './types';
+import { SourceFileWithRequires } from '../analyzeFiles/types';
 
-export default function(fileInfos, getNewLocation) {
+export default (
+  fileInfos: SourceFileWithRequires[],
+  getNewLocation: LocationCalculator
+): MoveInfo[] => {
   var files: MoveInfo[] = [];
 
   fileInfos.forEach(function(f) {
