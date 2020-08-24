@@ -8,7 +8,6 @@
     "outDir": "lib",
     "esModuleInterop": true,
     "allowJs": true,
-    "allowSyntheticDefaultImports": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src"],
 }

@@ -20,6 +20,7 @@
   "description": "Hauls your files around without breaking require dependencies",
   "dependencies": {
     "@babel/parser": "^7.11.4",
+    "@types/node": "^14.6.0",
     "coffee-script": "1.6.0",
     "ignore": "^2.2.19",
     "jschardet": "^1.6.0",
@@ -35,7 +36,8 @@
     "istanbul": "^0.4.5",
     "mocha": "^6.2.2",
     "mocha-concise-reporter": "^1.2.0",
-    "prettier": "^2.1.0"
+    "prettier": "^2.1.0",
+    "ts-mocha": "^7.0.0"
   },
   "engines": {
     "node": "0.10.x",
@@ -44,7 +46,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint lib/",
-    "test": "MOCHA_CONCISE_MODE=minimal mocha test/ -R mocha-concise-reporter",
+    "test": "MOCHA_CONCISE_MODE=minimal ts-mocha -p tsconfig.test.json test/* -- -R mocha-concise-reporter",
     "cover": "istanbul cover _mocha test/ && open coverage/lcov-report/index.html"
   }
 }
