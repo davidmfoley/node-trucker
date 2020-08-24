@@ -1,3 +1,5 @@
+import { SourceFile } from '../types';
+
 export interface RequireLocation {
   line: number;
   start: number;
@@ -11,4 +13,8 @@ export interface RequireInfo {
 export type FileRequireInfo = RequireInfo & {
   fullPath: string
   filePath: string
+}
+
+export type SourceFileWithRequires = SourceFile & {
+  requires: FileRequireInfo[]
 }

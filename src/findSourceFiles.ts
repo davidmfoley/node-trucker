@@ -1,9 +1,10 @@
 import analyzeFiles from './analyzeFiles';
 import fileFinder from './findFiles';
 import filterExcludedFiles from './filterExcludedFiles';
+import { TruckerJob } from './types';
 
-export default function matchingRequires(job) {
-  var files = fileFinder(job.base);
+const findSourceFiles = (job: TruckerJob)  => {
+  let files = fileFinder(job.base);
 
   if (job.ignore && job.ignore.patterns && job.ignore.patterns.length) {
     files = filterExcludedFiles(job.ignore.base, job.ignore.patterns, files);
@@ -11,3 +12,5 @@ export default function matchingRequires(job) {
 
   return analyzeFiles(job, files);
 };
+
+export default findSourceFiles

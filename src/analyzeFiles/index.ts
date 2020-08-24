@@ -1,8 +1,9 @@
 import ProgressBar from 'progress';
 import analyzer from './sourceFileAnalyzer';
-import { SourceFile } from '../types';
+import { SourceFile, TruckerJob } from '../types';
+import { SourceFileWithRequires } from './types';
 
-export default function(job, fileInfos: SourceFile[]) {
+export default (job: TruckerJob, fileInfos: SourceFile[]): SourceFileWithRequires[] =>  {
   var analyze = fileInfos.length > 100 && !job.quiet ? withBar : noBar;
   return analyze(fileInfos);
 };
