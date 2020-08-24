@@ -3,9 +3,10 @@ import fs from 'fs';
 import mkdirp from 'mkdirp';
 import applyToFile from './applyToFile';
 import printChanges from './printChanges';
+import { TruckerMoveJob, FileModification } from '../types';
 
-function applyChanges(job, changes) {
-  var to;
+const applyChanges = (job: TruckerMoveJob, changes: FileModification[]) => {
+  let to: string;
   if (!job.quiet) printChanges(job, changes);
   var toIsDirectory = fs.existsSync(job.to) && fs.statSync(job.to).isDirectory();
 

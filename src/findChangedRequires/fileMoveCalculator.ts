@@ -1,13 +1,13 @@
 import changedRequiresForSingleFile from './changedRequiresForSingleFile';
 import { LocationCalculator } from './types';
 import { SourceFileWithRequires } from '../analyzeFiles/types';
-import { MoveInfo } from '../types';
+import { FileModification } from '../types';
 
 export default (
   fileInfos: SourceFileWithRequires[],
   getNewLocation: LocationCalculator
-): MoveInfo[] => {
-  var files: MoveInfo[] = [];
+): FileModification[] => {
+  var files: FileModification[] = [];
 
   fileInfos.forEach(function(f) {
     var newFileLocation = getNewLocation(f.fullPath);

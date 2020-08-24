@@ -1,9 +1,9 @@
 import fileLocationCalculator from './fileLocationCalculator';
 import findSourceFiles from '../findSourceFiles';
 import moveCalculator from './fileMoveCalculator';
-import { TruckerMoveJob, MoveInfo } from '../types';
+import { TruckerMoveJob, FileModification } from '../types';
 
-function changedRequiresByFile(job: TruckerMoveJob): MoveInfo[] {
+function changedRequiresByFile(job: TruckerMoveJob): FileModification[] {
   var locationCalculator = fileLocationCalculator(job.from, job.to);
 
   var files = findSourceFiles(job);

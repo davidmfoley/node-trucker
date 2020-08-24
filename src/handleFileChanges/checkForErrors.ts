@@ -1,7 +1,9 @@
 import path from 'path';
-export default function(changes) {
+import { FileModification } from '../types';
+export default function(changes: FileModification[]) {
   var fileMoves = changes.filter(isMove);
   var byDest = {};
+
   fileMoves.forEach(function(m) {
     byDest[m.to] = byDest[m.to] || [];
     byDest[m.to].push(m.from);
@@ -24,6 +26,6 @@ export default function(changes) {
   }
 };
 
-function isMove(change) {
+function isMove(change: FileModification) {
   return change.from !== change.to;
 }

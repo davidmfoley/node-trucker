@@ -14,7 +14,7 @@ export interface SourceFile {
   filetype: string
 }
 
-export interface MoveInfo {
+export interface FileModification {
   from: string;
   to: string;
   requires: ChangedRequire[]
