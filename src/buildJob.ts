@@ -1,7 +1,8 @@
 import path from 'path';
 import readIgnores from './readIgnores';
+import { TruckerJob, TruckerOptions } from './types';
 
-export default function(options: any) {
+export default function(options: TruckerOptions): TruckerJob {
   var scopePresent =  (options.scope && options.scope.length);
   var _ = options._ || [];
   var files = _.map(blowOutPath);
@@ -17,7 +18,7 @@ export default function(options: any) {
   return {
     base: base,
     ignore: ignore,
-    files: files,
+    files,
     from: from,
     to: to,
     dryRun: !!options['dry-run'],
@@ -28,6 +29,6 @@ export default function(options: any) {
   };
 };
 
-function blowOutPath(subPath) {
+function blowOutPath(subPath: string): string {
   return path.normalize(path.join(process.cwd(), subPath));
 }

@@ -16,7 +16,7 @@ function job(from, to) {
     from: [p(from)],
     to: p(to),
     base: examplePath
-  };
+  } as any;
 }
 
 

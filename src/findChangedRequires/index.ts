@@ -3,7 +3,7 @@ import findSourceFiles from '../findSourceFiles';
 import moveCalculator from './fileMoveCalculator';
 import { TruckerMoveJob, FileModification } from '../types';
 
-function changedRequiresByFile(job: TruckerMoveJob): FileModification[] {
+const changedRequiresByFile = (job: TruckerMoveJob): FileModification[] => {
   var locationCalculator = fileLocationCalculator(job.from, job.to);
 
   var files = findSourceFiles(job);
