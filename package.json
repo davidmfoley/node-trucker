@@ -24,6 +24,7 @@
     "coffee-script": "1.6.0",
     "ignore": "^2.2.19",
     "jschardet": "^1.6.0",
+    "minimist": "^1.2.5",
     "mkdirp": "~0.3",
     "optimist": "~0.6.0",
     "progress": "~1.1",
@@ -32,7 +33,7 @@
   "devDependencies": {
     "@babel/types": "^7.11.0",
     "chai": "^1.9.2",
-    "eslint": "^6.5.1",
+    "eslint": "^7.7.0",
     "istanbul": "^0.4.5",
     "mocha": "^6.2.2",
     "mocha-concise-reporter": "^1.2.0",
@@ -45,8 +46,11 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf ./lib/",
     "lint": "eslint lib/",
     "test": "MOCHA_CONCISE_MODE=minimal ts-mocha -p tsconfig.test.json test/* -- -R mocha-concise-reporter",
+    "prettier": "prettier -c '{src,test}/**/*.ts}'",
+    "fix:prettier": "yarn run prettier --write '{src,test}/**/*.ts'",
     "cover": "istanbul cover _mocha test/ && open coverage/lcov-report/index.html"
   }
 }
