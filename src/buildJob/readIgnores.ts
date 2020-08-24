@@ -1,42 +1,42 @@
-import path from 'path';
-import fs from 'fs';
+import path from 'path'
+import fs from 'fs'
 
 export default function readIgnores(base) {
-  var current = base;
+  var current = base
 
-  while(shouldContinue(current)) {
-    var gitignorePath = current + '/.gitignore';
+  while (shouldContinue(current)) {
+    var gitignorePath = current + '/.gitignore'
     if (fs.existsSync(gitignorePath)) {
       return {
         base: current,
-        patterns: parseGitignore(gitignorePath)
-      };
+        patterns: parseGitignore(gitignorePath),
+      }
     }
-    current = path.normalize(current + '/..');
+    current = path.normalize(current + '/..')
   }
 
-  return {base: base, patterns: []};
-};
+  return { base: base, patterns: [] }
+}
 
 function shouldContinue(current) {
-  return path.parse(current).root !== path.normalize(current);
+  return path.parse(current).root !== path.normalize(current)
 }
 
 function parseGitignore(gitignorePath) {
-  var text = fs.readFileSync(gitignorePath, 'utf-8');
-  var lines = text.split('\n');
-  return lines.map(trim).map(stripComment).filter(removeEmpties);
+  var text = fs.readFileSync(gitignorePath, 'utf-8')
+  var lines = text.split('\n')
+  return lines.map(trim).map(stripComment).filter(removeEmpties)
 }
 
 function trim(line) {
-  return line.trim();
+  return line.trim()
 }
 
 function stripComment(line) {
-  if (line.indexOf('#') === 1) return;
-  return line;
+  if (line.indexOf('#') === 1) return
+  return line
 }
 
 function removeEmpties(line) {
-  return !!(line && line.length);
+  return !!(line && line.length)
 }

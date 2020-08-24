@@ -3,7 +3,6 @@
     "linebreak-style": [ 2, "unix" ],
     "semi": [ 2, "always" ],
     "no-console": 0,
-    "no-debugger": 2,
     "accessor-pairs": 2,
     "arrow-spacing": [2, { "before": true, "after": true }],
     "comma-dangle": 0,

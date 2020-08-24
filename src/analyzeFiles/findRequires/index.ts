@@ -1,7 +1,7 @@
-import javascript from './javascriptRequireFinder';
-import typescript from './typescriptRequireFinder';
-import coffee from './coffeescriptRequireFinder';
-import { RequireInfo } from '../types';
+import javascript from './javascriptRequireFinder'
+import typescript from './typescriptRequireFinder'
+import coffee from './coffeescriptRequireFinder'
+import { RequireInfo } from '../types'
 
 type RequireFinder = (contents: string, filename: string) => RequireInfo[]
 type Parsers = { [key: string]: RequireFinder }
@@ -12,9 +12,9 @@ var parsers: Parsers = {
   jsx: javascript,
   ts: typescript,
   tsx: typescript,
-  coffee
-};
+  coffee,
+}
 
-export default function(filetype, contents, filename) {
-  return parsers[filetype](contents, filename);
-};
+export default function (filetype, contents, filename) {
+  return parsers[filetype](contents, filename)
+}

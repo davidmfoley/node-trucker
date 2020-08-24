@@ -1,5 +1,5 @@
 function isLocal(requirePath) {
-  return requirePath[0] === '.';
+  return requirePath[0] === '.'
 }
 
-export default isLocal;
+export default isLocal

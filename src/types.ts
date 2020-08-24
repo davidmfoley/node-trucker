@@ -1,33 +1,33 @@
 export interface TruckerJob {
   quiet?: boolean
-  ignore?: { base: string,  patterns?: string [] },
+  ignore?: { base: string; patterns?: string[] }
   base: string
-  from: string[],
-  to: string,
-  files: string[],
-  dryRun: boolean,
-  info: boolean,
-  unused: boolean,
-  format: string,
+  from: string[]
+  to: string
+  files: string[]
+  dryRun: boolean
+  info: boolean
+  unused: boolean
+  format: string
 }
 
 export type TruckerMoveJob = TruckerJob
 
 export interface SourceFile {
-  fullPath: string,
+  fullPath: string
   filetype: string
 }
 
 export interface FileModification {
-  from: string;
-  to: string;
+  from: string
+  to: string
   requires: ChangedRequire[]
 }
 export interface ChangedRequire {
   filePath: string
-  newPath: string,
-  loc: Location,
+  newPath: string
+  loc: Location
   path: string
 }
 
-export type TruckerOptions =  any
+export type TruckerOptions = any

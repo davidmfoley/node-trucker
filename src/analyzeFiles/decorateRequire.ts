@@ -1,21 +1,21 @@
-import path from "path";
-import nodeFs from "fs";
+import path from 'path'
+import nodeFs from 'fs'
 
-import { SourceFile } from "../types";
-import { RequireInfo, FileRequireInfo } from "./types";
+import { SourceFile } from '../types'
+import { RequireInfo, FileRequireInfo } from './types'
 
 const requireResolve = (path, opts) => require.resolve(path, opts)
 
-export default (
-  fs = nodeFs,
-  resolve = requireResolve
-) => (fileInfo: SourceFile, req: RequireInfo): FileRequireInfo => {
+export default (fs = nodeFs, resolve = requireResolve) => (
+  fileInfo: SourceFile,
+  req: RequireInfo
+): FileRequireInfo => {
   var fullPath = path.normalize(
     path.join(path.dirname(fileInfo.fullPath), req.path)
-  );
-  let resolved;
+  )
+  let resolved
   try {
-    resolved = resolve(req.path, { paths: [path.dirname(fileInfo.fullPath)] });
+    resolved = resolve(req.path, { paths: [path.dirname(fileInfo.fullPath)] })
 
     if (resolved) {
       return {
@@ -23,28 +23,28 @@ export default (
         path: req.path,
         fullPath: fullPath,
         filePath: resolved,
-      };
+      }
     }
   } catch (e) {
     // nothing
   }
 
-  const exts = [".js", ".jsx", ".mjs", ".ts", ".tsx", ".coffee"];
+  const exts = ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.coffee']
 
-  if (isValidFile(fullPath)) return buildResult(fullPath);
+  if (isValidFile(fullPath)) return buildResult(fullPath)
 
   for (let i = 0; i < exts.length; i++) {
-    if (isValidFile(fullPath + exts[i])) return buildResult(fullPath + exts[i]);
+    if (isValidFile(fullPath + exts[i])) return buildResult(fullPath + exts[i])
   }
 
   for (let i = 0; i < exts.length; i++) {
-    if (isValidFile(fullPath + "/index" + exts[i])) {
-      return buildResult(fullPath + "/index" + exts[i]);
+    if (isValidFile(fullPath + '/index' + exts[i])) {
+      return buildResult(fullPath + '/index' + exts[i])
     }
   }
 
   function isValidFile(path) {
-    return fs.existsSync(path) && fs.statSync(path).isFile();
+    return fs.existsSync(path) && fs.statSync(path).isFile()
   }
 
   function buildResult(filePath) {
@@ -53,6 +53,6 @@ export default (
       path: req.path,
       fullPath: fullPath,
       filePath: filePath,
-    };
+    }
   }
-};
+}
