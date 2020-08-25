@@ -4,9 +4,7 @@ import ignore from 'ignore'
 type PathFilter = (path: string) => boolean
 
 export default (ignoreBase: string, ignorePatterns: string[]): PathFilter => {
-  var filter = ignore()
-    .add(ignorePatterns)
-    .createFilter()
+  var filter = ignore().add(ignorePatterns).createFilter()
 
   return (filepath: string) => {
     var relativeToBase = path.relative(ignoreBase, filepath)
