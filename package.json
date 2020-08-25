@@ -17,7 +17,7 @@
     "refactor"
   ],
   "main": "./lib",
-  "description": "Hauls your files around without breaking require dependencies",
+  "description": "Hauls your files around without breaking your imports",
   "dependencies": {
     "@babel/parser": "^7.11.4",
     "coffeescript": "^2.5.1",
