@@ -1,24 +1,33 @@
 import fs from 'fs'
 import jschardet from 'jschardet'
 
-function getEncoding(filePath) {
-  var buffer = fs.readFileSync(filePath)
-  var detected = jschardet.detect(buffer) || { encoding: 'utf8' }
-  return detected.encoding || 'utf8'
+
+const detectBufferEncoding = (buffer:Buffer): BufferEncoding => {
+  let detected = jschardet.detect(buffer) || { encoding: 'utf-8' }
+  if (!detected.encoding) return 'utf-8'
+  if (!Buffer.isEncoding(detected.encoding)) return 'utf-8'
+  return (detected.encoding.toLowerCase() as BufferEncoding)
 }
 
-function readContents(filePath) {
+const getEncoding = (filePath: string): BufferEncoding => {
   var buffer = fs.readFileSync(filePath)
-  var detected = jschardet.detect(buffer) || { encoding: 'utf8' }
+  return detectBufferEncoding(buffer)
+}
+
+const readContents = (filePath: string): string => {
+  var buffer = fs.readFileSync(filePath)
+  const detectedEncoding = detectBufferEncoding(buffer)
+
   try {
-    return buffer.toString(detected.encoding)
+    return buffer.toString(detectedEncoding)
   } catch (e) {
     // this is stupid
-    return buffer.toString('ascii')
+    return buffer.toString('utf-8')
   }
 }
 
 export default {
+  getEncoding,
   readContents,
   // pads with a blank element zero since line numbers start at one
   readLines: function (filePath) {
@@ -26,13 +35,12 @@ export default {
     return [''].concat(contents.split('\n'))
   },
   // removes blank element
-  writeLines: function (filePath, lines) {
-    const encoding = getEncoding(filePath)
+  writeLines: function (filePath, lines, encoding) {
     try {
       fs.writeFileSync(filePath, lines.slice(1).join('\n'), { encoding })
     } catch (e) {
       fs.writeFileSync(filePath, lines.slice(1).join('\n'), {
-        encoding: 'ascii',
+        encoding: 'utf-8',
       })
     }
   },

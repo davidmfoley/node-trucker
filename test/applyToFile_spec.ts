@@ -4,20 +4,41 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import applyToFile from '../src/handleFileChanges/applyToFile'
 
-let contents
-let written
-
-let fs = {
-  readContents: () => '',
-  readLines: function () {
-    return [''].concat(contents.split('\n'))
-  },
-  writeLines: function (_, data) {
-    written = data.slice(1).join('\n')
-  },
-}
 
 describe('applyToFile', function () {
+  let contents: string
+  let written: string
+  let writtenEncoding: string
+
+  let fs = {
+    getEncoding: () => 'utf-8',
+    readContents: () => '',
+    readLines: function () {
+      return [''].concat(contents.split('\n'))
+    },
+    writeLines: function (_, data, encoding) {
+      written = data.slice(1).join('\n')
+      writtenEncoding = encoding
+    },
+  }
+
+  it('writes the same encoding', () => {
+    var exampleEdits
+    contents = "\nvar foo = require('./bar');\n"
+    exampleEdits = [
+      {
+        loc: {
+          line: 2,
+          start: 20,
+          length: 5,
+        },
+        newPath: './bar/baz42',
+      },
+    ]
+    applyToFile('foo.js', exampleEdits, fs)
+    expect(writtenEncoding).to.equal('utf-8')
+  })
+
   it('works with a single require', function () {
     var exampleEdits
     contents = "\nvar foo = require('./bar');\n"
@@ -34,6 +55,7 @@ describe('applyToFile', function () {
     applyToFile('foo.js', exampleEdits, fs)
     expect(written).to.equal("\nvar foo = require('./bar/baz42');\n")
   })
+
   it('works with multiple requires on a line', function () {
     var exampleEdits
     contents =

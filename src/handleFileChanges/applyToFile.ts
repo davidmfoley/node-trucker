@@ -7,14 +7,15 @@ function applyToFile(
   changedRequires,
   sourceFile = importedSourceFile
 ) {
-  var lines = sourceFile.readLines(filePath)
+  const lines = sourceFile.readLines(filePath)
+  const encoding = sourceFile.getEncoding(filePath)
   var updated = applyEdits(lines, changedRequires)
-  sourceFile.writeLines(filePath, updated)
+  sourceFile.writeLines(filePath, updated, encoding)
 }
 
 function applyEdits(lines, requires) {
-  var lineNumber = 0
-  var byLine = getLineEdits(requires)
+  let lineNumber = 0
+  const byLine = getLineEdits(requires)
 
   return lines.map(function (line) {
     var edited = editLine(line, byLine[lineNumber])
