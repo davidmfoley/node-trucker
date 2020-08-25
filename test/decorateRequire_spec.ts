@@ -1,4 +1,4 @@
-import { describe, before, it } from 'mocha'
+import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import decorateRequire from '../src/analyzeFiles/decorateRequire'
 
@@ -79,7 +79,7 @@ describe('decorateRequire', () => {
       } as any
     )
 
-    expect(result).to.be.undefined()
+    expect(result).to.be.undefined
 
     expect(existsArgs).to.eql([
       '/example',
