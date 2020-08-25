@@ -32,7 +32,7 @@
     "@babel/types": "^7.11.0",
     "@types/node": "^14.6.0",
     "chai": "^1.9.2",
-    "mocha": "^6.2.2",
+    "mocha": "^8.1.2",
     "mocha-concise-reporter": "^1.2.0",
     "nyc": "^15.1.0",
     "prettier": "^2.1.0",
@@ -50,6 +50,13 @@
     "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
     "cover": "TS_NODE_PROJECT=tsconfig.test.json COVERAGE=1 nyc mocha && open coverage/index.html",
     "ci": "yarn build && yarn test && yarn prettier"
+  },
+  "mocha": {
+    "extension": [ "ts" ],
+    "require": [
+      "ts-node/register/transpile-only",
+      "source-map-support/register"
+    ]
   },
   "nyc": {
     "extension": [
