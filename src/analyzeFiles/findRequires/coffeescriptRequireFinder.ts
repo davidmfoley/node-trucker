@@ -24,9 +24,7 @@ function traverse(node: CoffeeNode, requires: RequireInfo[]) {
 
 function pushIfRequire(requires: RequireInfo[], node: CoffeeNode) {
   if (!node) return
-  if (
-    node?.base?.variable?.base?.value === 'require'
-  ) {
+  if (node?.base?.variable?.base?.value === 'require') {
     pushRequire(requires, node)
   }
 }
