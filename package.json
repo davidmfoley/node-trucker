@@ -40,8 +40,7 @@
     "ts-node": "^9.0.0"
   },
   "engines": {
-    "node": "0.10.x",
-    "npm": "1.1.x"
+    "node": ">=10.0.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
