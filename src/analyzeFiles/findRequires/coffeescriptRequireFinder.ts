@@ -1,4 +1,4 @@
-import coffee from 'coffee-script'
+import coffee from 'coffeescript'
 import requirePathFilter from './requirePathFilter'
 import { RequireInfo } from '../../types'
 
@@ -12,8 +12,8 @@ export default (contents: string): RequireInfo[] => {
 }
 
 function traverse(node: CoffeeNode, requires: RequireInfo[]) {
-  if (node.expressions) {
-    node.expressions.forEach(function (n) {
+  if (node.body && node.body.expressions) {
+    node.body.expressions.forEach(function (n) {
       traverse(n, requires)
     })
   } else if (node && typeof node === 'object') {
@@ -25,16 +25,14 @@ function traverse(node: CoffeeNode, requires: RequireInfo[]) {
 function pushIfRequire(requires: RequireInfo[], node: CoffeeNode) {
   if (!node) return
   if (
-    node.variable &&
-    node.variable.base &&
-    node.variable.base.value === 'require'
+    node?.base?.variable?.base?.value === 'require'
   ) {
     pushRequire(requires, node)
   }
 }
 
 function pushRequire(requires: RequireInfo[], node: CoffeeNode) {
-  var pathNode = node.args[0].base
+  var pathNode = node.base.args[0].base
   var path = pathNode.value
   path = path.substring(1, path.length - 1)
   var locationData = pathNode.locationData

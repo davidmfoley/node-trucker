@@ -20,8 +20,8 @@
   "description": "Hauls your files around without breaking require dependencies",
   "dependencies": {
     "@babel/parser": "^7.11.4",
-    "coffee-script": "1.6.0",
-    "ignore": "^2.2.19",
+    "coffeescript": "^2.5.1",
+    "ignore": "3.3.x",
     "jschardet": "^2.2.1",
     "mkdirp": "^1.0.4",
     "optimist": "~0.6.0",
