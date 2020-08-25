@@ -4,14 +4,13 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import applyToFile from '../src/handleFileChanges/applyToFile'
 
-
 describe('applyToFile', function () {
   let contents: string
   let written: string
   let writtenEncoding: string
 
   let fs = {
-    getEncoding: () => 'utf-8',
+    getEncoding: (f: string) => 'utf-8' as BufferEncoding,
     readContents: () => '',
     readLines: function () {
       return [''].concat(contents.split('\n'))

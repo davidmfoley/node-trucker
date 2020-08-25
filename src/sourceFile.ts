@@ -1,12 +1,11 @@
 import fs from 'fs'
 import jschardet from 'jschardet'
 
-
-const detectBufferEncoding = (buffer:Buffer): BufferEncoding => {
+const detectBufferEncoding = (buffer: Buffer): BufferEncoding => {
   let detected = jschardet.detect(buffer) || { encoding: 'utf-8' }
   if (!detected.encoding) return 'utf-8'
   if (!Buffer.isEncoding(detected.encoding)) return 'utf-8'
-  return (detected.encoding.toLowerCase() as BufferEncoding)
+  return detected.encoding.toLowerCase() as BufferEncoding
 }
 
 const getEncoding = (filePath: string): BufferEncoding => {
