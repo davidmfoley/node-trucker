@@ -1,10 +1,16 @@
 {
   "name": "trucker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "bin": {
     "trucker": "./cli"
   },
+  "files": [
+    "lib/**",
+    "cli",
+    "README.md",
+    "trucker-graph.svg"
+  ],
   "repository": {
     "type": "git",
     "url": "http://github.com/davidmfoley/node-trucker.git"
