@@ -1,22 +1,26 @@
 import ProgressBar from 'progress'
-import analyzer from './sourceFileAnalyzer'
+import analyzer, { SourceFileAnalyzer } from './sourceFileAnalyzer'
 import { SourceFile, TruckerJob, SourceFileWithRequires } from '../types'
 
-type Analyze = (fileInfos: SourceFile[]) => SourceFileWithRequires[]
+type Analyze = (
+  analyzer: SourceFileAnalyzer,
+  fileInfos: SourceFile[]
+) => SourceFileWithRequires[]
 
 export default (
   job: TruckerJob,
   fileInfos: SourceFile[]
 ): SourceFileWithRequires[] => {
-  var analyze: Analyze = fileInfos.length > 100 && !job.quiet ? withBar : noBar
-  return analyze(fileInfos)
+  const showProgress = fileInfos.length > 100 && !job.quiet
+  const analyze: Analyze = showProgress ? withBar : noBar
+  return analyze(analyzer, fileInfos)
 }
 
-function noBar(fileInfos: SourceFile[]) {
+function noBar(analyzer: SourceFileAnalyzer, fileInfos: SourceFile[]) {
   return fileInfos.map(analyzer)
 }
 
-function withBar(fileInfos: SourceFile[]) {
+function withBar(analyzer: SourceFileAnalyzer, fileInfos: SourceFile[]) {
   console.error('analyzing ' + fileInfos.length + ' files for dependencies')
   var bar = new ProgressBar(
     '  [:bar] :current/:total :percent :elapseds elapsed, :etas to go',

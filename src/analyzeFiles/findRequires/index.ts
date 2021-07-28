@@ -15,6 +15,6 @@ var parsers: Parsers = {
   coffee,
 }
 
-export default function (filetype, contents, filename) {
+export default function (filetype: string, contents: string, filename: string) {
   return parsers[filetype](contents, filename)
 }

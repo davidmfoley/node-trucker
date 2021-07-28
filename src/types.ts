@@ -25,8 +25,12 @@ export interface RequireLocation {
   start: number
   length: number
 }
+
+type RequireKind = 'relative' | 'alias' | 'package'
+
 export interface RequireInfo {
   path: string
+  kind?: RequireKind
   loc: RequireLocation
 }
 

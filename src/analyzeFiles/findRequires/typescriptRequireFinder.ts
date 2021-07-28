@@ -3,7 +3,7 @@ import requirePathFilter from './requirePathFilter'
 import { RequireInfo } from '../../types'
 type TypescriptToken = any
 
-export default function (contents: string, filename: string): RequireInfo[] {
+const findRequires = (contents: string, filename: string): RequireInfo[] => {
   // Parse a file
   let sourceFile = ts.createSourceFile(
     filename,
@@ -58,3 +58,5 @@ export default function (contents: string, filename: string): RequireInfo[] {
   findRequires(requires, sourceFile)
   return requires
 }
+
+export default findRequires

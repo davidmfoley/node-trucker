@@ -1,12 +1,12 @@
 import sourceFile from '../sourceFile'
 import findRequires from './findRequires'
 import DecorateRequire from './decorateRequire'
-import { FileRequireInfo, RequireInfo, SourceFileWithRequires } from '../types'
+import { RequireInfo, SourceFileWithRequires } from '../types'
 import { SourceFile } from '../types'
 
 const decorateRequire = DecorateRequire()
 
-export default (fileInfo: SourceFile): SourceFileWithRequires => {
+const sourceFileAnalyzer = (fileInfo: SourceFile): SourceFileWithRequires => {
   var contents = sourceFile.readContents(fileInfo.fullPath)
 
   let requires: RequireInfo[] = []
@@ -25,7 +25,7 @@ export default (fileInfo: SourceFile): SourceFileWithRequires => {
     }),
   }
 
-  function decorate(require) {
+  function decorate(require: RequireInfo) {
     return decorateRequire(fileInfo, require)
   }
 }
@@ -37,3 +37,7 @@ function printAnalyzeError(fileInfo: SourceFile, err: Error) {
   var stack = err.stack || ''
   console.warn(stack.split('\n')[1])
 }
+
+export type SourceFileAnalyzer = typeof sourceFileAnalyzer
+
+export default sourceFileAnalyzer
