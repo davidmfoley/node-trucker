@@ -1,7 +1,6 @@
 import ProgressBar from 'progress'
 import analyzer from './sourceFileAnalyzer'
-import { SourceFile, TruckerJob } from '../types'
-import { SourceFileWithRequires } from '../types'
+import { SourceFile, TruckerJob, SourceFileWithRequires } from '../types'
 
 type Analyze = (fileInfos: SourceFile[]) => SourceFileWithRequires[]
 

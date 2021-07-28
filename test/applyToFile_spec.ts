@@ -22,9 +22,8 @@ describe('applyToFile', function () {
   }
 
   it('writes the same encoding', () => {
-    var exampleEdits
     contents = "\nvar foo = require('./bar');\n"
-    exampleEdits = [
+    let exampleEdits = [
       {
         loc: {
           line: 2,

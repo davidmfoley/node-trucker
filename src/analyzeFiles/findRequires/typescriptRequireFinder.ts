@@ -12,11 +12,7 @@ export default function (contents: string, filename: string): RequireInfo[] {
     /*setParentNodes */ true
   )
 
-  const requires: RequireInfo[] = []
-  findRequires(requires, sourceFile)
-  return requires
-
-  function findRequires(requires, node) {
+  const findRequires = (requires: RequireInfo[], node: ts.SourceFile) => {
     var statements = node.statements.slice()
     while (statements.length) {
       var statement = statements.shift()
@@ -37,7 +33,7 @@ export default function (contents: string, filename: string): RequireInfo[] {
     return requires
   }
 
-  function pushRequire(requires: RequireInfo[], statement: TypescriptToken) {
+  const pushRequire = (requires: RequireInfo[], statement: TypescriptToken) => {
     ts.forEachChild(statement, function (child: any) {
       var lineAndChar = sourceFile.getLineAndCharacterOfPosition(
         child.getStart()
@@ -57,4 +53,8 @@ export default function (contents: string, filename: string): RequireInfo[] {
       }
     })
   }
+
+  const requires: RequireInfo[] = []
+  findRequires(requires, sourceFile)
+  return requires
 }

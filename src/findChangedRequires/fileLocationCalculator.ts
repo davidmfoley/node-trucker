@@ -3,32 +3,35 @@ import FileInfo from './fileInfo'
 import { LocationCalculator } from './types'
 
 export default (
-  from: string[],
-  to: string,
+  moves: {
+    from: string[]
+    to: string
+  }[],
   fileInfo?: typeof FileInfo
 ): LocationCalculator => {
   fileInfo = fileInfo || FileInfo
-  var mappers = from.map(getMapper)
 
-  if (fileInfo.isFile(to) && from.length > 1) {
-    throw new Error("When moving multiple files, destination can't be a file")
-  }
+  let mappers: ((path: string) => string | undefined)[] = []
+
+  moves.forEach(({ from, to }) => {
+    mappers = mappers.concat(from.map(getMapper))
+
+    if (fileInfo.isFile(to) && from.length > 1) {
+      throw new Error("When moving multiple files, destination can't be a file")
+    }
+
+    function getMapper(f) {
+      var mapper = fileInfo.isDirectory(f) ? directoryMapper : fileMapper
+      return mapper(f, to, fileInfo)
+    }
+  })
 
   return function (fullPath) {
-    var mapped = mappers.map(function (mapper) {
-      return mapper(fullPath)
-    })
-    var matches = mapped.filter(function (x) {
-      return x
-    })
+    var mapped = mappers.map((mapper) => mapper(fullPath))
+    var matches = mapped.filter((x) => !!x)
 
     if (matches.length) return moveInfo(true, matches[0])
     return moveInfo(false, fullPath)
-  }
-
-  function getMapper(f) {
-    var mapper = fileInfo.isDirectory(f) ? directoryMapper : fileMapper
-    return mapper(f, to, fileInfo)
   }
 }
 

@@ -13,8 +13,12 @@ function p(subPath) {
 
 function job(from, to) {
   return {
-    from: [p(from)],
-    to: p(to),
+    moves: [
+      {
+        from: [p(from)],
+        to: p(to),
+      },
+    ],
     base: examplePath,
   } as any
 }

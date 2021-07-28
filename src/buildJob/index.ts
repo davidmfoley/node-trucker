@@ -19,8 +19,12 @@ export default function (options: TruckerOptions): TruckerJob {
     base: base,
     ignore: ignore,
     files,
-    from: from,
-    to: to,
+    moves: [
+      {
+        from: from,
+        to: to,
+      },
+    ],
     dryRun: !!options['dry-run'],
     quiet: !!options.quiet,
     info: !!options.info,

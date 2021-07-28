@@ -8,19 +8,23 @@ import { TruckerMoveJob, FileModification } from '../types'
 const applyChanges = (job: TruckerMoveJob, changes: FileModification[]) => {
   let to: string
   if (!job.quiet) printChanges(job, changes)
-  var toIsDirectory = fs.existsSync(job.to) && fs.statSync(job.to).isDirectory()
 
-  job.from.forEach(function (from) {
-    var fromIsFile = fs.statSync(from).isFile()
+  job.moves.forEach((move) => {
+    var toIsDirectory =
+      fs.existsSync(move.to) && fs.statSync(move.to).isDirectory()
 
-    if (fromIsFile && toIsDirectory) {
-      to = path.join(job.to, path.basename(from))
-    } else {
-      to = job.to
-    }
+    move.from.forEach((from) => {
+      var fromIsFile = fs.statSync(from).isFile()
 
-    mkdirp.sync(path.dirname(to))
-    fs.renameSync(from, to)
+      if (fromIsFile && toIsDirectory) {
+        to = path.join(move.to, path.basename(from))
+      } else {
+        to = move.to
+      }
+
+      mkdirp.sync(path.dirname(to))
+      fs.renameSync(from, to)
+    })
   })
 
   changes.forEach(function (f) {

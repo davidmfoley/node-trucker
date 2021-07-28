@@ -2,8 +2,10 @@ export interface TruckerJob {
   quiet?: boolean
   ignore?: { base: string; patterns?: string[] }
   base: string
-  from: string[]
-  to: string
+  moves: {
+    from: string[]
+    to: string
+  }[]
   files: string[]
   dryRun: boolean
   info: boolean
