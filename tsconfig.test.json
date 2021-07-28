@@ -1,13 +1,8 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
-    "module": "commonjs",
-    "target": "es6",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "jsx": "react"
+    "noEmit": true,
+    "sourceMap": true
   },
-  "include": ["src" , "test"],
-  "compileOnSave": false
+  "include": ["src" , "test"]
 }
