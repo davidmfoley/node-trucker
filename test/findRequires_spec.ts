@@ -2,7 +2,9 @@ import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
 
 const exampleName = 'example.js'
-import findRequires from '../src/analyzeFiles/findRequires'
+import FindRequires from '../src/analyzeFiles/findRequires'
+
+const findRequires = FindRequires({} as any)
 
 describe('RequireFinder', () => {
   describe('with es6 imports', () => {

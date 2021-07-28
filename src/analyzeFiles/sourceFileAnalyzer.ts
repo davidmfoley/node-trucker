@@ -1,34 +1,37 @@
 import sourceFile from '../sourceFile'
 import findRequires from './findRequires'
 import DecorateRequire from './decorateRequire'
-import { RequireInfo, SourceFileWithRequires } from '../types'
+import { RequireInfo, SourceFileWithRequires, TruckerJob } from '../types'
 import { SourceFile } from '../types'
 
 const decorateRequire = DecorateRequire()
 
-const sourceFileAnalyzer = (fileInfo: SourceFile): SourceFileWithRequires => {
-  var contents = sourceFile.readContents(fileInfo.fullPath)
+const sourceFileAnalyzer =
+  (job: TruckerJob) =>
+  (fileInfo: SourceFile): SourceFileWithRequires => {
+    const finder = findRequires(job)
+    var contents = sourceFile.readContents(fileInfo.fullPath)
 
-  let requires: RequireInfo[] = []
+    let requires: RequireInfo[] = []
 
-  try {
-    requires = findRequires(fileInfo.filetype, contents, fileInfo.fullPath)
-  } catch (err) {
-    printAnalyzeError(fileInfo, err)
+    try {
+      requires = finder(fileInfo.filetype, contents, fileInfo.fullPath)
+    } catch (err) {
+      printAnalyzeError(fileInfo, err)
+    }
+
+    return {
+      fullPath: fileInfo.fullPath,
+      filetype: fileInfo.filetype,
+      requires: requires.map(decorate).filter(function (r) {
+        return !!r
+      }),
+    }
+
+    function decorate(require: RequireInfo) {
+      return decorateRequire(fileInfo, require)
+    }
   }
-
-  return {
-    fullPath: fileInfo.fullPath,
-    filetype: fileInfo.filetype,
-    requires: requires.map(decorate).filter(function (r) {
-      return !!r
-    }),
-  }
-
-  function decorate(require: RequireInfo) {
-    return decorateRequire(fileInfo, require)
-  }
-}
 
 function printAnalyzeError(fileInfo: SourceFile, err: Error) {
   console.warn('')
@@ -38,6 +41,6 @@ function printAnalyzeError(fileInfo: SourceFile, err: Error) {
   console.warn(stack.split('\n')[1])
 }
 
-export type SourceFileAnalyzer = typeof sourceFileAnalyzer
+export type SourceFileAnalyzer = ReturnType<typeof sourceFileAnalyzer>
 
 export default sourceFileAnalyzer

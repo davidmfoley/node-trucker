@@ -14,7 +14,7 @@ describe('sourceFileAnalyzer', () => {
 
   describe('analyzing a sourcefile', () => {
     before(() => {
-      result = sourceFileAnalyzer({
+      result = sourceFileAnalyzer({} as any)({
         fullPath: path.join(examplePath, 'stark/eddard.js'),
         filetype: 'js',
       })

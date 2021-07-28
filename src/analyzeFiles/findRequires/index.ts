@@ -1,20 +1,22 @@
 import javascript from './javascriptRequireFinder'
-import typescript from './typescriptRequireFinder'
+import typescriptRequireFinder from './typescriptRequireFinder'
 import coffee from './coffeescriptRequireFinder'
-import { RequireInfo } from '../../types'
+import { RequireInfo, TruckerJob } from '../../types'
 
 type RequireFinder = (contents: string, filename: string) => RequireInfo[]
 type Parsers = { [key: string]: RequireFinder }
 
-var parsers: Parsers = {
-  js: javascript,
-  mjs: javascript,
-  jsx: javascript,
-  ts: typescript,
-  tsx: typescript,
-  coffee,
-}
+export default (job: TruckerJob) =>
+  (filetype: string, contents: string, filename: string) => {
+    const typescript = typescriptRequireFinder(job)
+    const parsers: Parsers = {
+      js: javascript,
+      mjs: javascript,
+      jsx: javascript,
+      ts: typescript,
+      tsx: typescript,
+      coffee,
+    }
 
-export default function (filetype: string, contents: string, filename: string) {
-  return parsers[filetype](contents, filename)
-}
+    return parsers[filetype](contents, filename)
+  }

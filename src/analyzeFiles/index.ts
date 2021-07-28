@@ -13,7 +13,7 @@ export default (
 ): SourceFileWithRequires[] => {
   const showProgress = fileInfos.length > 100 && !job.quiet
   const analyze: Analyze = showProgress ? withBar : noBar
-  return analyze(analyzer, fileInfos)
+  return analyze(analyzer(job), fileInfos)
 }
 
 function noBar(analyzer: SourceFileAnalyzer, fileInfos: SourceFile[]) {
