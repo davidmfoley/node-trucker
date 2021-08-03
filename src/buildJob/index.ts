@@ -30,6 +30,7 @@ export default function (options: TruckerOptions): TruckerJob {
     info: !!options.info,
     format: options.format || 'default',
     unused: !!options.unused,
+    tsconfig: options.project || base,
   }
 }
 

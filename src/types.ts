@@ -11,6 +11,7 @@ export interface TruckerJob {
   info: boolean
   unused: boolean
   format: string
+  tsconfigPath?: string
 }
 
 export type TruckerMoveJob = TruckerJob
