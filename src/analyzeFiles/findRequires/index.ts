@@ -1,5 +1,5 @@
 import javascript from './javascriptRequireFinder'
-import typescriptRequireFinder from './typescriptRequireFinder'
+import typescriptRequireFinder from './typescript'
 import coffee from './coffeescriptRequireFinder'
 import { RequireInfo, TruckerJob } from '../../types'
 

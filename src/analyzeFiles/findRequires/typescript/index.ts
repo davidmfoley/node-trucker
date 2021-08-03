@@ -1,26 +1,9 @@
 import ts from 'typescript'
-import requirePathFilter from './requirePathFilter'
-import { RequireInfo, TruckerJob } from '../../types'
+import requirePathFilter from '../requirePathFilter'
+import { RequireInfo, TruckerJob } from '../../../types'
+import { getTsConfig } from './tsConfig'
+import { getPathMapper, PathMapper } from './pathMapper'
 type TypescriptToken = any
-
-type TsConfigPaths = { [key: string]: string[] }
-
-interface TsConfig {
-  paths: TsConfigPaths
-}
-
-type PathMapper = (path: string) => { path: string }
-
-const getPathMapper = ({ paths }: TsConfig): PathMapper => {
-  return (path: string) => {
-    const pathKeys = Object.keys(paths)
-
-    for (const alias of pathKeys) {
-    }
-
-    return { path }
-  }
-}
 
 export const FindRequires = (pathMapper: PathMapper) => {
   const findRequires = (contents: string, filename: string): RequireInfo[] => {
@@ -85,11 +68,6 @@ export const FindRequires = (pathMapper: PathMapper) => {
 
   return findRequires
 }
-
-const getTsConfig = (tsconfigPath: string | undefined) =>
-  ({
-    paths: {},
-  } as TsConfig)
 
 export default (truckerJob: Pick<TruckerJob, 'tsconfigPath'>) => {
   const tsconfig = getTsConfig(truckerJob.tsconfigPath)
