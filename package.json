@@ -66,6 +66,7 @@
     "watch": "concurrently 'yarn test:watch' 'yarn build -w --noEmit --pretty --preserveWatchOutput' -n t,b -c cyan,yellow"
   },
   "mocha": {
+    "recursive": true,
     "extension": [
       "ts"
     ],

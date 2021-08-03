@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 
-import { FindRequires } from '../src/analyzeFiles/findRequires/typescript'
+import { FindRequires } from '../../src/analyzeFiles/findRequires/typescript'
 
 describe('RequireFinder', () => {
   describe('with typescript', () => {
