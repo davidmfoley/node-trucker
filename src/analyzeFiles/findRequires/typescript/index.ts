@@ -45,11 +45,14 @@ export const FindRequires = (pathMapper: PathMapper) => {
           child.getStart()
         )
         if (child.kind === ts.SyntaxKind.StringLiteral) {
-          const actualPath = pathMapper(child.text).path
+          const mapped = pathMapper({
+            filePath: filename,
+            importPath: child.text,
+          })
 
-          if (requirePathFilter(actualPath)) {
+          if (requirePathFilter(mapped.path)) {
             requires.push({
-              path: actualPath,
+              path: mapped.path,
               loc: {
                 line: lineAndChar.line + 1,
                 start: lineAndChar.character + 2,

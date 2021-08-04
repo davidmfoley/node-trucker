@@ -29,6 +29,7 @@
     "coffeescript": "^2.5.1",
     "ignore": "3.3.x",
     "jschardet": "^2.2.1",
+    "micromatch": "^4.0.4",
     "mkdirp": "^1.0.4",
     "optimist": "~0.6.0",
     "progress": "~1.1",
@@ -37,6 +38,7 @@
   "devDependencies": {
     "@babel/types": "^7.11.0",
     "@types/chai": "^4.2.12",
+    "@types/micromatch": "^4.0.2",
     "@types/mkdirp": "^1.0.1",
     "@types/mocha": "^9.0.0",
     "@types/node": "^14.6.0",

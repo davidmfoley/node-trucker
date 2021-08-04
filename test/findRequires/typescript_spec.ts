@@ -5,7 +5,13 @@ import { FindRequires } from '../../src/analyzeFiles/findRequires/typescript'
 
 describe('RequireFinder', () => {
   describe('with typescript', () => {
-    const findRequires = FindRequires((path: string) => ({ path }))
+    const findRequires = FindRequires(
+      ({ importPath }: { importPath: string }) => ({
+        path: importPath,
+        kind: 'relative',
+        text: importPath,
+      })
+    )
 
     it('handles basic import', () => {
       const code = `import { Foo } from './example';`
@@ -95,9 +101,13 @@ describe('RequireFinder', () => {
 
   describe('path aliases', () => {
     it('handles mapped path', () => {
-      const findRequires = FindRequires((path: string) => ({
-        path: path.replace(/^\~/, './src'),
-      }))
+      const findRequires = FindRequires(
+        ({ importPath }: { importPath: string }) => ({
+          path: importPath.replace(/^\~/, './src'),
+          kind: 'alias',
+          text: importPath,
+        })
+      )
       const code = `import { Foo } from '~/foo/bar';`
 
       const requires = findRequires(code, 'foo.ts')
