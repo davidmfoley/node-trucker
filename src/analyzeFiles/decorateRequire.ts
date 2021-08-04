@@ -8,20 +8,31 @@ const requireResolve = (path, opts) => require.resolve(path, opts)
 
 export default (fs = nodeFs, resolve = requireResolve) =>
   (fileInfo: SourceFile, req: RequireInfo): FileRequireInfo => {
+    const isValidFile = (path: string) => {
+      return fs.existsSync(path) && fs.statSync(path).isFile()
+    }
+
+    const buildResult = (filePath: string) => {
+      return {
+        loc: req.loc,
+        path: req.path,
+        kind: req.kind,
+        fullPath: fullPath,
+        filePath: filePath,
+      }
+    }
+
     var fullPath = path.normalize(
       path.join(path.dirname(fileInfo.fullPath), req.path)
     )
-    let resolved
+
     try {
-      resolved = resolve(req.path, { paths: [path.dirname(fileInfo.fullPath)] })
+      const resolved = resolve(req.path, {
+        paths: [path.dirname(fileInfo.fullPath)],
+      })
 
       if (resolved) {
-        return {
-          loc: req.loc,
-          path: req.path,
-          fullPath: fullPath,
-          filePath: resolved,
-        }
+        return buildResult(resolved)
       }
     } catch (e) {
       // nothing
@@ -39,19 +50,6 @@ export default (fs = nodeFs, resolve = requireResolve) =>
     for (let i = 0; i < exts.length; i++) {
       if (isValidFile(fullPath + '/index' + exts[i])) {
         return buildResult(fullPath + '/index' + exts[i])
-      }
-    }
-
-    function isValidFile(path) {
-      return fs.existsSync(path) && fs.statSync(path).isFile()
-    }
-
-    function buildResult(filePath) {
-      return {
-        loc: req.loc,
-        path: req.path,
-        fullPath: fullPath,
-        filePath: filePath,
       }
     }
   }
