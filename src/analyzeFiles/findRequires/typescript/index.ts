@@ -69,8 +69,8 @@ export const FindRequires = (pathMapper: PathMapper) => {
   return findRequires
 }
 
-export default (truckerJob: Pick<TruckerJob, 'tsconfigPath'>) => {
-  const tsconfig = getTsConfig(truckerJob.tsconfigPath)
+export default (truckerJob: Pick<TruckerJob, 'tsconfigPath' | 'base'>) => {
+  const tsconfig = getTsConfig(truckerJob)
   const mapper = getPathMapper(tsconfig)
   return FindRequires(mapper)
 }
