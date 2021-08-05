@@ -6,11 +6,9 @@ import { TruckerJob } from '../types'
 const findSourceFiles = (job: TruckerJob) => {
   let files = fileFinder(job.base)
 
-  if (job.ignore && job.ignore.patterns && job.ignore.patterns.length) {
-    files = filterExcludedFiles(job.ignore.base, job.ignore.patterns, files)
-  }
+  const filtered = filterExcludedFiles(job)(files)
 
-  return analyzeFiles(job, files)
+  return analyzeFiles(job, filtered)
 }
 
 export default findSourceFiles

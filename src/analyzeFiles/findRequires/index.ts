@@ -1,6 +1,6 @@
-import javascript from './javascriptRequireFinder'
+import javascript from './javascript'
 import typescriptRequireFinder from './typescript'
-import coffee from './coffeescriptRequireFinder'
+import coffee from './coffeescript'
 import { RequireInfo, TruckerJob } from '../../types'
 
 type RequireFinder = (contents: string, filename: string) => RequireInfo[]

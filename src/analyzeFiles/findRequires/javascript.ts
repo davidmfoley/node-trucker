@@ -15,15 +15,16 @@ export default (contents: string, filename: string): RequireInfo[] => {
 }
 
 function regexFinder(contents: string): RequireInfo[] {
-  var lines = contents.split('\n')
-  var requires = []
-  var importRegex = /((import|export) (.+? from)?|require\s*\()\s*['"`]/g
+  const lines = contents.split('\n')
+  const requires = []
+  const importRegex = /((import|export) (.+? from)?|require\s*\()\s*['"`]/g
+
   lines.map(function (line, i) {
-    var result = importRegex.exec(line)
+    let result = importRegex.exec(line)
     while (result) {
       if (!result) return
-      var location = result.index + result[0].length
-      var requirePath = line.substring(location).split(/['"`]/)[0]
+      const location = result.index + result[0].length
+      const requirePath = line.substring(location).split(/['"`]/)[0]
       if (requirePathFilter(requirePath)) {
         requires.push({
           path: requirePath,
@@ -42,7 +43,7 @@ function regexFinder(contents: string): RequireInfo[] {
 
 function babelFinder(contents: string): RequireInfo[] {
   // kitchen-sink approach, since we just want to find requires/imports/etc.
-  var bbl = babelParser.parse(contents, {
+  const bbl = babelParser.parse(contents, {
     sourceType: 'unambiguous',
     ranges: true,
     tokens: true,
@@ -79,11 +80,7 @@ function babelFinder(contents: string): RequireInfo[] {
     ] as any,
   })
 
-  //var result = babel.transform(contents, {stage:0, filename: filename});
-
-  //var ast = result.ast;
-
-  var requires: RequireInfo[] = []
+  const requires: RequireInfo[] = []
   scan(bbl.tokens || [], requires)
   return requires
 }
@@ -97,9 +94,9 @@ function isString(token: BabelToken) {
 }
 
 function scan(tokens: BabelToken[], requires: RequireInfo[]) {
-  for (var i = 0; i < tokens.length; i++) {
-    var token = tokens[i]
-    var type = token.type
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i]
+    const type = token.type
     if (type.keyword === 'import' || type.keyword === 'export') {
       i++
 
@@ -123,9 +120,9 @@ function scan(tokens: BabelToken[], requires: RequireInfo[]) {
 function addIfMatch(requires: RequireInfo[], pathToken: BabelToken) {
   if (!(pathToken && pathToken.value)) return
   if (!requirePathFilter(pathToken.value)) return
-  var loc = pathToken.loc
+  const loc = pathToken.loc
 
-  var req = {
+  const req = {
     path: pathToken.value,
     loc: {
       line: loc.start.line,
