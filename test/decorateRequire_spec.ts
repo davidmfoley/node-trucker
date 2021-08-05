@@ -10,7 +10,7 @@ describe('decorateRequire', () => {
         fullPath: '/src',
       },
       {
-        path: './example',
+        relativePath: './example',
       } as any
     )
 
@@ -31,7 +31,7 @@ describe('decorateRequire', () => {
         fullPath: '/src/index.js',
       } as any,
       {
-        path: './example',
+        relativePath: './example',
       } as any
     )
 
@@ -52,7 +52,7 @@ describe('decorateRequire', () => {
         fullPath: '/src/index.js',
       } as any,
       {
-        path: './example',
+        relativePath: './example',
       } as any
     )
 
@@ -75,7 +75,7 @@ describe('decorateRequire', () => {
         fullPath: '/src',
       } as any,
       {
-        path: './example',
+        relativePath: './example',
       } as any
     )
 

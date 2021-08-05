@@ -12,7 +12,7 @@ describe('pathMapper', () => {
       importPath: '../foo',
       filePath: '/example/base/whatever.ts',
     })
-    expect(result.path).to.eq('../foo')
+    expect(result.relativePath).to.eq('../foo')
     expect(result.kind).to.eq('relative')
     expect(result.text).to.eq('../foo')
   })
@@ -28,7 +28,7 @@ describe('pathMapper', () => {
       filePath: '/example/base/src/wherever/whatever.ts',
     })
 
-    expect(result.path).to.eq('../foo/bar')
+    expect(result.relativePath).to.eq('../foo/bar')
     expect(result.kind).to.eq('alias')
     expect(result.text).to.eq('~/foo/bar')
   })
@@ -44,7 +44,7 @@ describe('pathMapper', () => {
       filePath: '/example/base/src/whatever.ts',
     })
 
-    expect(result.path).to.eq('./foo/bar')
+    expect(result.relativePath).to.eq('./foo/bar')
     expect(result.kind).to.eq('alias')
     expect(result.text).to.eq('~/foo/bar')
   })
@@ -61,7 +61,7 @@ describe('pathMapper', () => {
       filePath: '/some/place/whatever.ts',
     })
 
-    expect(result.path).to.eq('./globals/foo/bar')
+    expect(result.relativePath).to.eq('./globals/foo/bar')
     expect(result.kind).to.eq('alias')
     expect(result.text).to.eq('~/foo/bar')
   })

@@ -7,7 +7,7 @@ describe('RequireFinder', () => {
   describe('with typescript', () => {
     const findRequires = FindRequires(
       ({ importPath }: { importPath: string }) => ({
-        path: importPath,
+        relativePath: importPath,
         kind: 'relative',
         text: importPath,
       })
@@ -18,7 +18,7 @@ describe('RequireFinder', () => {
 
       const requires = findRequires(code, 'foo.ts')
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./example')
+      expect(requires[0].relativePath).to.equal('./example')
       expect(requires[0].loc.line).to.equal(1)
       expect(requires[0].loc.start).to.equal(22)
       expect(requires[0].loc.length).to.equal(9)
@@ -38,7 +38,7 @@ describe('RequireFinder', () => {
 
       const requires = findRequires(code, 'foo.ts')
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./path/with/separators')
+      expect(requires[0].relativePath).to.equal('./path/with/separators')
       expect(requires[0].loc.line).to.equal(1)
       expect(requires[0].loc.start).to.equal(23)
       expect(requires[0].loc.length).to.equal(22)
@@ -52,7 +52,7 @@ describe('RequireFinder', () => {
 
       const requires = findRequires(code, 'foo.ts')
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./path/with/separators')
+      expect(requires[0].relativePath).to.equal('./path/with/separators')
       expect(requires[0].loc.line).to.equal(4)
       expect(requires[0].loc.start).to.equal(9)
       expect(requires[0].loc.length).to.equal(22)
@@ -62,21 +62,21 @@ describe('RequireFinder', () => {
       const code = "export * from './y';"
       const requires = findRequires(code, 'foo.ts')
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./y')
+      expect(requires[0].relativePath).to.equal('./y')
     })
 
     it('handles import with alias', () => {
       const code = "import { Foo as Bar } from './y';"
       const requires = findRequires(code, 'foo.ts')
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./y')
+      expect(requires[0].relativePath).to.equal('./y')
     })
 
     it('handles import with require', () => {
       const code = "import foo = require('./foo');"
       const requires = findRequires(code, 'foo.ts')
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./foo')
+      expect(requires[0].relativePath).to.equal('./foo')
     })
 
     it('does not treat an exported string as a file', () => {
@@ -95,7 +95,7 @@ describe('RequireFinder', () => {
       const code = "import './y';"
       const requires = findRequires(code, 'foo.ts')
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./y')
+      expect(requires[0].relativePath).to.equal('./y')
     })
   })
 
@@ -103,7 +103,7 @@ describe('RequireFinder', () => {
     it('handles mapped path', () => {
       const findRequires = FindRequires(
         ({ importPath }: { importPath: string }) => ({
-          path: importPath.replace(/^\~/, './src'),
+          relativePath: importPath.replace(/^\~/, './src'),
           kind: 'alias',
           text: importPath,
         })
@@ -113,7 +113,7 @@ describe('RequireFinder', () => {
       const requires = findRequires(code, 'foo.ts')
 
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./src/foo/bar')
+      expect(requires[0].relativePath).to.equal('./src/foo/bar')
       // expect(requires[0].text).to.equal('~/foo/bar')
       expect(requires[0].loc.line).to.equal(1)
       expect(requires[0].loc.start).to.equal(22)

@@ -50,9 +50,9 @@ export const FindRequires = (pathMapper: PathMapper) => {
             importPath: child.text,
           })
 
-          if (requirePathFilter(mapped.path)) {
+          if (requirePathFilter(mapped.relativePath)) {
             requires.push({
-              path: mapped.path,
+              ...mapped,
               loc: {
                 line: lineAndChar.line + 1,
                 start: lineAndChar.character + 2,

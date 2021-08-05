@@ -17,14 +17,14 @@ describe('RequireFinder', () => {
         const code = "foo = require( './foo' )\n"
         const requires = findRequires('coffee', code, exampleName)
         expect(requires.length).to.eql(1)
-        expect(requires[0].path).to.equal('./foo')
+        expect(requires[0].relativePath).to.equal('./foo')
       })
 
       it('ignores npm modules that are required', () => {
         const code = "bar = require 'bar'\nfoo = require './foo'\n"
         const requires = findRequires('coffee', code, exampleName)
         expect(requires.length).to.eql(1)
-        expect(requires[0].path).to.equal('./foo')
+        expect(requires[0].relativePath).to.equal('./foo')
       })
 
       it('sets location correctly', () => {
@@ -42,7 +42,7 @@ describe('RequireFinder', () => {
         const code = "require( './foo' )\n"
         const requires = findRequires('coffee', code, exampleName)
         expect(requires.length).to.eql(1)
-        expect(requires[0].path).to.equal('./foo')
+        expect(requires[0].relativePath).to.equal('./foo')
       })
 
       it('sets location correctly', () => {

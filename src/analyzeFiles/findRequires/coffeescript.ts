@@ -36,7 +36,8 @@ function pushRequire(requires: RequireInfo[], node: CoffeeNode) {
   var locationData = pathNode.locationData
   if (requirePathFilter(path)) {
     requires.push({
-      path: path,
+      relativePath: path,
+      text: path,
       loc: {
         line: locationData.first_line + 1,
         start: locationData.first_column + 2,

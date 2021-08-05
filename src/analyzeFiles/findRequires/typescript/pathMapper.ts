@@ -2,17 +2,16 @@ import { TsConfig } from './tsConfig'
 import micromatch from 'micromatch'
 
 import path from 'path'
+import { RequireKind } from '../../../types'
 
 interface PathMapperImport {
   importPath: string
   filePath: string
 }
 
-type ImportKind = 'relative' | 'alias'
-
 interface PathMapperResult {
-  path: string
-  kind: ImportKind
+  relativePath: string
+  kind: RequireKind
   text: string
 }
 
@@ -32,7 +31,7 @@ export const getPathMapper = ({ paths }: TsConfig): PathMapper => {
         return {
           kind: 'alias',
           text: im.importPath,
-          path: relativePath,
+          relativePath: relativePath,
         }
       }
       return undefined
@@ -45,6 +44,6 @@ export const getPathMapper = ({ paths }: TsConfig): PathMapper => {
       if (result) return result
     }
 
-    return { path: r.importPath, kind: 'relative', text: r.importPath }
+    return { relativePath: r.importPath, kind: 'relative', text: r.importPath }
   }
 }

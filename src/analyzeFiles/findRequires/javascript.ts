@@ -27,7 +27,7 @@ function regexFinder(contents: string): RequireInfo[] {
       const requirePath = line.substring(location).split(/['"`]/)[0]
       if (requirePathFilter(requirePath)) {
         requires.push({
-          path: requirePath,
+          relativePath: requirePath,
           loc: {
             line: i + 1,
             start: location + 1,
@@ -123,7 +123,8 @@ function addIfMatch(requires: RequireInfo[], pathToken: BabelToken) {
   const loc = pathToken.loc
 
   const req = {
-    path: pathToken.value,
+    relativePath: pathToken.value,
+    text: pathToken.value,
     loc: {
       line: loc.start.line,
       start: loc.start.column + 2,

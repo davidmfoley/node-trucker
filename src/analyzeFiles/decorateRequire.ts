@@ -4,7 +4,7 @@ import nodeFs from 'fs'
 import { SourceFile } from '../types'
 import { RequireInfo, FileRequireInfo } from '../types'
 
-const requireResolve = (path, opts) => require.resolve(path, opts)
+const requireResolve = (path: string, opts: any) => require.resolve(path, opts)
 
 export default (fs = nodeFs, resolve = requireResolve) =>
   (fileInfo: SourceFile, req: RequireInfo): FileRequireInfo => {
@@ -12,22 +12,18 @@ export default (fs = nodeFs, resolve = requireResolve) =>
       return fs.existsSync(path) && fs.statSync(path).isFile()
     }
 
-    const buildResult = (filePath: string) => {
-      return {
-        loc: req.loc,
-        path: req.path,
-        kind: req.kind,
-        fullPath: fullPath,
-        filePath: filePath,
-      }
-    }
+    const buildResult = (filePath: string): FileRequireInfo => ({
+      ...req,
+      fullPath: fullPath,
+      filePath: filePath,
+    })
 
     var fullPath = path.normalize(
-      path.join(path.dirname(fileInfo.fullPath), req.path)
+      path.join(path.dirname(fileInfo.fullPath), req.relativePath)
     )
 
     try {
-      const resolved = resolve(req.path, {
+      const resolved = resolve(req.relativePath, {
         paths: [path.dirname(fileInfo.fullPath)],
       })
 

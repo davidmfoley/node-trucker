@@ -27,12 +27,13 @@ export interface RequireLocation {
   length: number
 }
 
-type RequireKind = 'relative' | 'alias' | 'package'
+export type RequireKind = 'relative' | 'alias' | 'package'
 
 export interface RequireInfo {
-  path: string
+  relativePath: string
   kind?: RequireKind
   loc: RequireLocation
+  text: string
 }
 
 export type FileRequireInfo = RequireInfo & {

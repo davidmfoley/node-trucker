@@ -1,16 +1,7 @@
 import path from 'path'
 import fileInfo from './fileInfo'
 import { LocationCalculator } from './types'
-import { ChangedRequire } from '../types'
-
-type Location = any
-
-interface RequireInfo {
-  filePath: string
-  fullPath: string
-  loc: Location
-  path: string
-}
+import { ChangedRequire, FileRequireInfo, RequireInfo } from '../types'
 
 interface SourceFile {
   fullPath: string
@@ -24,7 +15,7 @@ export default (
   var changedRequires = []
   var newFileLocation = getNewLocation(f.fullPath)
 
-  f.requires.forEach(function (r: RequireInfo) {
+  f.requires.forEach(function (r: FileRequireInfo) {
     var newRequireLocation = getNewLocation(r.filePath)
 
     if (newFileLocation.isMoved || newRequireLocation.isMoved) {
@@ -43,10 +34,10 @@ export default (
 
       newPath = newPath.replace(/\\/g, '/')
 
-      if (newPath !== r.path) {
+      if (newPath !== r.relativePath) {
         changedRequires.push({
           loc: r.loc,
-          path: r.path,
+          path: r.relativePath,
           newPath: newPath,
           fullPath: r.fullPath,
         })

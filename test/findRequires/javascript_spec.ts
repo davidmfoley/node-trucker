@@ -16,21 +16,21 @@ describe('RequireFinder', () => {
       const code = "import * as x from './y';"
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./y')
+      expect(requires[0].relativePath).to.equal('./y')
     })
 
     it('handles unassigned import', () => {
       const code = "import './y';"
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./y')
+      expect(requires[0].relativePath).to.equal('./y')
     })
 
     it('handles immediately exported import', () => {
       const code = "export * from './y';"
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./y')
+      expect(requires[0].relativePath).to.equal('./y')
     })
 
     it('ignores a jsx tag on same line as export', () => {
@@ -48,14 +48,14 @@ export default () => <a href="/">Test</a>;`
       `
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./MyModule')
+      expect(requires[0].relativePath).to.equal('./MyModule')
     })
 
     it('ignores npm modules that are required', () => {
       const code = "import bar from 'bar';\nimport foo from './foo' ;\n"
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./foo')
+      expect(requires[0].relativePath).to.equal('./foo')
     })
 
     it('sets location correctly', () => {
@@ -78,7 +78,7 @@ export default () => <a href="/">Test</a>;`
 
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./MyModule')
+      expect(requires[0].relativePath).to.equal('./MyModule')
     })
 
     // cheese factor high
@@ -95,12 +95,12 @@ this is garbage ())((((/.
 
         const [thing, other] = requires
 
-        expect(thing.path).to.equal('./thing')
+        expect(thing.relativePath).to.equal('./thing')
         expect(thing.loc.line).to.equal(3)
         expect(thing.loc.start).to.equal(25)
         expect(thing.loc.length).to.equal(7)
 
-        expect(other.path).to.equal('./other')
+        expect(other.relativePath).to.equal('./other')
         expect(other.loc.line).to.equal(4)
         expect(other.loc.start).to.equal(25)
         expect(other.loc.length).to.equal(7)
@@ -117,12 +117,12 @@ this is garbage ())((((/.
 
         const [thing, other] = requires
 
-        expect(thing.path).to.equal('./thing')
+        expect(thing.relativePath).to.equal('./thing')
         expect(thing.loc.line).to.equal(2)
         expect(thing.loc.length).to.equal(7)
         expect(thing.loc.start).to.equal(11)
 
-        expect(other.path).to.equal('./other')
+        expect(other.relativePath).to.equal('./other')
         expect(other.loc.line).to.equal(3)
         expect(other.loc.length).to.equal(7)
         expect(other.loc.start).to.equal(11)
@@ -138,7 +138,7 @@ this is garbage ())((((/.
         const requires = findRequires('js', code, exampleName)
         expect(requires.length).to.eql(1)
         const req = requires[0]
-        expect(req.path).to.equal('./thing')
+        expect(req.relativePath).to.equal('./thing')
         expect(req.loc.line).to.equal(3)
         expect(req.loc.start).to.equal(25)
         expect(req.loc.length).to.equal(7)
@@ -161,7 +161,7 @@ export const fetchLookup = query =>
 
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./foo')
+      expect(requires[0].relativePath).to.equal('./foo')
     })
 
     it('handles flow annotations', () => {
@@ -176,8 +176,8 @@ export default (a: string): Object => moduleB(moduleA(a))
       const requires = findRequires('js', code, exampleName)
 
       expect(requires.length).to.eql(2)
-      expect(requires[0].path).to.equal('./module-a')
-      expect(requires[1].path).to.equal('./module-b')
+      expect(requires[0].relativePath).to.equal('./module-a')
+      expect(requires[1].relativePath).to.equal('./module-b')
     })
   })
 
@@ -190,7 +190,7 @@ export default (a: string): Object => moduleB(moduleA(a))
       const code = "var foo = require( './foo' );\n"
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./foo')
+      expect(requires[0].relativePath).to.equal('./foo')
     })
 
     it("handles import in a file that babylon can't fully parse", () => {
@@ -201,8 +201,8 @@ foo = foo || () => {}; //babylon can't handle this for some reason
       `
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(2)
-      expect(requires[0].path).to.equal('./y')
-      expect(requires[1].path).to.equal('./z')
+      expect(requires[0].relativePath).to.equal('./y')
+      expect(requires[1].relativePath).to.equal('./z')
     })
 
     it("handles require in a file that babylon can't fully parse", () => {
@@ -213,15 +213,15 @@ foo = foo || () => {}; //babylon can't handle this for some reason
       `
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(2)
-      expect(requires[0].path).to.equal('./y')
-      expect(requires[1].path).to.equal('./z')
+      expect(requires[0].relativePath).to.equal('./y')
+      expect(requires[1].relativePath).to.equal('./z')
     })
 
     it('handles a shebanged javascript file', () => {
       const code = "#! /usr/bin/env node\nvar foo = require( './foo' );\n"
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./foo')
+      expect(requires[0].relativePath).to.equal('./foo')
       expect(requires[0].loc.line).to.equal(2)
     })
 
@@ -229,7 +229,7 @@ foo = foo || () => {}; //babylon can't handle this for some reason
       const code = "var bar = require('bar');\nvar foo = require( './foo' );\n"
       const requires = findRequires('js', code, exampleName)
       expect(requires.length).to.eql(1)
-      expect(requires[0].path).to.equal('./foo')
+      expect(requires[0].relativePath).to.equal('./foo')
     })
 
     it('sets location correctly', () => {
