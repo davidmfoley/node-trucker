@@ -1,6 +1,7 @@
 import coffee from 'coffeescript'
 import requirePathFilter from './requirePathFilter'
 import { RequireInfo } from '../../types'
+import { relativeImport } from '../requireInfo'
 
 type CoffeeNode = any
 
@@ -35,14 +36,12 @@ function pushRequire(requires: RequireInfo[], node: CoffeeNode) {
   path = path.substring(1, path.length - 1)
   var locationData = pathNode.locationData
   if (requirePathFilter(path)) {
-    requires.push({
-      relativePath: path,
-      text: path,
-      loc: {
+    requires.push(
+      relativeImport(path, {
         line: locationData.first_line + 1,
         start: locationData.first_column + 2,
         length: path.length,
-      },
-    })
+      })
+    )
   }
 }

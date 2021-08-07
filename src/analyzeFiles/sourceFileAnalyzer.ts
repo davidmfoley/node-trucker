@@ -6,10 +6,9 @@ import { SourceFile } from '../types'
 
 const decorateRequire = DecorateRequire()
 
-const sourceFileAnalyzer =
-  (job: TruckerJob) =>
-  (fileInfo: SourceFile): SourceFileWithRequires => {
-    const finder = findRequires(job)
+const sourceFileAnalyzer = (job: TruckerJob) => {
+  const finder = findRequires(job)
+  return (fileInfo: SourceFile): SourceFileWithRequires => {
     var contents = sourceFile.readContents(fileInfo.fullPath)
 
     let requires: RequireInfo[] = []
@@ -20,18 +19,17 @@ const sourceFileAnalyzer =
       printAnalyzeError(fileInfo, err)
     }
 
+    const decorate = (require: RequireInfo) => {
+      return decorateRequire(fileInfo, require)
+    }
+
     return {
       fullPath: fileInfo.fullPath,
       filetype: fileInfo.filetype,
-      requires: requires.map(decorate).filter(function (r) {
-        return !!r
-      }),
-    }
-
-    function decorate(require: RequireInfo) {
-      return decorateRequire(fileInfo, require)
+      requires: requires.map(decorate).filter((r) => !!r),
     }
   }
+}
 
 function printAnalyzeError(fileInfo: SourceFile, err: Error) {
   console.warn('')

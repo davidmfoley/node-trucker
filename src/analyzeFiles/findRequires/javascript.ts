@@ -1,6 +1,7 @@
 import * as babelParser from '@babel/parser'
 import requirePathFilter from './requirePathFilter'
 import { RequireInfo } from '../../types'
+import { relativeImport } from '../requireInfo'
 
 type BabelToken = any
 
@@ -122,16 +123,13 @@ function addIfMatch(requires: RequireInfo[], pathToken: BabelToken) {
   if (!requirePathFilter(pathToken.value)) return
   const loc = pathToken.loc
 
-  const req = {
-    relativePath: pathToken.value,
-    text: pathToken.value,
-    loc: {
+  requires.push(
+    relativeImport(pathToken.value, {
       line: loc.start.line,
       start: loc.start.column + 2,
       length: pathToken.value.length,
-    },
-  }
-  requires.push(req)
+    })
+  )
 }
 
 function handleShebang(contents: string): string {
