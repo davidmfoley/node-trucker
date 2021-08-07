@@ -1,49 +1,64 @@
-import { TsConfig } from './tsConfig'
 import micromatch from 'micromatch'
 
 import path from 'path'
-import { RequireKind } from '../../../types'
+import { RequireInfo, RequireLocation } from '../../../types'
 
 interface PathMapperImport {
   importPath: string
   filePath: string
 }
 
-interface PathMapperResult {
-  relativePath: string
-  kind: RequireKind
-  text: string
+type MapperPaths = {
+  [key: string]: string[]
 }
 
-export type PathMapper = (importInfo: PathMapperImport) => PathMapperResult
+export type PathMapper = (
+  importInfo: PathMapperImport,
+  loc: RequireLocation
+) => RequireInfo
 
-export const getPathMapper = ({ paths }: TsConfig): PathMapper => {
-  const mappers = Object.entries(paths).map(([key, destinations]) => {
-    return (im: PathMapperImport): PathMapperResult | undefined => {
-      const result = micromatch.capture(key.replace('*', '**'), im.importPath)
-      if (result) {
-        let relativePath = path.relative(
-          path.dirname(im.filePath),
-          destinations[0].replace('*', result[0])
-        )
+const buildMapper =
+  (pattern: string, destinations: string[]) =>
+  (im: PathMapperImport, loc: RequireLocation): RequireInfo | undefined => {
+    const result = micromatch.capture(pattern.replace('*', '**'), im.importPath)
 
-        if (!relativePath.startsWith('.')) relativePath = './' + relativePath
-        return {
-          kind: 'alias',
-          text: im.importPath,
-          relativePath: relativePath,
-        }
+    if (result) {
+      let relativePath = path.relative(
+        path.dirname(im.filePath),
+        destinations[0].replace('*', result[0])
+      )
+
+      if (!relativePath.startsWith('.')) relativePath = './' + relativePath
+      return {
+        kind: 'alias',
+        text: im.importPath,
+        relativePath: relativePath,
+        loc,
       }
-      return undefined
     }
-  })
+    return undefined
+  }
 
-  return (r) => {
+export const getPathMapper = ({
+  paths,
+}: {
+  paths: MapperPaths
+}): PathMapper => {
+  const mappers = Object.entries(paths).map(([key, destinations]) =>
+    buildMapper(key, destinations)
+  )
+
+  return (r, loc) => {
     for (const mapper of mappers) {
-      const result = mapper(r)
+      const result = mapper(r, loc)
       if (result) return result
     }
 
-    return { relativePath: r.importPath, kind: 'relative', text: r.importPath }
+    return {
+      relativePath: r.importPath,
+      kind: 'relative',
+      text: r.importPath,
+      loc,
+    }
   }
 }

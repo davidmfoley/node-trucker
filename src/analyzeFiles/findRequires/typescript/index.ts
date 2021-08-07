@@ -70,10 +70,13 @@ export const FindRequires = (pathMapper: PathMapper) => {
       ts.forEachChild(statement, (child) => {
         if (isStringLiteral(child)) {
           const loc = tsNodeLoc(child)
-          const mapped = pathMapper({
-            filePath: filename,
-            importPath: child.text,
-          })
+          const mapped = pathMapper(
+            {
+              filePath: filename,
+              importPath: child.text,
+            },
+            loc
+          )
 
           if (requirePathFilter(mapped.relativePath)) {
             requires.push({
