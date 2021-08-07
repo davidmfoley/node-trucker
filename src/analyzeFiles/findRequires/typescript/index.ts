@@ -19,15 +19,6 @@ const isImportEquals = (
   statement.kind === ts.SyntaxKind.ImportEqualsDeclaration
 
 export const FindRequires = (pathMapper: PathMapper) => {
-  const processTsImport = (item: ImportStatement) =>
-    pathMapper(
-      {
-        filePath: item.filePath,
-        importPath: item.importPath,
-      },
-      item.loc
-    )
-
   const filterTsImport = (item: RequireInfo) =>
     requirePathFilter(item.relativePath)
 
@@ -96,7 +87,7 @@ export const FindRequires = (pathMapper: PathMapper) => {
     return requires
   }
 
-  return getFileImports(findTsImports, processTsImport, filterTsImport)
+  return getFileImports(findTsImports, pathMapper, filterTsImport)
 }
 
 export default (truckerJob: Pick<TruckerJob, 'tsconfigPath' | 'base'>) => {

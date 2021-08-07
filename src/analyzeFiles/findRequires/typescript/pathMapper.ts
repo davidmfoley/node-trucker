@@ -1,25 +1,18 @@
 import micromatch from 'micromatch'
 
 import path from 'path'
-import { RequireInfo, RequireLocation } from '../../../types'
-
-interface PathMapperImport {
-  importPath: string
-  filePath: string
-}
+import { RequireInfo } from '../../../types'
+import { ImportStatement } from '../../getFileImports'
 
 type MapperPaths = {
   [key: string]: string[]
 }
 
-export type PathMapper = (
-  importInfo: PathMapperImport,
-  loc: RequireLocation
-) => RequireInfo
+export type PathMapper = (im: ImportStatement) => RequireInfo
 
 const buildMapper =
   (pattern: string, destinations: string[]) =>
-  (im: PathMapperImport, loc: RequireLocation): RequireInfo | undefined => {
+  (im: ImportStatement): RequireInfo | undefined => {
     const result = micromatch.capture(pattern.replace('*', '**'), im.importPath)
 
     if (result) {
@@ -33,7 +26,7 @@ const buildMapper =
         kind: 'alias',
         text: im.importPath,
         relativePath: relativePath,
-        loc,
+        loc: im.loc,
       }
     }
     return undefined
@@ -48,17 +41,17 @@ export const getPathMapper = ({
     buildMapper(key, destinations)
   )
 
-  return (r, loc) => {
+  return (im) => {
     for (const mapper of mappers) {
-      const result = mapper(r, loc)
+      const result = mapper(im)
       if (result) return result
     }
 
     return {
-      relativePath: r.importPath,
+      relativePath: im.importPath,
       kind: 'relative',
-      text: r.importPath,
-      loc,
+      text: im.importPath,
+      loc: im.loc,
     }
   }
 }

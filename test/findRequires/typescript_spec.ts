@@ -2,12 +2,12 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 
 import { FindRequires } from '../../src/analyzeFiles/findRequires/typescript'
-import { RequireLocation } from '../../src/types'
+import { ImportStatement } from '../../src/analyzeFiles/getFileImports'
 
 describe('RequireFinder', () => {
   describe('with typescript', () => {
     const findRequires = FindRequires(
-      ({ importPath }: { importPath: string }, loc: RequireLocation) => ({
+      ({ importPath, loc }: ImportStatement) => ({
         relativePath: importPath,
         kind: 'relative',
         text: importPath,
@@ -104,7 +104,7 @@ describe('RequireFinder', () => {
   describe('path aliases', () => {
     it('handles mapped path', () => {
       const findRequires = FindRequires(
-        ({ importPath }: { importPath: string }, loc: RequireLocation) => ({
+        ({ importPath, loc }: ImportStatement) => ({
           relativePath: importPath.replace(/^\~/, './src'),
           kind: 'alias',
           text: importPath,

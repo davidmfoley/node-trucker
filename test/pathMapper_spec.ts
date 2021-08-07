@@ -15,13 +15,11 @@ describe('pathMapper', () => {
     const mapper = getPathMapper({
       paths: {},
     })
-    const result = mapper(
-      {
-        importPath: '../foo',
-        filePath: '/example/base/whatever.ts',
-      },
-      exampleLoc
-    )
+    const result = mapper({
+      importPath: '../foo',
+      filePath: '/example/base/whatever.ts',
+      loc: exampleLoc,
+    })
     expect(result.relativePath).to.eq('../foo')
     expect(result.kind).to.eq('relative')
     expect(result.text).to.eq('../foo')
@@ -33,13 +31,11 @@ describe('pathMapper', () => {
         '~/foo/*': ['/example/base/src/foo/*'],
       },
     })
-    const result = mapper(
-      {
-        importPath: '~/foo/bar',
-        filePath: '/example/base/src/wherever/whatever.ts',
-      },
-      exampleLoc
-    )
+    const result = mapper({
+      importPath: '~/foo/bar',
+      filePath: '/example/base/src/wherever/whatever.ts',
+      loc: exampleLoc,
+    })
 
     expect(result.relativePath).to.eq('../foo/bar')
     expect(result.kind).to.eq('alias')
@@ -52,13 +48,11 @@ describe('pathMapper', () => {
         '~/foo/*': ['/example/base/src/foo/*'],
       },
     })
-    const result = mapper(
-      {
-        importPath: '~/foo/bar',
-        filePath: '/example/base/src/whatever.ts',
-      },
-      exampleLoc
-    )
+    const result = mapper({
+      importPath: '~/foo/bar',
+      filePath: '/example/base/src/whatever.ts',
+      loc: exampleLoc,
+    })
 
     expect(result.relativePath).to.eq('./foo/bar')
     expect(result.kind).to.eq('alias')
@@ -72,13 +66,11 @@ describe('pathMapper', () => {
       },
     })
 
-    const result = mapper(
-      {
-        importPath: '~/foo/bar',
-        filePath: '/some/place/whatever.ts',
-      },
-      exampleLoc
-    )
+    const result = mapper({
+      importPath: '~/foo/bar',
+      filePath: '/some/place/whatever.ts',
+      loc: exampleLoc,
+    })
 
     expect(result.relativePath).to.eq('./globals/foo/bar')
     expect(result.kind).to.eq('alias')
