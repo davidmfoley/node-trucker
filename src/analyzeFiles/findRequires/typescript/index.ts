@@ -3,6 +3,7 @@ import requirePathFilter from '../requirePathFilter'
 import { RequireInfo, TruckerJob } from '../../../types'
 import { getTsConfig } from './tsConfig'
 import { getPathMapper, PathMapper } from './pathMapper'
+import { getFileImports, ImportStatement } from '../../getFileImports'
 type TypescriptToken = any
 
 const isStringLiteral = (child: ts.Node): child is ts.StringLiteral =>
@@ -18,17 +19,32 @@ const isImportEquals = (
   statement.kind === ts.SyntaxKind.ImportEqualsDeclaration
 
 export const FindRequires = (pathMapper: PathMapper) => {
-  const findRequires = (contents: string, filename: string): RequireInfo[] => {
+  const processTsImport = (item: ImportStatement) =>
+    pathMapper(
+      {
+        filePath: item.filePath,
+        importPath: item.importPath,
+      },
+      item.loc
+    )
+
+  const filterTsImport = (item: RequireInfo) =>
+    requirePathFilter(item.relativePath)
+
+  const findTsImports = (
+    contents: string,
+    filePath: string
+  ): ImportStatement[] => {
     // Parse a file
     let sourceFile = ts.createSourceFile(
-      filename,
+      filePath,
       contents,
       ts.ScriptTarget.ES2015,
       /*setParentNodes */ true
     )
 
     const pushImportEquals = (
-      requires: RequireInfo[],
+      requires: ImportStatement[],
       statement: ts.ImportEqualsDeclaration
     ) => {
       ts.forEachChild(statement, (child) => {
@@ -38,7 +54,7 @@ export const FindRequires = (pathMapper: PathMapper) => {
       })
     }
 
-    const findRequires = (requires: RequireInfo[], node: ts.SourceFile) => {
+    const findRequires = (requires: ImportStatement[], node: ts.SourceFile) => {
       var statements = node.statements.slice()
       while (statements.length) {
         const statement = statements.shift()
@@ -52,7 +68,7 @@ export const FindRequires = (pathMapper: PathMapper) => {
       return requires
     }
 
-    const tsNodeLoc = (node: ts.StringLiteral) => {
+    const buildLoc = (node: ts.StringLiteral) => {
       const lineAndChar = sourceFile.getLineAndCharacterOfPosition(
         node.getStart()
       )
@@ -64,36 +80,23 @@ export const FindRequires = (pathMapper: PathMapper) => {
     }
 
     const pushRequire = (
-      requires: RequireInfo[],
+      requires: ImportStatement[],
       statement: TypescriptToken
     ) => {
       ts.forEachChild(statement, (child) => {
         if (isStringLiteral(child)) {
-          const loc = tsNodeLoc(child)
-          const mapped = pathMapper(
-            {
-              filePath: filename,
-              importPath: child.text,
-            },
-            loc
-          )
-
-          if (requirePathFilter(mapped.relativePath)) {
-            requires.push({
-              ...mapped,
-              loc,
-            })
-          }
+          const loc = buildLoc(child)
+          requires.push({ loc, importPath: child.text, filePath: filePath })
         }
       })
     }
 
-    const requires: RequireInfo[] = []
+    const requires: ImportStatement[] = []
     findRequires(requires, sourceFile)
     return requires
   }
 
-  return findRequires
+  return getFileImports(findTsImports, processTsImport, filterTsImport)
 }
 
 export default (truckerJob: Pick<TruckerJob, 'tsconfigPath' | 'base'>) => {
