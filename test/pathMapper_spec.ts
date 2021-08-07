@@ -10,11 +10,19 @@ const exampleLoc: RequireLocation = {
   length: 3,
 }
 
+const exampleResolver = {
+  absolute: (s: string) => s,
+  relative: (i: string, s: string) => s,
+}
+
 describe('pathMapper', () => {
   test('unmapped path', () => {
-    const mapper = getPathMapper({
-      paths: {},
-    })
+    const mapper = getPathMapper(
+      {
+        paths: {},
+      },
+      exampleResolver
+    )
     const result = mapper({
       importPath: '../foo',
       filePath: '/example/base/whatever.ts',
@@ -26,11 +34,14 @@ describe('pathMapper', () => {
   })
 
   test('mapped path that is above file path', () => {
-    const mapper = getPathMapper({
-      paths: {
-        '~/foo/*': ['/example/base/src/foo/*'],
+    const mapper = getPathMapper(
+      {
+        paths: {
+          '~/foo/*': ['/example/base/src/foo/*'],
+        },
       },
-    })
+      exampleResolver
+    )
     const result = mapper({
       importPath: '~/foo/bar',
       filePath: '/example/base/src/wherever/whatever.ts',
@@ -43,11 +54,14 @@ describe('pathMapper', () => {
   })
 
   test('mapped path that is adjacent', () => {
-    const mapper = getPathMapper({
-      paths: {
-        '~/foo/*': ['/example/base/src/foo/*'],
+    const mapper = getPathMapper(
+      {
+        paths: {
+          '~/foo/*': ['/example/base/src/foo/*'],
+        },
       },
-    })
+      exampleResolver
+    )
     const result = mapper({
       importPath: '~/foo/bar',
       filePath: '/example/base/src/whatever.ts',
@@ -60,11 +74,14 @@ describe('pathMapper', () => {
   })
 
   test('map to deeper path', () => {
-    const mapper = getPathMapper({
-      paths: {
-        '~/*': ['/some/place/globals/*'],
+    const mapper = getPathMapper(
+      {
+        paths: {
+          '~/*': ['/some/place/globals/*'],
+        },
       },
-    })
+      exampleResolver
+    )
 
     const result = mapper({
       importPath: '~/foo/bar',

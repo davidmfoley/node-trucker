@@ -11,6 +11,8 @@ describe('RequireFinder', () => {
         relativePath: importPath,
         kind: 'relative',
         text: importPath,
+        fullPath: importPath,
+        filePath: 'example.ts',
         loc,
       })
     )
@@ -109,6 +111,8 @@ describe('RequireFinder', () => {
           kind: 'alias',
           text: importPath,
           loc,
+          filePath: '/example/file/path.ts',
+          fullPath: '/example/full/path',
         })
       )
       const code = `import { Foo } from '~/foo/bar';`

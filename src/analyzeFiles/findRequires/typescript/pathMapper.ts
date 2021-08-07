@@ -1,44 +1,56 @@
 import micromatch from 'micromatch'
 
 import path from 'path'
-import { RequireInfo } from '../../../types'
+import { FileRequireInfo } from '../../../types'
 import { ImportStatement } from '../../getFileImports'
+import { ImportResolver } from '../importResolver'
 
 type MapperPaths = {
   [key: string]: string[]
 }
 
-export type PathMapper = (im: ImportStatement) => RequireInfo
+export type PathMapper = (im: ImportStatement) => FileRequireInfo | undefined
 
 const buildMapper =
-  (pattern: string, destinations: string[]) =>
-  (im: ImportStatement): RequireInfo | undefined => {
+  (pattern: string, destinations: string[], resolver: ImportResolver) =>
+  (im: ImportStatement): FileRequireInfo | undefined => {
     const result = micromatch.capture(pattern.replace('*', '**'), im.importPath)
 
     if (result) {
-      let relativePath = path.relative(
-        path.dirname(im.filePath),
-        destinations[0].replace('*', result[0])
-      )
+      for (let destination of destinations) {
+        const fullImportPath = destination.replace('*', result[0])
+        const fullPath = resolver.absolute(fullImportPath)
+        if (!fullPath) return undefined
 
-      if (!relativePath.startsWith('.')) relativePath = './' + relativePath
-      return {
-        kind: 'alias',
-        text: im.importPath,
-        relativePath: relativePath,
-        loc: im.loc,
+        let relativePath = path.relative(
+          path.dirname(im.filePath),
+          fullImportPath
+        )
+
+        if (!relativePath.startsWith('.')) relativePath = './' + relativePath
+        return {
+          kind: 'alias',
+          text: im.importPath,
+          relativePath,
+          fullPath,
+          filePath: im.filePath,
+          loc: im.loc,
+        }
       }
     }
     return undefined
   }
 
-export const getPathMapper = ({
-  paths,
-}: {
-  paths: MapperPaths
-}): PathMapper => {
+export const getPathMapper = (
+  {
+    paths,
+  }: {
+    paths: MapperPaths
+  },
+  resolver: ImportResolver
+): PathMapper => {
   const mappers = Object.entries(paths).map(([key, destinations]) =>
-    buildMapper(key, destinations)
+    buildMapper(key, destinations, resolver)
   )
 
   return (im) => {
@@ -47,10 +59,15 @@ export const getPathMapper = ({
       if (result) return result
     }
 
+    const fullPath = resolver.relative(im.filePath, im.importPath)
+    if (!fullPath) return undefined
+
     return {
       relativePath: im.importPath,
       kind: 'relative',
       text: im.importPath,
+      filePath: im.filePath,
+      fullPath,
       loc: im.loc,
     }
   }

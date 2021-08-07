@@ -17,4 +17,7 @@ export const getFileImports =
     importFilter: ImportFilter
   ) =>
   (contents: string, filePath: string) =>
-    findImports(contents, filePath).map(processImport).filter(importFilter)
+    findImports(contents, filePath)
+      .map(processImport)
+      .filter((x) => !!x)
+      .filter(importFilter)
