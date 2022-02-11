@@ -24,27 +24,31 @@ const getCandidatePaths = (dir: string) => {
 
 type ReadConfigFile = typeof ts['readConfigFile']
 
+const parsePaths = (
+  tsconfigPath: string,
+  configPaths: undefined | Record<string, unknown>
+): TsConfigPaths => {
+  const paths = {} as TsConfigPaths
+  const dirname = path.dirname(tsconfigPath)
+  Object.entries(configPaths || {}).forEach(([alias, res]) => {
+    if (Array.isArray(res)) {
+      paths[alias] = res.map((r) => path.resolve(dirname, r))
+    }
+  })
+
+  return paths
+}
+
 const buildConfig = (
   tsconfigPath: string,
   readConfigFile: ReadConfigFile
 ): TsConfig => {
-  const paths = {} as TsConfigPaths
   const { error, config } = readConfigFile(tsconfigPath, ts.sys.readFile)
   if (error)
     throw new Error(`Error reading ${tsconfigPath}: ${error.messageText}`)
 
-  const dirname = path.dirname(tsconfigPath)
-
-  Object.entries(config?.compilerOptions?.paths || {}).forEach(
-    ([alias, res]) => {
-      if (Array.isArray(res)) {
-        paths[alias] = res.map((r) => path.resolve(dirname, r))
-      }
-    }
-  )
-
   return {
-    paths,
+    paths: parsePaths(tsconfigPath, config.compilerOptions?.paths),
   }
 }
 
