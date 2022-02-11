@@ -27,28 +27,28 @@ export const getImportStatements = (
   )
 
   const pushImportEquals = (
-    requires: ImportStatement[],
+    imports: ImportStatement[],
     statement: ts.ImportEqualsDeclaration
   ) => {
     ts.forEachChild(statement, (child) => {
       if (child.kind === ts.SyntaxKind.ExternalModuleReference) {
-        pushRequire(requires, child)
+        pushImport(imports, child)
       }
     })
   }
 
-  const findRequires = (requires: ImportStatement[], node: ts.SourceFile) => {
+  const findImports = (imports: ImportStatement[], node: ts.SourceFile) => {
     var statements = node.statements.slice()
     while (statements.length) {
       const statement = statements.shift()
       if (isImportOrExport(statement)) {
-        pushRequire(requires, statement)
+        pushImport(imports, statement)
       } else if (isImportEquals(statement)) {
-        pushImportEquals(requires, statement)
+        pushImportEquals(imports, statement)
       }
     }
 
-    return requires
+    return imports
   }
 
   const buildLoc = (node: ts.StringLiteral) => {
@@ -62,19 +62,19 @@ export const getImportStatements = (
     }
   }
 
-  const pushRequire = (
-    requires: ImportStatement[],
+  const pushImport = (
+    imports: ImportStatement[],
     statement: TypescriptToken
   ) => {
     ts.forEachChild(statement, (child) => {
       if (isStringLiteral(child)) {
         const loc = buildLoc(child)
-        requires.push({ loc, importPath: child.text, filePath: filePath })
+        imports.push({ loc, importPath: child.text, filePath: filePath })
       }
     })
   }
 
-  const requires: ImportStatement[] = []
-  findRequires(requires, sourceFile)
-  return requires
+  const imports: ImportStatement[] = []
+  findImports(imports, sourceFile)
+  return imports
 }
