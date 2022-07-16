@@ -3,13 +3,13 @@ import readIgnores from './readIgnores'
 import { TruckerJob, TruckerOptions } from '../types'
 
 export default function (options: TruckerOptions): TruckerJob {
-  var scopePresent = options.scope && options.scope.length
-  var _ = options._ || []
-  var files = _.map(blowOutPath)
-  var from = files.slice(0, files.length - 1)
-  var to = files.length && files[files.length - 1]
-  var base = scopePresent ? path.resolve(options.scope) : process.cwd()
-  var ignore = readIgnores(base)
+  const scopePresent = options.scope && options.scope.length
+  const _ = options._ || []
+  const files = _.map(blowOutPath)
+  const from = files.slice(0, files.length - 1)
+  const to = files.length && files[files.length - 1]
+  const base = scopePresent ? path.resolve(options.scope) : process.cwd()
+  const ignore = readIgnores(base)
 
   if (options.exclude) {
     ignore.patterns = ignore.patterns.concat(options.exclude)

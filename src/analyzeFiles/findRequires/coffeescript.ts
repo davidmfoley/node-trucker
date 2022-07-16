@@ -6,8 +6,8 @@ import { relativeImport } from '../requireInfo'
 type CoffeeNode = any
 
 export default (contents: string): RequireInfo[] => {
-  var requires: RequireInfo[] = []
-  var ast = coffee.nodes(contents)
+  const requires: RequireInfo[] = []
+  const ast = coffee.nodes(contents)
   traverse(ast, requires)
   return requires
 }
@@ -31,10 +31,10 @@ function pushIfRequire(requires: RequireInfo[], node: CoffeeNode) {
 }
 
 function pushRequire(requires: RequireInfo[], node: CoffeeNode) {
-  var pathNode = node.base.args[0].base
-  var path = pathNode.value
+  const pathNode = node.base.args[0].base
+  let path = pathNode.value
   path = path.substring(1, path.length - 1)
-  var locationData = pathNode.locationData
+  const locationData = pathNode.locationData
   if (requirePathFilter(path)) {
     requires.push(
       relativeImport(path, {

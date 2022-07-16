@@ -1,7 +1,7 @@
 import path from 'path'
 
 export default function printUnused(job, files) {
-  var byPath = {}
+  const byPath = {}
 
   files.forEach(function (f) {
     byPath[f.fullPath] = f

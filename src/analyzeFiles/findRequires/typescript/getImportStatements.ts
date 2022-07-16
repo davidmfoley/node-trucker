@@ -19,7 +19,7 @@ export const getImportStatements = (
   filePath: string
 ): ImportStatement[] => {
   // Parse a file
-  let sourceFile = ts.createSourceFile(
+  const sourceFile = ts.createSourceFile(
     filePath,
     contents,
     ts.ScriptTarget.ES2015,
@@ -38,7 +38,7 @@ export const getImportStatements = (
   }
 
   const findImports = (imports: ImportStatement[], node: ts.SourceFile) => {
-    var statements = node.statements.slice()
+    const statements = node.statements.slice()
     while (statements.length) {
       const statement = statements.shift()
       if (isImportOrExport(statement)) {
@@ -69,7 +69,7 @@ export const getImportStatements = (
     ts.forEachChild(statement, (child) => {
       if (isStringLiteral(child)) {
         const loc = buildLoc(child)
-        imports.push({ loc, importPath: child.text, filePath: filePath })
+        imports.push({ loc, importPath: child.text, filePath })
       }
     })
   }

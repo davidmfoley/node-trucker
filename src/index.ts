@@ -9,8 +9,8 @@ import printDependencies from './printDependencies'
 
 export default function (options) {
   try {
-    var job = buildJob(options)
-    var action = getAction(job)
+    const job = buildJob(options)
+    const action = getAction(job)
     action(job)
     return 0
   } catch (error) {
@@ -26,17 +26,17 @@ function getAction(job) {
 }
 
 function moveFiles(job) {
-  var changes = changedRequiresByFile(job)
-  var handler = handleFileChanges(job.dryRun)
+  const changes = changedRequiresByFile(job)
+  const handler = handleFileChanges(job.dryRun)
   handler(job, changes)
 }
 
 function showInfo(job) {
-  var requires = findSourceFiles(job)
+  const requires = findSourceFiles(job)
   printDependencies(requires, job)
 }
 
 function showUnused(job) {
-  var files = findSourceFiles(job)
+  const files = findSourceFiles(job)
   printUnused(job, files)
 }

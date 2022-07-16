@@ -1,7 +1,7 @@
 export default function getLineEdits(requires) {
-  var byLine = {}
+  const byLine = {}
   requires.forEach(function (r) {
-    var line = r.loc.line
+    const line = r.loc.line
     byLine[line] = byLine[line] || []
     byLine[line].push(r)
     byLine[line] = byLine[line].sort(function (a, b) {

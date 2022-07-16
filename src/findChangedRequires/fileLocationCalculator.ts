@@ -21,14 +21,14 @@ export default (
     }
 
     function getMapper(f) {
-      var mapper = fileInfo.isDirectory(f) ? directoryMapper : fileMapper
+      const mapper = fileInfo.isDirectory(f) ? directoryMapper : fileMapper
       return mapper(f, to, fileInfo)
     }
   })
 
   return function (fullPath) {
-    var mapped = mappers.map((mapper) => mapper(fullPath))
-    var matches = mapped.filter((x) => !!x)
+    const mapped = mappers.map((mapper) => mapper(fullPath))
+    const matches = mapped.filter((x) => !!x)
 
     if (matches.length) return moveInfo(true, matches[0])
     return moveInfo(false, fullPath)
@@ -36,7 +36,7 @@ export default (
 }
 
 function fileMapper(f, to, fileInfo) {
-  var toFilename = !fileInfo.isFile(to) ? path.join(to, path.basename(f)) : to
+  const toFilename = !fileInfo.isFile(to) ? path.join(to, path.basename(f)) : to
   return function (fullPath) {
     return path.normalize(fullPath) === f && toFilename
   }
@@ -44,14 +44,14 @@ function fileMapper(f, to, fileInfo) {
 
 function directoryMapper(f, to) {
   return function (fullPath) {
-    var relative = path.relative(f, fullPath)
+    const relative = path.relative(f, fullPath)
     return relative[0] !== '.' && path.join(to, relative)
   }
 }
 
 const requirePath = (filePath: string): string => {
-  var basename = path.basename(filePath)
-  var req = filePath.substring(
+  const basename = path.basename(filePath)
+  const req = filePath.substring(
     0,
     filePath.length - path.extname(filePath).length
   )

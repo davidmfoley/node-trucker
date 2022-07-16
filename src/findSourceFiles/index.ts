@@ -4,7 +4,7 @@ import filterExcludedFiles from './filterExcludedFiles'
 import { TruckerJob } from '../types'
 
 const findSourceFiles = (job: TruckerJob) => {
-  let files = fileFinder(job.base)
+  const files = fileFinder(job.base)
 
   const filtered = filterExcludedFiles(job)(files)
 

@@ -18,7 +18,7 @@ const importResolver =
         .concat(exts.map((ext) => `${fullImportPath}${ext}`))
         .concat(exts.map((ext) => `${fullImportPath}/index${ext}`))
 
-      for (let candidate of candidates) {
+      for (const candidate of candidates) {
         if (isFile(candidate)) return candidate
       }
     }

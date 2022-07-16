@@ -7,11 +7,11 @@ export default (
   fileInfos: SourceFileWithRequires[],
   getNewLocation: LocationCalculator
 ): FileModification[] => {
-  var files: FileModification[] = []
+  const files: FileModification[] = []
 
   fileInfos.forEach(function (f) {
-    var newFileLocation = getNewLocation(f.fullPath)
-    var changedRequires = changedRequiresForSingleFile(f, getNewLocation)
+    const newFileLocation = getNewLocation(f.fullPath)
+    const changedRequires = changedRequiresForSingleFile(f, getNewLocation)
 
     if (changedRequires.length || newFileLocation.isMoved) {
       files.push({

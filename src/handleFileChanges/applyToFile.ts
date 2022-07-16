@@ -9,7 +9,7 @@ function applyToFile(
 ) {
   const lines = sourceFile.readLines(filePath)
   const encoding = sourceFile.getEncoding(filePath)
-  var updated = applyEdits(lines, changedRequires)
+  const updated = applyEdits(lines, changedRequires)
   sourceFile.writeLines(filePath, updated, encoding)
 }
 
@@ -18,7 +18,7 @@ function applyEdits(lines, requires) {
   const byLine = getLineEdits(requires)
 
   return lines.map(function (line) {
-    var edited = editLine(line, byLine[lineNumber])
+    const edited = editLine(line, byLine[lineNumber])
     lineNumber++
     return edited
   })

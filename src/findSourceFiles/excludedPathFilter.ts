@@ -14,7 +14,7 @@ export default (job: {
   const filter = ignore().add(job.ignore.patterns).createFilter()
 
   return (filepath: string) => {
-    var relativeToBase = path.relative(job.ignore.base, filepath)
+    const relativeToBase = path.relative(job.ignore.base, filepath)
 
     // don't exclude files above ignore file
     if (relativeToBase.indexOf('..') === 0) return true

@@ -2,10 +2,10 @@ import path from 'path'
 import fs from 'fs'
 
 export default function readIgnores(base) {
-  var current = base
+  let current = base
 
   while (shouldContinue(current)) {
-    var gitignorePath = current + '/.gitignore'
+    const gitignorePath = current + '/.gitignore'
     if (fs.existsSync(gitignorePath)) {
       return {
         base: current,
@@ -23,8 +23,8 @@ function shouldContinue(current) {
 }
 
 function parseGitignore(gitignorePath) {
-  var text = fs.readFileSync(gitignorePath, 'utf-8')
-  var lines = text.split('\n')
+  const text = fs.readFileSync(gitignorePath, 'utf-8')
+  const lines = text.split('\n')
   return lines.map(trim).map(stripComment).filter(removeEmpties)
 }
 

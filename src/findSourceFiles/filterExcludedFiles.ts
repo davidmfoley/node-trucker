@@ -8,6 +8,6 @@ export default (job: {
     }
   }) =>
   (files: SourceFile[]) => {
-    var filter = excludedPathFilter(job)
+    const filter = excludedPathFilter(job)
     return files.filter((fileInfo) => filter(fileInfo.fullPath))
   }

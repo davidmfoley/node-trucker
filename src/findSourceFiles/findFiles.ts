@@ -2,18 +2,18 @@ import fs from 'fs'
 import path from 'path'
 
 export default function (base) {
-  var files = []
+  const files = []
   traverse(base, '.' + path.sep, files)
   return files
 }
 
 function traverse(base, current, files) {
-  var childDirs = []
-  var fullCurrentPath = path.join(base, current)
+  const childDirs = []
+  const fullCurrentPath = path.join(base, current)
 
   fs.readdirSync(fullCurrentPath).forEach(function (f) {
-    var file = path.join(fullCurrentPath, f)
-    var stat = fs.statSync(file)
+    const file = path.join(fullCurrentPath, f)
+    const stat = fs.statSync(file)
     if (stat.isDirectory()) {
       if (weCareAboutDirectory(f)) childDirs.push(f)
     } else if (weCareAboutFile(file)) {
@@ -31,7 +31,7 @@ function traverse(base, current, files) {
 }
 
 function weCareAboutDirectory(name) {
-  var ignore = ['node_modules', 'bower_components']
+  const ignore = ['node_modules', 'bower_components']
   return ignore.indexOf(name) === -1
 }
 function weCareAboutFile(name) {

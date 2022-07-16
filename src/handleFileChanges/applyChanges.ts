@@ -9,12 +9,12 @@ const applyChanges = (job: TruckerMoveJob, changes: FileModification[]) => {
   let to: string
   if (!job.quiet) printChanges(job, changes)
 
-  job.moves.forEach((move) => {
-    var toIsDirectory =
+  for (const move of job.moves) {
+    const toIsDirectory =
       fs.existsSync(move.to) && fs.statSync(move.to).isDirectory()
 
-    move.from.forEach((from) => {
-      var fromIsFile = fs.statSync(from).isFile()
+    for (const from of move.from) {
+      const fromIsFile = fs.statSync(from).isFile()
 
       if (fromIsFile && toIsDirectory) {
         to = path.join(move.to, path.basename(from))
@@ -24,8 +24,8 @@ const applyChanges = (job: TruckerMoveJob, changes: FileModification[]) => {
 
       mkdirp.sync(path.dirname(to))
       fs.renameSync(from, to)
-    })
-  })
+    }
+  }
 
   changes.forEach(function (f) {
     applyToFile(f.to, f.requires)

@@ -9,7 +9,7 @@ const decorateRequire = DecorateRequire()
 const sourceFileAnalyzer = (job: TruckerJob) => {
   const finder = findRequires(job)
   return (fileInfo: SourceFile): SourceFileWithRequires => {
-    var contents = sourceFile.readContents(fileInfo.fullPath)
+    const contents = sourceFile.readContents(fileInfo.fullPath)
 
     let requires: RequireInfo[] = []
 
@@ -35,7 +35,7 @@ function printAnalyzeError(fileInfo: SourceFile, err: Error) {
   console.warn('')
   console.warn('error processing ' + fileInfo.fullPath)
   console.warn(err)
-  var stack = err.stack || ''
+  const stack = err.stack || ''
   console.warn(stack.split('\n')[1])
 }
 

@@ -1,15 +1,15 @@
 import path from 'path'
 import { FileModification } from '../types'
 export default function (changes: FileModification[]) {
-  var fileMoves = changes.filter(isMove)
-  var byDest = {}
+  const fileMoves = changes.filter(isMove)
+  const byDest = {}
 
   fileMoves.forEach(function (m) {
     byDest[m.to] = byDest[m.to] || []
     byDest[m.to].push(m.from)
   })
 
-  var conflicts = Object.keys(byDest).filter(function (dest) {
+  const conflicts = Object.keys(byDest).filter(function (dest) {
     return byDest[dest].length > 1
   })
 

@@ -11,7 +11,7 @@ export default function printDependencies(files, job) {
   }
 
   function printViz(files, job) {
-    var clusterFills = [
+    const clusterFills = [
       '#FFEEDD',
       '#EEDDFF',
       '#DDFFEE',
@@ -19,19 +19,19 @@ export default function printDependencies(files, job) {
       '#DDEEFF',
       '#EEFFDD',
     ]
-    var clusterId = 0
+    let clusterId = 0
     console.log('digraph Files {')
     console.log('rankdir=LR;')
 
     console.log('node[shape="box" style="filled" fillcolor="#FFFF99"];')
     console.log('edge[color="#888888"];')
-    let folderTree = { files: [], children: {} }
+    const folderTree = { files: [], children: {} }
     files.forEach(function (file) {
       const filePath = path.relative(job.base, file.fullPath)
-      let folders = filePath.split(path.sep)
+      const folders = filePath.split(path.sep)
       folders.pop()
-      var target = folderTree
-      var folder = folders.shift()
+      let target = folderTree
+      let folder = folders.shift()
       while (folder) {
         if (!target.children[folder]) {
           target.children[folder] = {
@@ -98,7 +98,7 @@ export default function printDependencies(files, job) {
   }
 
   function printStandard(files, job) {
-    var outbound = {},
+    const outbound = {},
       inbound = {}
     function digest(graph, from, to) {
       graph[from] = graph[from] || []
@@ -121,7 +121,7 @@ export default function printDependencies(files, job) {
     files.forEach(printFile)
 
     function printFile(f) {
-      var path = f.fullPath
+      const path = f.fullPath
 
       print(path, '')
       ;(outbound[path] || []).forEach(function (to) {

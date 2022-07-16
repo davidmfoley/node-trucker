@@ -17,7 +17,7 @@ const buildMapper =
     const result = micromatch.capture(pattern.replace('*', '**'), im.importPath)
 
     if (result) {
-      for (let destination of destinations) {
+      for (const destination of destinations) {
         const fullImportPath = destination.replace('*', result[0])
         const fullPath = resolver.absolute(fullImportPath)
         if (!fullPath) return undefined

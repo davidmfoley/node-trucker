@@ -22,7 +22,7 @@ function noBar(analyzer: SourceFileAnalyzer, fileInfos: SourceFile[]) {
 
 function withBar(analyzer: SourceFileAnalyzer, fileInfos: SourceFile[]) {
   console.error('analyzing ' + fileInfos.length + ' files for dependencies')
-  var bar = new ProgressBar(
+  const bar = new ProgressBar(
     '  [:bar] :current/:total :percent :elapseds elapsed, :etas to go',
     {
       incomplete: ' ',
@@ -31,7 +31,7 @@ function withBar(analyzer: SourceFileAnalyzer, fileInfos: SourceFile[]) {
     }
   )
 
-  var files = fileInfos.map(analyzeAndTick)
+  const files = fileInfos.map(analyzeAndTick)
   bar.terminate()
   console.error('completed analysis')
   console.error('')
