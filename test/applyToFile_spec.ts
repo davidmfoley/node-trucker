@@ -10,7 +10,7 @@ describe('applyToFile', function () {
   let writtenEncoding: string
 
   const fs = {
-    getEncoding: (f: string) => 'utf-8' as BufferEncoding,
+    getEncoding: (_: string) => 'utf-8' as BufferEncoding,
     readContents: () => '',
     readLines: function () {
       return [''].concat(contents.split('\n'))

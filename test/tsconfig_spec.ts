@@ -11,7 +11,7 @@ describe('tsconfig parsing', () => {
     return !!fileContents[path]
   }
 
-  const readConfigFile = ((path: string, read: any) => {
+  const readConfigFile = ((path: string) => {
     const content = fileContents[path]
     if (!content) throw new Error('file not found')
     return content

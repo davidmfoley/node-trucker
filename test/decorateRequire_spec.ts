@@ -4,7 +4,7 @@ import decorateRequire from '../src/analyzeFiles/decorateRequire'
 
 describe('decorateRequire', () => {
   it('uses require.resolve location if found', function () {
-    var result = decorateRequire({} as any, () => 'src/example.js')(
+    const result = decorateRequire({} as any, () => 'src/example.js')(
       {
         filetype: '',
         fullPath: '/src',
@@ -20,7 +20,7 @@ describe('decorateRequire', () => {
   it('finds a file with matching name', function () {
     const filePath = '/src/example.js'
 
-    var result = decorateRequire(
+    const result = decorateRequire(
       {
         existsSync: (p) => p === filePath,
         statSync: (p) => ({ isFile: () => p === filePath }),
@@ -41,7 +41,7 @@ describe('decorateRequire', () => {
   it('finds an index file with matching name', function () {
     const filePath = '/src/example/index.tsx'
 
-    var result = decorateRequire(
+    const result = decorateRequire(
       {
         existsSync: (p) => p === filePath,
         statSync: (p) => ({ isFile: () => p === filePath }),
@@ -60,8 +60,8 @@ describe('decorateRequire', () => {
   })
 
   it('tries all the extensions in order if require resolve fails', function () {
-    let existsArgs = []
-    var result = decorateRequire(
+    const existsArgs = []
+    const result = decorateRequire(
       {
         existsSync: (a) => {
           existsArgs.push(a)

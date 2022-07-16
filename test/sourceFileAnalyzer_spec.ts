@@ -6,7 +6,7 @@ import sourceFileAnalyzer, {
 } from '../src/analyzeFiles/sourceFileAnalyzer'
 import { FileRequireInfo } from '../src/types'
 
-let examplePath = path.normalize(path.join(__dirname, '../examples'))
+const examplePath = path.normalize(path.join(__dirname, '../examples'))
 
 describe('sourceFileAnalyzer', () => {
   let requires: FileRequireInfo[]

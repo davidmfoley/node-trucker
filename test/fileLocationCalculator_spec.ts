@@ -5,20 +5,20 @@ import path from 'path'
 import fileLocationCalculator from '../src/findChangedRequires/fileLocationCalculator'
 
 describe('FileLocationCalculator', () => {
-  let examplePath = path.normalize(path.join(__dirname, '../examples'))
-  let starkPath = path.join(examplePath, '/stark')
+  const examplePath = path.normalize(path.join(__dirname, '../examples'))
+  const starkPath = path.join(examplePath, '/stark')
   let calc
 
   const testPath = (p: string) => path.join(examplePath, p)
 
-  let whenLocationsAre = (froms: string | string[], to: string) => {
+  const whenLocationsAre = (froms: string | string[], to: string) => {
     const asArray = !Array.isArray(froms) ? [froms] : froms
     const from = asArray.map((f) => path.join(examplePath, f))
     calc = fileLocationCalculator([{ from, to: path.join(examplePath, to) }])
   }
 
-  let expectMove = (from: string, toPath: string, toRequire?: string) => {
-    let newLoc = calc(path.join(examplePath, from))
+  const expectMove = (from: string, toPath: string, toRequire?: string) => {
+    const newLoc = calc(path.join(examplePath, from))
     expect(newLoc.isMoved).to.equal(true)
     expect(newLoc.fullPath).to.equal(path.join(examplePath, toPath))
     if (toRequire) {
@@ -26,8 +26,8 @@ describe('FileLocationCalculator', () => {
     }
   }
 
-  let expectNoMove = (from) => {
-    let newLoc = calc(path.join(examplePath, from))
+  const expectNoMove = (from) => {
+    const newLoc = calc(path.join(examplePath, from))
     expect(newLoc.isMoved).to.equal(false)
   }
   describe('moving a file with explicit "to"', () => {
