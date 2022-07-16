@@ -18,7 +18,7 @@ export default (fs = nodeFs, resolve = requireResolve) =>
       filePath: filePath,
     })
 
-    var fullPath = path.normalize(
+    const fullPath = path.normalize(
       path.join(path.dirname(fileInfo.fullPath), req.relativePath)
     )
 

@@ -5,7 +5,7 @@ import { relativeImport } from '../requireInfo'
 
 type BabelToken = any
 
-export default (contents: string, filename: string): RequireInfo[] => {
+export default (contents: string, _filename: string): RequireInfo[] => {
   contents = handleShebang(contents)
   try {
     return babelFinder(contents)

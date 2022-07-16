@@ -62,10 +62,11 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "ci": "yarn build && yarn test && yarn prettier",
+    "ci": "yarn build && yarn test && yarn lint && yarn prettier",
     "clean": "rm -rf ./lib/",
     "cover": "TS_NODE_PROJECT=tsconfig.test.json COVERAGE=1 nyc mocha && open coverage/index.html",
     "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
+    "lint": "eslint src/ test/",
     "prettier": "prettier -c '{src,test}/**/*.ts'",
     "test": "MOCHA_CONCISE_MODE=minimal TS_NODE_PROJECT=tsconfig.test.json mocha -R mocha-concise-reporter",
     "test:watch": "nodemon -q -e ts --exec \"yarn test\" --watch src --watch test",
