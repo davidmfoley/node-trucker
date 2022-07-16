@@ -9,7 +9,7 @@ describe('applyToFile', function () {
   let written: string
   let writtenEncoding: string
 
-  let fs = {
+  const fs = {
     getEncoding: (f: string) => 'utf-8' as BufferEncoding,
     readContents: () => '',
     readLines: function () {
@@ -23,7 +23,7 @@ describe('applyToFile', function () {
 
   it('writes the same encoding', () => {
     contents = "\nvar foo = require('./bar');\n"
-    let exampleEdits = [
+    const exampleEdits = [
       {
         loc: {
           line: 2,
@@ -38,9 +38,8 @@ describe('applyToFile', function () {
   })
 
   it('works with a single require', function () {
-    var exampleEdits
     contents = "\nvar foo = require('./bar');\n"
-    exampleEdits = [
+    const exampleEdits = [
       {
         loc: {
           line: 2,
@@ -55,10 +54,9 @@ describe('applyToFile', function () {
   })
 
   it('works with multiple requires on a line', function () {
-    var exampleEdits
     contents =
       "\nvar foo = require('./foo'), bar = require('./bar');\nfunction blah(){}"
-    exampleEdits = [
+    const exampleEdits = [
       {
         loc: {
           line: 2,
