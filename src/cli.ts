@@ -6,6 +6,8 @@ const cli = () => {
     .usage(
       'Move CommonJS source files or directories without breaking your app.\nFixes requires in javascript and coffeescript files.\n$0 source [additional sources...] destination [flags]'
     )
+    .boolean('v')
+    .alias('v', 'version')
     .boolean('h')
     .alias('h', 'help')
     .describe('h', 'Show help')
@@ -52,6 +54,13 @@ const cli = () => {
   const argv = options.argv,
     fileCount = argv._length,
     requiredFileCount = argv.i ? 1 : 2
+
+  if (argv.v) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const version = require('../package.json').version
+    console.log(`Trucker version ${version}`)
+    process.exit()
+  }
 
   if (!(argv.h || argv.i || argv.m || argv.n || argv.u)) {
     options.showHelp()
