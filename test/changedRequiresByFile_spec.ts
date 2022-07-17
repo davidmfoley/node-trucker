@@ -4,7 +4,7 @@ import { expect } from 'chai'
 import changedRequiresByFile from '../src/findChangedRequires'
 
 import path from 'path'
-import { FileModification } from '../lib/types'
+import { FileModification } from '../src/FileModification'
 
 const examplePath = path.normalize(path.join(__dirname, '../examples/'))
 
