@@ -64,11 +64,11 @@
     "build": "tsc -p tsconfig.build.json",
     "ci": "yarn build && yarn test && yarn lint && yarn prettier",
     "clean": "rm -rf ./lib/",
-    "cover": "TS_NODE_PROJECT=tsconfig.test.json COVERAGE=1 nyc mocha && open coverage/index.html",
+    "cover": "TS_NODE_PROJECT=tsconfig.json COVERAGE=1 nyc mocha && open coverage/index.html",
     "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
     "lint": "eslint src/ test/",
     "prettier": "prettier -c '{src,test}/**/*.ts'",
-    "test": "MOCHA_CONCISE_MODE=minimal mocha -R mocha-concise-reporter",
+    "test": "MOCHA_CONCISE_MODE=minimal MOCHA_COLORS=1 mocha -R mocha-concise-reporter",
     "test:watch": "nodemon -q -e ts --exec \"yarn test\" --watch src --watch test",
     "build:graph": "bash -c 'dot -Tsvg -o ./trucker-graph.svg <(trucker --info --format dot --exclude test --exclude examples)' ",
     "watch": "concurrently 'yarn test:watch' 'yarn build -w --noEmit --pretty --preserveWatchOutput' -n t,b -c cyan,yellow"
