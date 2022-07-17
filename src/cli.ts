@@ -4,7 +4,20 @@ import trucker from '.'
 const cli = () => {
   const options = optimist
     .usage(
-      'Move CommonJS source files or directories without breaking your app.\nFixes requires in javascript and coffeescript files.\n$0 source [additional sources...] destination [flags]'
+      `Move CommonJS source files or directories without breaking your imports.\nSupports typescript, javascript and coffeescript files.
+
+Move files:
+trucker -m [sources...] destination
+
+Dry run (shows what moves would happen but doesn't do them):
+trucker -n [sources...] destination
+
+Print information about imports:
+trucker -i [sources...]
+
+Print information about imports in dotviz format:
+trucker -i [sources...] -f dot
+`
     )
     .boolean('v')
     .alias('v', 'version')
