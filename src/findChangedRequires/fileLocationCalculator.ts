@@ -13,18 +13,20 @@ export default (
 
   let mappers: ((path: string) => string | undefined)[] = []
 
-  moves.forEach(({ from, to }) => {
+  for (const { from, to } of moves) {
+    const getMapper = (f: string) => {
+      const mapper = fileInfo.isDirectory(f)
+        ? directoryMapper
+        : fileMapper(fileInfo.isFile)
+      return mapper(f, to)
+    }
+
     mappers = mappers.concat(from.map(getMapper))
 
     if (fileInfo.isFile(to) && from.length > 1) {
       throw new Error("When moving multiple files, destination can't be a file")
     }
-
-    function getMapper(f) {
-      const mapper = fileInfo.isDirectory(f) ? directoryMapper : fileMapper
-      return mapper(f, to, fileInfo)
-    }
-  })
+  }
 
   return function (fullPath) {
     const mapped = mappers.map((mapper) => mapper(fullPath))
@@ -35,14 +37,18 @@ export default (
   }
 }
 
-function fileMapper(f, to, fileInfo) {
-  const toFilename = !fileInfo.isFile(to) ? path.join(to, path.basename(f)) : to
-  return function (fullPath) {
-    return path.normalize(fullPath) === f && toFilename
-  }
-}
+type Mapper = (f: string, to: string) => (fullPath: string) => string
 
-function directoryMapper(f, to) {
+const fileMapper =
+  (isFile: (name: string) => boolean): Mapper =>
+  (f, to) => {
+    const toFilename = !isFile(to) ? path.join(to, path.basename(f)) : to
+    return function (fullPath) {
+      return path.normalize(fullPath) === f && toFilename
+    }
+  }
+
+const directoryMapper: Mapper = (f, to) => {
   return function (fullPath) {
     const relative = path.relative(f, fullPath)
     return relative[0] !== '.' && path.join(to, relative)
