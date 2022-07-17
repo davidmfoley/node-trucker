@@ -1,15 +1,14 @@
+import path from 'path'
 import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
 
-import changedRequiresByFile from '../src/findChangedRequires'
+import changedRequiresByFile from '../../src/findChangedRequires'
 
-import path from 'path'
-import { FileModification } from '../src/FileModification'
-
-const examplePath = path.normalize(path.join(__dirname, '../examples/'))
+import { FileModification } from '../../src/FileModification'
+import { examplesPath } from './examplesPath'
 
 function p(subPath: string) {
-  return path.normalize(path.join(examplePath, subPath))
+  return path.normalize(path.join(examplesPath, subPath))
 }
 
 function job(from: string, to: string) {
@@ -20,7 +19,7 @@ function job(from: string, to: string) {
         to: p(to),
       },
     ],
-    base: examplePath,
+    base: examplesPath,
   } as any
 }
 

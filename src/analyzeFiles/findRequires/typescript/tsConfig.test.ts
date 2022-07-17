@@ -1,6 +1,6 @@
 import { describe, test, beforeEach } from 'mocha'
 import { expect } from 'chai'
-import { getTsConfig } from '../src/analyzeFiles/findRequires/typescript/tsConfig'
+import { getTsConfig } from './tsConfig'
 
 describe('tsconfig parsing', () => {
   let paths: string[]

@@ -2,7 +2,7 @@
 
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import applyToFile from '../src/handleFileChanges/applyToFile'
+import applyToFile from './applyToFile'
 
 describe('applyToFile', function () {
   let contents: string

@@ -2,11 +2,11 @@ import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
 
 import path from 'path'
-import fileFinder from '../src/findSourceFiles/findFiles'
+import fileFinder from '../../src/findSourceFiles/findFiles'
+import { examplesPath } from './examplesPath'
 
-const examplePath = path.normalize(path.join(__dirname, '../examples'))
-const starkPath = path.join(examplePath, '/stark')
-const tullyPath = path.join(examplePath, '/tully')
+const starkPath = path.join(examplesPath, '/stark')
+const tullyPath = path.join(examplesPath, '/tully')
 
 function byFullPath(a, b) {
   return a.fullPath > b.fullPath ? 1 : -1
@@ -33,7 +33,7 @@ describe('fileFinder', function () {
   })
   describe('recursively', function () {
     before(function () {
-      result = fileFinder(examplePath).sort(byFullPath)
+      result = fileFinder(examplesPath).sort(byFullPath)
     })
     it('can find eddard', function () {
       const eddard = result[0]

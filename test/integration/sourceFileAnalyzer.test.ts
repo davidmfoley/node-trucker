@@ -3,10 +3,9 @@ import { expect } from 'chai'
 import path from 'path'
 import sourceFileAnalyzer, {
   SourceFileAnalyzer,
-} from '../src/analyzeFiles/sourceFileAnalyzer'
-import { FileRequireInfo } from '../src/analyzeFiles'
-
-const examplePath = path.normalize(path.join(__dirname, '../examples'))
+} from '../../src/analyzeFiles/sourceFileAnalyzer'
+import { FileRequireInfo } from '../../src/analyzeFiles'
+import { examplesPath } from './examplesPath'
 
 describe('sourceFileAnalyzer', () => {
   let requires: FileRequireInfo[]
@@ -15,7 +14,7 @@ describe('sourceFileAnalyzer', () => {
   describe('analyzing a sourcefile', () => {
     before(() => {
       result = sourceFileAnalyzer({} as any)({
-        fullPath: path.join(examplePath, 'stark/eddard.js'),
+        fullPath: path.join(examplesPath, 'stark/eddard.js'),
         filetype: 'js',
       })
       requires = result.requires.sort((a, b) =>
@@ -26,11 +25,11 @@ describe('sourceFileAnalyzer', () => {
       expect(requires.length).to.equal(2)
     })
     it('decorates require in a different location with full path', () => {
-      const expected = path.normalize(path.join(examplePath, 'tully/catelyn'))
+      const expected = path.normalize(path.join(examplesPath, 'tully/catelyn'))
       expect(requires[1].fullPath).to.equal(expected)
     })
     it('decorates require in the same location with full path', () => {
-      const expected = path.normalize(path.join(examplePath, 'stark/robb'))
+      const expected = path.normalize(path.join(examplesPath, 'stark/robb'))
       expect(requires[0].fullPath).to.equal(expected)
     })
   })

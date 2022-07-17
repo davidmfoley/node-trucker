@@ -2,7 +2,7 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 
 import path from 'path'
-import readIgnores from '../src/buildJob/readIgnores'
+import readIgnores from './readIgnores'
 
 describe('readIgnores', function () {
   it('works here', function () {
@@ -15,6 +15,6 @@ describe('readIgnores', function () {
       'lib',
     ])
 
-    expect(ignore.base).to.equal(path.normalize(__dirname + '/..'))
+    expect(ignore.base).to.equal(path.normalize(__dirname + '/../..'))
   })
 })

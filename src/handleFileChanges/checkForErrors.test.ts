@@ -1,6 +1,6 @@
 import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
-import checkForErrors from '../src/handleFileChanges/checkForErrors'
+import checkForErrors from './checkForErrors'
 
 let errors
 

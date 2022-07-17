@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import decorateRequire from '../src/analyzeFiles/decorateRequire'
+import decorateRequire from './decorateRequire'
 
 describe('decorateRequire', () => {
   it('uses require.resolve location if found', function () {

@@ -1,62 +1,35 @@
-import { describe, before, it, test } from 'mocha'
+import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
 
 import path from 'path'
-import fileLocationCalculator from '../src/findChangedRequires/fileLocationCalculator'
-import { LocationCalculator } from '../src/findChangedRequires/types'
+import fileLocationCalculator from '../../src/findChangedRequires/fileLocationCalculator'
+import { LocationCalculator } from '../../src/findChangedRequires/types'
+import { examplesPath } from './examplesPath'
 
 describe('FileLocationCalculator', () => {
-  describe('directory into another directory', () => {
-    const calc = fileLocationCalculator(
-      [{ from: ['src/bar'], to: 'src/foo/' }],
-      { isDirectory: () => true, isFile: () => true } as any
-    )
-
-    test('matching directory', () => {
-      const result = calc('src/bar/baz.ts')
-      expect(result.fullPath).to.eq('src/foo/bar/baz.ts')
-    })
-
-    test('other directory', () => {
-      const other = calc('src/other/baz.ts')
-      expect(other.isMoved).to.eq(false)
-    })
-  })
-
-  test('rename directory', () => {
-    const calc = fileLocationCalculator(
-      [{ from: ['src/bar'], to: 'src/foo' }],
-      { isDirectory: () => true, isFile: () => true } as any
-    )
-
-    const result = calc('src/bar/baz.ts')
-    expect(result.fullPath).to.eq('src/foo/baz.ts')
-  })
-
   describe('integration tests', () => {
-    const examplePath = path.normalize(path.join(__dirname, '../examples'))
-    const starkPath = path.join(examplePath, '/stark')
+    const starkPath = path.join(examplesPath, '/stark')
     let calc: LocationCalculator
 
-    const testPath = (p: string) => path.join(examplePath, p)
+    const testPath = (p: string) => path.join(examplesPath, p)
 
     const whenLocationsAre = (froms: string | string[], to: string) => {
       const asArray = !Array.isArray(froms) ? [froms] : froms
-      const from = asArray.map((f) => path.join(examplePath, f))
-      calc = fileLocationCalculator([{ from, to: path.join(examplePath, to) }])
+      const from = asArray.map((f) => path.join(examplesPath, f))
+      calc = fileLocationCalculator([{ from, to: path.join(examplesPath, to) }])
     }
 
     const expectMove = (from: string, toPath: string, toRequire?: string) => {
-      const newLoc = calc(path.join(examplePath, from))
+      const newLoc = calc(path.join(examplesPath, from))
       expect(newLoc.isMoved).to.equal(true)
-      expect(newLoc.fullPath).to.equal(path.join(examplePath, toPath))
+      expect(newLoc.fullPath).to.equal(path.join(examplesPath, toPath))
       if (toRequire) {
-        expect(newLoc.requirePath).to.equal(path.join(examplePath, toRequire))
+        expect(newLoc.requirePath).to.equal(path.join(examplesPath, toRequire))
       }
     }
 
     const expectNoMove = (from) => {
-      const newLoc = calc(path.join(examplePath, from))
+      const newLoc = calc(path.join(examplesPath, from))
       expect(newLoc.isMoved).to.equal(false)
     }
     describe('moving a file with explicit "to"', () => {
