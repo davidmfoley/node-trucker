@@ -4,7 +4,7 @@ import path from 'path'
 import sourceFileAnalyzer, {
   SourceFileAnalyzer,
 } from '../src/analyzeFiles/sourceFileAnalyzer'
-import { FileRequireInfo } from '../src/types'
+import { FileRequireInfo } from '../src/analyzeFiles'
 
 const examplePath = path.normalize(path.join(__dirname, '../examples'))
 

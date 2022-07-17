@@ -2,6 +2,7 @@ import nodeFs from 'fs'
 import path from 'path'
 import ts from 'typescript'
 import { TruckerJob } from '../../../types'
+
 export type TsConfigPaths = { [key: string]: string[] }
 
 export interface TsConfig {

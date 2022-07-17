@@ -68,7 +68,7 @@
     "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
     "lint": "eslint src/ test/",
     "prettier": "prettier -c '{src,test}/**/*.ts'",
-    "test": "MOCHA_CONCISE_MODE=minimal TS_NODE_PROJECT=tsconfig.test.json mocha -R mocha-concise-reporter",
+    "test": "MOCHA_CONCISE_MODE=minimal mocha -R mocha-concise-reporter",
     "test:watch": "nodemon -q -e ts --exec \"yarn test\" --watch src --watch test",
     "build:graph": "bash -c 'dot -Tsvg -o ./trucker-graph.svg <(trucker --info --format dot --exclude test --exclude examples)' ",
     "watch": "concurrently 'yarn test:watch' 'yarn build -w --noEmit --pretty --preserveWatchOutput' -n t,b -c cyan,yellow"

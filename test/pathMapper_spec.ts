@@ -2,7 +2,7 @@ import { describe, test } from 'mocha'
 import { expect } from 'chai'
 
 import { getPathMapper } from '../src/analyzeFiles/findRequires/typescript/pathMapper'
-import { RequireLocation } from '../src/types'
+import { RequireLocation } from '../src/analyzeFiles'
 
 const exampleLoc: RequireLocation = {
   line: 1,

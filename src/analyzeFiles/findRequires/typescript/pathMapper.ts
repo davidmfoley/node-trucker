@@ -1,7 +1,7 @@
 import micromatch from 'micromatch'
 
 import path from 'path'
-import { FileRequireInfo } from '../../../types'
+import { FileRequireInfo } from '../../types'
 import { ImportStatement } from '../../getFileImports'
 import { ImportResolver } from '../importResolver'
 

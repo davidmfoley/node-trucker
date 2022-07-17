@@ -1,4 +1,4 @@
-import { RequireLocation, RequireInfo } from '../types'
+import { RequireLocation, RequireInfo } from './types'
 
 export interface ImportStatement {
   filePath: string

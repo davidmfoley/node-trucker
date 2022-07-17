@@ -1,8 +1,8 @@
 import sourceFile from '../sourceFile'
 import findRequires from './findRequires'
 import DecorateRequire from './decorateRequire'
-import { RequireInfo, SourceFileWithRequires, TruckerJob } from '../types'
-import { SourceFile } from '../types'
+import { TruckerJob } from '../types'
+import { RequireInfo, SourceFileWithRequires, SourceFile } from './types'
 
 const decorateRequire = DecorateRequire()
 

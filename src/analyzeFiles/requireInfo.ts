@@ -1,4 +1,4 @@
-import { RequireInfo, RequireLocation } from '../types'
+import { RequireInfo, RequireLocation } from './types'
 
 export const relativeImport = (
   relativePath: string,

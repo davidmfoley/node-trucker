@@ -1,5 +1,6 @@
 import requirePathFilter from '../requirePathFilter'
-import { RequireInfo, TruckerJob } from '../../../types'
+import { TruckerJob } from '../../../types'
+import { RequireInfo } from '../../types'
 import { getTsConfig } from './tsConfig'
 import { getPathMapper, PathMapper } from './pathMapper'
 import { getFileImports } from '../../getFileImports'

@@ -1,5 +1,5 @@
 import excludedPathFilter from './excludedPathFilter'
-import { SourceFile } from '../types'
+import { SourceFile } from '../analyzeFiles'
 
 export default (job: {
     ignore?: {
