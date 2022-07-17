@@ -65,7 +65,7 @@
     "build": "tsc -p tsconfig.build.json",
     "ci": "yarn build && yarn test && yarn lint && yarn prettier",
     "clean": "rm -rf ./lib/",
-    "cover": "TS_NODE_PROJECT=tsconfig.json COVERAGE=1 nyc mocha && open coverage/index.html",
+    "cover": "COVERAGE=1 nyc mocha && open coverage/index.html",
     "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
     "lint": "eslint src/ test/",
     "prettier": "prettier -c '{src,test}/**/*.ts'",
