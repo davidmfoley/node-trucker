@@ -32,26 +32,32 @@ export default (
     const mapped = mappers.map((mapper) => mapper(fullPath))
     const matches = mapped.filter((x) => !!x)
 
-    if (matches.length) return moveInfo(true, matches[0])
+    if (matches.length) {
+      return moveInfo(true, matches[0])
+    }
+
     return moveInfo(false, fullPath)
   }
 }
 
-type Mapper = (f: string, to: string) => (fullPath: string) => string
+type Mapper = (f: string, to: string) => (fullPath: string) => string | null
 
 const fileMapper =
   (isFile: (name: string) => boolean): Mapper =>
   (f, to) => {
     const toFilename = !isFile(to) ? path.join(to, path.basename(f)) : to
     return function (fullPath) {
-      return path.normalize(fullPath) === f && toFilename
+      return (path.normalize(fullPath) === f && toFilename) || null
     }
   }
 
 const directoryMapper: Mapper = (f, to) => {
   return function (fullPath) {
-    const relative = path.relative(f, fullPath)
-    return relative[0] !== '.' && path.join(to, relative)
+    let relative = path.relative(f, fullPath)
+    if (to.endsWith(path.sep)) {
+      relative = `${path.basename(f)}${path.sep}${relative}`
+    }
+    return (relative[0] !== '.' && path.join(to, relative)) || null
   }
 }
 
