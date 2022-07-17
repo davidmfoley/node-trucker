@@ -1,5 +1,5 @@
 import path from 'path'
-import { FileModification } from '../types'
+import { FileModification } from '../FileModification'
 export default function (changes: FileModification[]) {
   const fileMoves = changes.filter(isMove)
   const byDest = {}

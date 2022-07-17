@@ -1,6 +1,6 @@
 import ProgressBar from 'progress'
 import analyzer, { SourceFileAnalyzer } from './sourceFileAnalyzer'
-import { TruckerJob } from '../types'
+import { TruckerJob } from '../TruckerJob'
 import {
   SourceFile,
   SourceFileWithRequires,

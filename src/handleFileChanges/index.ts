@@ -1,7 +1,8 @@
 import checkForErrors from './checkForErrors'
 import printChanges from './printChanges'
 import applyChanges from './applyChanges'
-import { FileModification, TruckerMoveJob } from '../types'
+import { TruckerMoveJob } from '../TruckerJob'
+import { FileModification } from '../FileModification'
 
 export default function (isDryRun: boolean) {
   if (isDryRun) console.log('DRY RUN - no changes will be made.')

@@ -3,7 +3,8 @@ import fs from 'fs'
 import mkdirp from 'mkdirp'
 import applyToFile from './applyToFile'
 import printChanges from './printChanges'
-import { TruckerMoveJob, FileModification } from '../types'
+import { TruckerMoveJob } from '../TruckerJob'
+import { FileModification } from '../FileModification'
 
 const applyChanges = (job: TruckerMoveJob, changes: FileModification[]) => {
   let to: string

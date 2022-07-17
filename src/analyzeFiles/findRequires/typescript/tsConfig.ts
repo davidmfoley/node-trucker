@@ -1,7 +1,7 @@
 import nodeFs from 'fs'
 import path from 'path'
 import ts from 'typescript'
-import { TruckerJob } from '../../../types'
+import { TruckerJob } from '../../../TruckerJob'
 
 export type TsConfigPaths = { [key: string]: string[] }
 

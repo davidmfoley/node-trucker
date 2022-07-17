@@ -1,7 +1,9 @@
 import fileLocationCalculator from './fileLocationCalculator'
 import findSourceFiles from '../findSourceFiles'
 import moveCalculator from './fileMoveCalculator'
-import { TruckerMoveJob, FileModification } from '../types'
+import { TruckerMoveJob } from '../TruckerJob'
+import { FileModification } from '../FileModification'
+export type { ChangedRequire } from './changedRequiresForSingleFile'
 
 const changedRequiresByFile = (job: TruckerMoveJob): FileModification[] => {
   const locationCalculator = fileLocationCalculator(job.moves)
