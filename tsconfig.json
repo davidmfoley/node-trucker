@@ -4,7 +4,9 @@
     "module": "commonjs",
     "target": "es6",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true
   },
-  "compileOnSave": false
+  "compileOnSave": false,
+  "include": ["src" , "test"]
 }
