@@ -54,7 +54,7 @@ const fileMapper =
 const directoryMapper: Mapper = (f, to) => {
   return function (fullPath) {
     let relative = path.relative(f, fullPath)
-    if (to.endsWith(path.sep)) {
+    if (to.endsWith(path.sep) && !relative.startsWith('.')) {
       relative = `${path.basename(f)}${path.sep}${relative}`
     }
     return (relative[0] !== '.' && path.join(to, relative)) || null

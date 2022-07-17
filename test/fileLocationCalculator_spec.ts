@@ -6,14 +6,21 @@ import fileLocationCalculator from '../src/findChangedRequires/fileLocationCalcu
 import { LocationCalculator } from '../src/findChangedRequires/types'
 
 describe('FileLocationCalculator', () => {
-  test('directory into another directory', () => {
+  describe('directory into another directory', () => {
     const calc = fileLocationCalculator(
       [{ from: ['src/bar'], to: 'src/foo/' }],
       { isDirectory: () => true, isFile: () => true } as any
     )
 
-    const result = calc('src/bar/baz.ts')
-    expect(result.fullPath).to.eq('src/foo/bar/baz.ts')
+    test('matching directory', () => {
+      const result = calc('src/bar/baz.ts')
+      expect(result.fullPath).to.eq('src/foo/bar/baz.ts')
+    })
+
+    test('other directory', () => {
+      const other = calc('src/other/baz.ts')
+      expect(other.isMoved).to.eq(false)
+    })
   })
 
   test('rename directory', () => {
