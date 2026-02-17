@@ -1,24 +1,25 @@
 import path from 'path'
+import { FileModification } from '../FileModification'
 import sourceFile from '../sourceFile'
+import { TruckerJob } from '../TruckerJob'
 import editLine from './editLine'
 import getLineEdits from './getLineEdits'
 
-function printChanges(job, changes) {
+function printChanges(job: TruckerJob, changes: FileModification[]) {
   const count = changes.reduce(function (x, y) {
     return y.requires.length + x
   }, 0)
+
   console.log(count + ' changes in ' + changes.length + ' files.')
 
   const base = job.base
+
   changes.forEach(function (f) {
+    const fromRelative = path.relative(base, f.from)
     if (f.from !== f.to) {
-      console.log(
-        path.relative(base, f.from),
-        ' -> ',
-        path.relative(base, f.to)
-      )
+      console.log(fromRelative, ' -> ', path.relative(base, f.to))
     } else {
-      console.log(path.relative(base, f.from))
+      console.log(fromRelative)
     }
 
     const byLine = getLineEdits(f.requires)

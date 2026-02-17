@@ -1,6 +1,11 @@
 import path from 'path'
+import { SourceFileWithRequires } from './analyzeFiles'
+import { TruckerJob } from './TruckerJob'
 
-export default function printUnused(job, files) {
+export default function printUnused(
+  job: TruckerJob,
+  files: SourceFileWithRequires[]
+) {
   const byPath = {}
 
   files.forEach(function (f) {

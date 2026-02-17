@@ -6,8 +6,9 @@ import handleFileChanges from './handleFileChanges'
 
 import findSourceFiles from './findSourceFiles'
 import printDependencies from './printDependencies'
+import { TruckerJob } from './TruckerJob'
 
-export default function (options) {
+export default function (options: unknown) {
   try {
     const job = buildJob(options)
     const action = getAction(job)
@@ -19,24 +20,24 @@ export default function (options) {
   }
 }
 
-function getAction(job) {
+function getAction(job: TruckerJob) {
   if (job.unused) return showUnused
   if (job.info) return showInfo
   return moveFiles
 }
 
-function moveFiles(job) {
+function moveFiles(job: TruckerJob) {
   const changes = changedRequiresByFile(job)
   const handler = handleFileChanges(job.dryRun)
   handler(job, changes)
 }
 
-function showInfo(job) {
-  const requires = findSourceFiles(job)
-  printDependencies(requires, job)
+function showInfo(job: TruckerJob) {
+  const files = findSourceFiles(job)
+  printDependencies(files, job)
 }
 
-function showUnused(job) {
+function showUnused(job: TruckerJob) {
   const files = findSourceFiles(job)
   printUnused(job, files)
 }

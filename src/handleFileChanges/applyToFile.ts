@@ -1,10 +1,11 @@
 import getLineEdits from './getLineEdits'
 import editLine from './editLine'
 import importedSourceFile from '../sourceFile'
+import { ChangedRequire } from '../findChangedRequires'
 
 function applyToFile(
-  filePath,
-  changedRequires,
+  filePath: string,
+  changedRequires: ChangedRequire[],
   sourceFile = importedSourceFile
 ) {
   const lines = sourceFile.readLines(filePath)
@@ -13,15 +14,10 @@ function applyToFile(
   sourceFile.writeLines(filePath, updated, encoding)
 }
 
-function applyEdits(lines, requires) {
-  let lineNumber = 0
+function applyEdits(lines: string[], requires: ChangedRequire[]) {
   const byLine = getLineEdits(requires)
 
-  return lines.map(function (line) {
-    const edited = editLine(line, byLine[lineNumber])
-    lineNumber++
-    return edited
-  })
+  return lines.map((line, lineNumber) => editLine(line, byLine[lineNumber]))
 }
 
 export default applyToFile

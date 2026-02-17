@@ -1,7 +1,7 @@
 import path from 'path'
 import fileInfo from './fileInfo'
 import { LocationCalculator } from './types'
-import { FileRequireInfo } from '../analyzeFiles'
+import { FileRequireInfo, RequireLocation } from '../analyzeFiles'
 
 interface SourceFile {
   fullPath: string
@@ -11,7 +11,7 @@ interface SourceFile {
 export interface ChangedRequire {
   filePath: string
   newPath: string
-  loc: Location
+  loc: RequireLocation
   path: string
 }
 

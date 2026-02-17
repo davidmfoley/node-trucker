@@ -1,4 +1,6 @@
-export default function editLine(contents, edits) {
+import { ChangedRequire } from '../findChangedRequires'
+
+export default function editLine(contents: string, edits: ChangedRequire[]) {
   if (!edits || edits.length === 0) {
     return contents
   }

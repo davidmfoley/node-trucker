@@ -14,7 +14,7 @@ export default (contents: string): RequireInfo[] => {
 
 function traverse(node: CoffeeNode, requires: RequireInfo[]) {
   if (node.body && node.body.expressions) {
-    node.body.expressions.forEach(function (n) {
+    node.body.expressions.forEach(function (n: CoffeeNode) {
       traverse(n, requires)
     })
   } else if (node && typeof node === 'object') {

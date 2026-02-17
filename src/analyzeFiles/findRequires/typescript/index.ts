@@ -1,7 +1,6 @@
 import requirePathFilter from '../requirePathFilter'
-import { TruckerJob } from '../../../TruckerJob'
 import { RequireInfo } from '../../types'
-import { getTsConfig } from './tsConfig'
+import { TsConfig } from './tsConfig'
 import { getPathMapper, PathMapper } from './pathMapper'
 import { getFileImports } from '../../getFileImports'
 import { getImportStatements } from './getImportStatements'
@@ -14,8 +13,7 @@ export const FindRequires = (pathMapper: PathMapper) => {
   return getFileImports(getImportStatements, pathMapper, filterTsImport)
 }
 
-export default (truckerJob: Pick<TruckerJob, 'tsconfigPath' | 'base'>) => {
-  const tsconfig = getTsConfig(truckerJob)
+export default (tsconfig: TsConfig) => {
   const mapper = getPathMapper(
     tsconfig,
     importResolver(['.ts', '.tsx', '.js', '.jsx', '.mjs'])

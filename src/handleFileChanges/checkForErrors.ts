@@ -1,5 +1,6 @@
 import path from 'path'
 import { FileModification } from '../FileModification'
+
 export default function (changes: FileModification[]) {
   const fileMoves = changes.filter(isMove)
   const byDest = {}
@@ -17,7 +18,7 @@ export default function (changes: FileModification[]) {
     return message(dest, byDest[dest])
   })
 
-  function message(destination, sources) {
+  function message(destination: string, sources: any[]) {
     return (
       'multiple files would be moved to ' +
       relativePath(destination) +
@@ -26,7 +27,7 @@ export default function (changes: FileModification[]) {
     )
   }
 
-  function relativePath(f) {
+  function relativePath(f: string) {
     return path.relative(process.cwd(), f)
   }
 }
