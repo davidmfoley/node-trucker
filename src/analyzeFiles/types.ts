@@ -9,14 +9,22 @@ export interface RequireLocation {
   length: number
 }
 
-export type RequireKind = 'relative' | 'alias' | 'package'
+export type NonAliasRequireKind = 'relative' | 'package'
+export type AliasRequireKind = 'alias'
 
-export interface RequireInfo {
+export type RequireInfo = {
   relativePath: string
-  kind?: RequireKind
   loc: RequireLocation
   text: string
-}
+} & (
+  | {
+      kind: NonAliasRequireKind
+    }
+  | {
+      kind: AliasRequireKind
+      mapping: { alias: string; destination: string }
+    }
+)
 
 export type FileRequireInfo = RequireInfo & {
   fullPath: string

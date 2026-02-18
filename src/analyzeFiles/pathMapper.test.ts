@@ -1,3 +1,4 @@
+import assert from 'node:assert'
 import { describe, test } from 'mocha'
 import { expect } from 'chai'
 
@@ -90,7 +91,11 @@ describe('pathMapper', () => {
     })
 
     expect(result.relativePath).to.eq('./globals/foo/bar')
-    expect(result.kind).to.eq('alias')
+    assert(result.kind === 'alias')
     expect(result.text).to.eq('~/foo/bar')
+    expect(result.mapping).to.eql({
+      alias: '~/*',
+      destination: '/some/place/globals/*',
+    })
   })
 })

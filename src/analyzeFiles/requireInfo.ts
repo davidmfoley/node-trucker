@@ -13,10 +13,12 @@ export const relativeImport = (
 export const aliasImport = (
   text: string,
   relativePath: string,
-  loc: RequireLocation
+  loc: RequireLocation,
+  mapping: { alias: string; destination: string }
 ): RequireInfo => ({
   relativePath,
   kind: 'alias',
   text,
   loc,
+  mapping,
 })

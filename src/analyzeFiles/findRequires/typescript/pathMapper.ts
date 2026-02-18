@@ -30,6 +30,7 @@ const buildMapper =
         if (!relativePath.startsWith('.')) relativePath = './' + relativePath
         return {
           kind: 'alias',
+          mapping: { alias: pattern, destination },
           text: im.importPath,
           relativePath,
           fullPath,
