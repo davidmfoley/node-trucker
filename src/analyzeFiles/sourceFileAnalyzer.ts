@@ -26,6 +26,7 @@ const sourceFileAnalyzer = (job: TruckerJob) => {
     return {
       fullPath: fileInfo.fullPath,
       filetype: fileInfo.filetype,
+      relativePath: fileInfo.relativePath,
       requires: requires.map(decorate).filter((r) => !!r),
     }
   }

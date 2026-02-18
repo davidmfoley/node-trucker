@@ -1,4 +1,5 @@
 export interface SourceFile {
+  relativePath: string
   fullPath: string
   filetype: string
 }

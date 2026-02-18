@@ -2,6 +2,7 @@ import path from 'path'
 import fileInfo from './fileInfo'
 import { LocationCalculator } from './types'
 import { FileRequireInfo, RequireLocation } from '../analyzeFiles'
+import { applyAliasMapping } from './applyAliasMapping'
 
 interface SourceFile {
   fullPath: string
@@ -27,21 +28,33 @@ export default (
 
     if (newFileLocation.isMoved || newRequireLocation.isMoved) {
       const extname = path.extname(r.filePath)
-      let newPath = path.relative(
+
+      let newRelativePath = path.relative(
         path.dirname(newFileLocation.fullPath),
         newRequireLocation.requirePath + extname
       )
-      if (newPath[0] !== '.') newPath = './' + newPath
+      if (newRelativePath[0] !== '.') newRelativePath = './' + newRelativePath
 
       const isFile = fileInfo.isFile(r.fullPath)
       if (!isFile) {
-        newPath = newPath.replace(/\/index\.(js|jsx|coffee|ts|tsx|mjs)$/, '')
-        newPath = newPath.replace(/\.(js|jsx|coffee|ts|tsx|mjs)$/, '')
+        newRelativePath = newRelativePath.replace(
+          /\/index\.(js|jsx|coffee|ts|tsx|mjs)$/,
+          ''
+        )
+        newRelativePath = newRelativePath.replace(
+          /\.(js|jsx|coffee|ts|tsx|mjs)$/,
+          ''
+        )
       }
 
-      newPath = newPath.replace(/\\/g, '/')
+      newRelativePath = newRelativePath.replace(/\\/g, '/')
 
-      if (newPath !== r.relativePath) {
+      if (newRelativePath !== r.relativePath) {
+        let newPath =
+          r.kind === 'alias'
+            ? applyAliasMapping(r.mapping, newRelativePath)
+            : newRelativePath
+
         changedRequires.push({
           loc: r.loc,
           path: r.relativePath,

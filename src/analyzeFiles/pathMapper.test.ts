@@ -13,7 +13,7 @@ const exampleLoc: RequireLocation = {
 
 const exampleResolver = {
   absolute: (s: string) => s,
-  relative: (i: string, s: string) => s,
+  relative: (_: string, s: string) => s,
 }
 
 describe('pathMapper', () => {
