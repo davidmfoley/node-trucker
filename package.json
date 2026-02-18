@@ -31,9 +31,9 @@
     "jschardet": "^2.2.1",
     "micromatch": "^4.0.4",
     "mkdirp": "^1.0.4",
-    "optimist": "~0.6.0",
+    "optimist": "^0.5.2",
     "progress": "~1.1",
-    "typescript": "^4.0.2"
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@babel/types": "^7.11.0",
@@ -44,18 +44,16 @@
     "@types/node": "^14.6.0",
     "@types/optimist": "^0.0.30",
     "@types/progress": "^2.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.30.6",
-    "@typescript-eslint/parser": "^5.30.6",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
     "chai": "^4.2.0",
     "concurrently": "^6.2.0",
-    "eslint": "^8.19.0",
-    "eslint-config-prettier": "^8.5.0",
-    "mocha": "^8.1.2",
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "mocha": "^11.7.5",
     "mocha-concise-reporter": "^1.2.0",
-    "nodemon": "^2.0.7",
-    "nyc": "^15.1.0",
+    "nodemon": "^3.1.11",
     "prettier": "^2.1.0",
-    "source-map-support": "^0.5.19",
     "ts-node": "^9.0.0"
   },
   "engines": {
@@ -63,16 +61,16 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "ci": "yarn build && yarn test && yarn lint && yarn prettier",
+    "ci": "npm run build && npm run test && npm run lint && npm run prettier",
     "clean": "rm -rf ./lib/",
     "cover": "COVERAGE=1 nyc mocha && open coverage/index.html",
     "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
     "lint": "eslint src/ test/",
     "prettier": "prettier -c '{src,test}/**/*.ts'",
     "test": "MOCHA_CONCISE_MODE=minimal MOCHA_COLORS=1 mocha -R mocha-concise-reporter",
-    "test:watch": "nodemon -q -e ts --exec \"yarn test\" --watch src --watch test",
+    "test:watch": "nodemon -q -e ts --exec \"npm run test\" --watch src --watch test",
     "build:graph": "bash -c 'dot -Tsvg -o ./trucker-graph.svg <(trucker --info --format dot --exclude test --exclude examples)' ",
-    "watch": "concurrently 'yarn test:watch' 'yarn build -w --noEmit --pretty --preserveWatchOutput' -n t,b -c cyan,yellow"
+    "watch": "concurrently 'npm run test:watch' 'npm run build -w --noEmit --pretty --preserveWatchOutput' -n t,b -c cyan,yellow"
   },
   "mocha": {
     "recursive": true,
