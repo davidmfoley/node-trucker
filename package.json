@@ -41,7 +41,7 @@
     "@types/micromatch": "^4.0.2",
     "@types/mkdirp": "^1.0.1",
     "@types/mocha": "^9.0.0",
-    "@types/node": "^14.6.0",
+    "@types/node": "^22.0.0",
     "@types/optimist": "^0.0.30",
     "@types/progress": "^2.0.4",
     "@typescript-eslint/eslint-plugin": "^8.56.0",
@@ -70,7 +70,7 @@
     "test": "MOCHA_CONCISE_MODE=minimal MOCHA_COLORS=1 mocha -R mocha-concise-reporter",
     "test:watch": "nodemon -q -e ts --exec \"npm run test\" --watch src --watch test",
     "build:graph": "bash -c 'dot -Tsvg -o ./trucker-graph.svg <(trucker --info --format dot --exclude test --exclude examples)' ",
-    "watch": "concurrently 'npm run test:watch' 'npm run build -w --noEmit --pretty --preserveWatchOutput' -n t,b -c cyan,yellow"
+    "watch": "concurrently 'npm run test:watch' 'npm run build -- --watch --noEmit --pretty --preserveWatchOutput' -n t,b -c cyan,yellow"
   },
   "mocha": {
     "recursive": true,
