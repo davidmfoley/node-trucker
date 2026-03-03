@@ -3,7 +3,8 @@ import nodeFs from 'fs'
 
 import { SourceFile, RequireInfo, FileRequireInfo } from './types'
 
-const requireResolve = (path: string, opts: any) => require.resolve(path, opts)
+const requireResolve = (path: string, opts: unknown) =>
+  require.resolve(path, opts)
 
 export default (fs = nodeFs, resolve = requireResolve) =>
   (fileInfo: SourceFile, req: RequireInfo): FileRequireInfo => {
@@ -29,7 +30,7 @@ export default (fs = nodeFs, resolve = requireResolve) =>
       if (resolved) {
         return buildResult(resolved)
       }
-    } catch (e) {
+    } catch (_: unknown) {
       // nothing
     }
 

@@ -2,6 +2,8 @@ import path from 'path'
 import readIgnores from './readIgnores'
 import { TruckerJob } from '../TruckerJob'
 
+// TODO
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type TruckerOptions = any
 
 export default function (options: TruckerOptions): TruckerJob {

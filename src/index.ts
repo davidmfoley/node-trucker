@@ -8,7 +8,7 @@ import findSourceFiles from './findSourceFiles'
 import printDependencies from './printDependencies'
 import { TruckerJob } from './TruckerJob'
 
-export default function (options: unknown) {
+export default function (options: Record<string, string>) {
   try {
     const job = buildJob(options)
     const action = getAction(job)

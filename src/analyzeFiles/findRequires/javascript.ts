@@ -3,13 +3,14 @@ import requirePathFilter from './requirePathFilter'
 import { RequireInfo } from '../types'
 import { relativeImport } from '../requireInfo'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type BabelToken = any
 
 export default (contents: string, _filename: string): RequireInfo[] => {
   contents = handleShebang(contents)
   try {
     return babelFinder(contents)
-  } catch (err) {
+  } catch (_err: unknown) {
     //fall back to stupid/fragile regex parsing
     return regexFinder(contents)
   }
@@ -78,7 +79,7 @@ function babelFinder(contents: string): RequireInfo[] {
       'privateIn',
       'throwExpressions',
       'topLevelAwait',
-    ] as any,
+    ],
   })
 
   const requires: RequireInfo[] = []

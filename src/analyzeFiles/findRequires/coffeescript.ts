@@ -3,6 +3,7 @@ import requirePathFilter from './requirePathFilter'
 import { RequireInfo } from '../types'
 import { relativeImport } from '../requireInfo'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CoffeeNode = any
 
 export default (contents: string): RequireInfo[] => {

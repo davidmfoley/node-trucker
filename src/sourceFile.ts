@@ -19,7 +19,7 @@ const readContents = (filePath: string): string => {
 
   try {
     return buffer.toString(detectedEncoding)
-  } catch (e) {
+  } catch (_: unknown) {
     // this is stupid
     return buffer.toString('utf-8')
   }
@@ -29,15 +29,19 @@ export default {
   getEncoding,
   readContents,
   // pads with a blank element zero since line numbers start at one
-  readLines: function (filePath) {
+  readLines: function (filePath: string) {
     const contents = readContents(filePath)
     return [''].concat(contents.split('\n'))
   },
   // removes blank element
-  writeLines: function (filePath, lines, encoding) {
+  writeLines: function (
+    filePath: string,
+    lines: string[],
+    encoding: BufferEncoding
+  ) {
     try {
       fs.writeFileSync(filePath, lines.slice(1).join('\n'), { encoding })
-    } catch (e) {
+    } catch (_: unknown) {
       fs.writeFileSync(filePath, lines.slice(1).join('\n'), {
         encoding: 'utf-8',
       })

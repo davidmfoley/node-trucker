@@ -1,6 +1,5 @@
 import ts from 'typescript'
 import { ImportStatement } from '../../getFileImports'
-type TypescriptToken = any
 
 const isStringLiteral = (child: ts.Node): child is ts.StringLiteral =>
   child.kind === ts.SyntaxKind.StringLiteral
@@ -62,10 +61,7 @@ export const getImportStatements = (
     }
   }
 
-  const pushImport = (
-    imports: ImportStatement[],
-    statement: TypescriptToken
-  ) => {
+  const pushImport = (imports: ImportStatement[], statement: ts.Node) => {
     ts.forEachChild(statement, (child) => {
       if (isStringLiteral(child)) {
         const loc = buildLoc(child)

@@ -20,7 +20,7 @@ export default (
   f: SourceFile,
   getNewLocation: LocationCalculator
 ): ChangedRequire[] => {
-  const changedRequires = []
+  const changedImports = []
   const newFileLocation = getNewLocation(f.fullPath)
 
   for (const r of f.requires) {
@@ -50,12 +50,12 @@ export default (
       newRelativePath = newRelativePath.replace(/\\/g, '/')
 
       if (newRelativePath !== r.relativePath) {
-        let newPath =
+        const newPath =
           r.kind === 'alias'
-            ? applyAliasMapping(r.mapping, newRelativePath)
+            ? applyAliasMapping(r.mapping, newRelativePath).path
             : newRelativePath
 
-        changedRequires.push({
+        changedImports.push({
           loc: r.loc,
           path: r.relativePath,
           newPath: newPath,
@@ -65,5 +65,5 @@ export default (
     }
   }
 
-  return changedRequires
+  return changedImports
 }

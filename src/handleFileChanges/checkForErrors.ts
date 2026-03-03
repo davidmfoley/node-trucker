@@ -18,7 +18,7 @@ export default function (changes: FileModification[]) {
     return message(dest, byDest[dest])
   })
 
-  function message(destination: string, sources: any[]) {
+  function message(destination: string, sources: string[]) {
     return (
       'multiple files would be moved to ' +
       relativePath(destination) +

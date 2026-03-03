@@ -79,6 +79,7 @@ describe('decorateRequire', () => {
       } as any
     )
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(result).to.be.undefined
 
     expect(existsArgs).to.eql([
