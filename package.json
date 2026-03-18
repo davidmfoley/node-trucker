@@ -60,9 +60,9 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "ci": "npm run build && npm run test && npm run lint && npm run prettier",
+    "check": "npm run build && npm run test && npm run lint && npm run prettier",
     "clean": "rm -rf ./lib/",
-    "fix:prettier": "prettier --write '{src,test}/**/*.ts'",
+    "fix": "prettier --write '{src,test}/**/*.ts'",
     "lint": "eslint src/ test/",
     "prettier": "prettier -c '{src,test}/**/*.ts'",
     "test": "MOCHA_CONCISE_MODE=minimal MOCHA_COLORS=1 mocha -R mocha-concise-reporter",
