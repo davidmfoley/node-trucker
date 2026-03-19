@@ -1,4 +1,4 @@
 import father from './eddard'
-import brother from './robb'
+import brother from './robb.ts'
 
 export default {}

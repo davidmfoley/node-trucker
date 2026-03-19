@@ -3,7 +3,7 @@ import path from 'path'
 import { SourceFile } from '../analyzeFiles'
 
 export default function (base: string) {
-  const files = []
+  const files = [] as SourceFile[]
   traverse(base, '.' + path.sep, files)
   return files
 }
