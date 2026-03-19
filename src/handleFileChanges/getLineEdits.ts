@@ -1,4 +1,4 @@
-import { ChangedRequire } from '../findChangedRequires'
+import { ChangedRequire } from '../findChangedImports'
 
 export default function getLineEdits(requires: ChangedRequire[]) {
   const byLine = {} as Record<number, ChangedRequire[]>

@@ -2,7 +2,7 @@ import path from 'path'
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 
-import changedRequiresByFile from '../../src/findChangedRequires'
+import changedRequiresByFile from '../../src/findChangedImports'
 
 import { FileModification } from '../../src/FileModification'
 import { examplesPath } from './examplesPath'

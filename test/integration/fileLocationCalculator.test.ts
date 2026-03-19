@@ -2,8 +2,8 @@ import { describe, before, it } from 'mocha'
 import { expect } from 'chai'
 
 import path from 'path'
-import fileLocationCalculator from '../../src/findChangedRequires/fileLocationCalculator'
-import { LocationCalculator } from '../../src/findChangedRequires/types'
+import fileLocationCalculator from '../../src/findChangedImports/fileLocationCalculator'
+import { LocationCalculator } from '../../src/findChangedImports/types'
 import { examplesPath } from './examplesPath'
 
 describe('FileLocationCalculator', () => {

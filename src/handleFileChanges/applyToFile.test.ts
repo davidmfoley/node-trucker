@@ -3,7 +3,7 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import applyToFile from './applyToFile'
-import { ChangedRequire } from '../findChangedRequires'
+import { ChangedRequire } from '../findChangedImports'
 
 describe('applyToFile', function () {
   let contents: string

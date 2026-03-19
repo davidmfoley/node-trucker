@@ -1,4 +1,4 @@
-import { ChangedRequire } from './findChangedRequires'
+import { ChangedRequire } from './findChangedImports'
 
 export interface FileModification {
   from: string

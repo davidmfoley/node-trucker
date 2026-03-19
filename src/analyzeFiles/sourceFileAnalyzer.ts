@@ -1,13 +1,13 @@
 import sourceFile from '../sourceFile'
-import findRequires from './findImports'
-import DecorateRequire from './decorateRequire'
+import findImports from './findImports'
+import DecorateRequire from './decorateImport'
 import { TruckerJob } from '../TruckerJob'
 import { ImportInfo, SourceFileWithImports, SourceFile } from './types'
 
 const decorateRequire = DecorateRequire()
 
 const sourceFileAnalyzer = (job: TruckerJob) => {
-  const finder = findRequires(job)
+  const finder = findImports(job)
   return (fileInfo: SourceFile): SourceFileWithImports => {
     const contents = sourceFile.readContents(fileInfo.fullPath)
 

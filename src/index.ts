@@ -1,7 +1,7 @@
 import buildJob from './buildJob'
 import printUnused from './printUnused'
 
-import changedRequiresByFile from './findChangedRequires'
+import changedRequiresByFile from './findChangedImports'
 import handleFileChanges from './handleFileChanges'
 
 import findSourceFiles from './findSourceFiles'

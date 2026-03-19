@@ -1,7 +1,7 @@
 import getLineEdits from './getLineEdits'
 import editLine from './editLine'
 import importedSourceFile from '../sourceFile'
-import { ChangedRequire } from '../findChangedRequires'
+import { ChangedRequire } from '../findChangedImports'
 
 function applyToFile(
   filePath: string,

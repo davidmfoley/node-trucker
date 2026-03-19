@@ -1,10 +1,10 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import decorateRequire from './decorateRequire'
+import decorateImport from './decorateImport'
 
 describe('decorateRequire', () => {
   it('uses require.resolve location if found', function () {
-    const result = decorateRequire({} as any, () => 'src/example.js')(
+    const result = decorateImport({} as any, () => 'src/example.js')(
       {
         filetype: '',
         fullPath: '/src',
@@ -20,7 +20,7 @@ describe('decorateRequire', () => {
   it('finds a file with matching name', function () {
     const filePath = '/src/example.js'
 
-    const result = decorateRequire(
+    const result = decorateImport(
       {
         existsSync: (p) => p === filePath,
         statSync: (p) => ({ isFile: () => p === filePath }),
@@ -41,7 +41,7 @@ describe('decorateRequire', () => {
   it('finds an index file with matching name', function () {
     const filePath = '/src/example/index.tsx'
 
-    const result = decorateRequire(
+    const result = decorateImport(
       {
         existsSync: (p) => p === filePath,
         statSync: (p) => ({ isFile: () => p === filePath }),
@@ -61,7 +61,7 @@ describe('decorateRequire', () => {
 
   it('tries all the extensions in order if require resolve fails', function () {
     const existsArgs = []
-    const result = decorateRequire(
+    const result = decorateImport(
       {
         existsSync: (a) => {
           existsArgs.push(a)
