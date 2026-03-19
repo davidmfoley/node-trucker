@@ -1,5 +1,4 @@
-var children = [
-  require('./robb')
-], wife = require('../tully/catelyn');
+var children = [require('./robb')],
+  wife = require('../tully/catelyn')
 
-module.exports = {};
+module.exports = {}
