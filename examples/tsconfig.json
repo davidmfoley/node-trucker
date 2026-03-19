@@ -9,7 +9,7 @@
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@dead": ["deceased"]
+      "@stark": ["deceased"]
     }
   },
   "include": ["."]
