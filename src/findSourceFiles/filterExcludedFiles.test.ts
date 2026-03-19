@@ -75,6 +75,7 @@ describe('filterExcludedFiles', function () {
 function testFiles(names: string[]): SourceFile[] {
   return names.map((name) => ({
     fullPath: '/src/' + name,
+    relativePath: '/src/' + name,
     filetype: 'unknown',
   }))
 }

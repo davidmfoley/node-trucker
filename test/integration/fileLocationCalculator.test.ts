@@ -28,7 +28,7 @@ describe('FileLocationCalculator', () => {
       }
     }
 
-    const expectNoMove = (from) => {
+    const expectNoMove = (from: string) => {
       const newLoc = calc(path.join(examplesPath, from))
       expect(newLoc.isMoved).to.equal(false)
     }

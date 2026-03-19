@@ -1,5 +1,3 @@
-'use strict'
-
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import applyToFile from './applyToFile'

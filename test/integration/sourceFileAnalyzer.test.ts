@@ -16,6 +16,7 @@ describe('sourceFileAnalyzer', () => {
       result = sourceFileAnalyzer({} as any)({
         fullPath: path.join(examplesPath, 'stark/eddard.js'),
         filetype: 'js',
+        relativePath: '',
       })
       requires = result.requires.sort((a, b) =>
         a.fullPath > b.fullPath ? 1 : -1
