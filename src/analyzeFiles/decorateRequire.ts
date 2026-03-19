@@ -1,18 +1,18 @@
 import path from 'path'
 import nodeFs from 'fs'
 
-import { SourceFile, RequireInfo, FileRequireInfo } from './types'
+import { SourceFile, ImportInfo, FileImportInfo } from './types'
 
 const requireResolve = (path: string, opts: unknown) =>
   require.resolve(path, opts)
 
 export default (fs = nodeFs, resolve = requireResolve) =>
-  (fileInfo: SourceFile, req: RequireInfo): FileRequireInfo => {
+  (fileInfo: SourceFile, req: ImportInfo): FileImportInfo => {
     const isValidFile = (path: string) => {
       return fs.existsSync(path) && fs.statSync(path).isFile()
     }
 
-    const buildResult = (filePath: string): FileRequireInfo => ({
+    const buildResult = (filePath: string): FileImportInfo => ({
       ...req,
       fullPath: fullPath,
       filePath: filePath,

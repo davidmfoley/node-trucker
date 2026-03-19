@@ -1,9 +1,9 @@
-import { RequireInfo, RequireLocation } from './types'
+import { ImportInfo, ImportLocation } from './types'
 
 export const relativeImport = (
   relativePath: string,
-  loc: RequireLocation
-): RequireInfo => ({
+  loc: ImportLocation
+): ImportInfo => ({
   relativePath,
   text: relativePath,
   kind: 'relative',
@@ -13,9 +13,9 @@ export const relativeImport = (
 export const aliasImport = (
   text: string,
   relativePath: string,
-  loc: RequireLocation,
+  loc: ImportLocation,
   mapping: { alias: string; destination: string }
-): RequireInfo => ({
+): ImportInfo => ({
   relativePath,
   kind: 'alias',
   text,

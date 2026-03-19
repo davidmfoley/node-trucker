@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import FindRequires from '../findRequires'
+import FindRequires from '../findImports'
 
 const exampleName = 'example.js'
 

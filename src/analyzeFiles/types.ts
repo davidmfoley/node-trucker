@@ -4,34 +4,34 @@ export interface SourceFile {
   filetype: string
 }
 
-export interface RequireLocation {
+export interface ImportLocation {
   line: number
   start: number
   length: number
 }
 
-export type NonAliasRequireKind = 'relative' | 'package'
-export type AliasRequireKind = 'alias'
+export type NonAliasImportKind = 'relative' | 'package'
+export type AliasImportKind = 'alias'
 
-export type RequireInfo = {
+export type ImportInfo = {
   relativePath: string
-  loc: RequireLocation
+  loc: ImportLocation
   text: string
 } & (
   | {
-      kind: NonAliasRequireKind
+      kind: NonAliasImportKind
     }
   | {
-      kind: AliasRequireKind
+      kind: AliasImportKind
       mapping: { alias: string; destination: string }
     }
 )
 
-export type FileRequireInfo = RequireInfo & {
+export type FileImportInfo = ImportInfo & {
   fullPath: string
   filePath: string
 }
 
-export type SourceFileWithRequires = SourceFile & {
-  requires: FileRequireInfo[]
+export type SourceFileWithImports = SourceFile & {
+  requires: FileImportInfo[]
 }

@@ -1,12 +1,11 @@
 import javascript from './javascript'
 import typescriptRequireFinder from './typescript'
-import coffee from './coffeescript'
-import { RequireInfo } from '../types'
+import { ImportInfo } from '../types'
 import { TruckerJob } from '../../TruckerJob'
 import { getTsConfig } from './typescript/tsConfig'
 
-type RequireFinder = (contents: string, filename: string) => RequireInfo[]
-type Parsers = { [key: string]: RequireFinder }
+type ImportFinder = (contents: string, filename: string) => ImportInfo[]
+type Parsers = { [key: string]: ImportFinder }
 
 export default (job: TruckerJob) => {
   const tsconfig = getTsConfig(job)
@@ -18,7 +17,6 @@ export default (job: TruckerJob) => {
     jsx: javascript,
     ts: typescript,
     tsx: typescript,
-    coffee,
   }
   return (filetype: string, contents: string, filename: string) => {
     return parsers[filetype](contents, filename)

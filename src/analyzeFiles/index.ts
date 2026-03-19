@@ -3,28 +3,28 @@ import analyzer, { SourceFileAnalyzer } from './sourceFileAnalyzer'
 import { TruckerJob } from '../TruckerJob'
 import {
   SourceFile,
-  SourceFileWithRequires,
-  RequireLocation,
-  RequireInfo,
-  FileRequireInfo,
+  SourceFileWithImports,
+  ImportLocation,
+  ImportInfo,
+  FileImportInfo,
 } from './types'
 export type {
   SourceFile,
-  SourceFileWithRequires,
-  RequireLocation,
-  RequireInfo,
-  FileRequireInfo,
+  SourceFileWithImports as SourceFileWithRequires,
+  ImportLocation as RequireLocation,
+  ImportInfo as RequireInfo,
+  FileImportInfo as FileRequireInfo,
 }
 
 type Analyze = (
   analyzer: SourceFileAnalyzer,
   fileInfos: SourceFile[]
-) => SourceFileWithRequires[]
+) => SourceFileWithImports[]
 
 export default (
   job: TruckerJob,
   fileInfos: SourceFile[]
-): SourceFileWithRequires[] => {
+): SourceFileWithImports[] => {
   const showProgress = fileInfos.length > 100 && !job.quiet
   const analyze: Analyze = showProgress ? withBar : noBar
   return analyze(analyzer(job), fileInfos)
@@ -51,7 +51,7 @@ function withBar(analyzer: SourceFileAnalyzer, fileInfos: SourceFile[]) {
   console.error('')
   return files
 
-  function analyzeAndTick(fileInfo: SourceFile): SourceFileWithRequires {
+  function analyzeAndTick(fileInfo: SourceFile): SourceFileWithImports {
     bar.tick()
     return analyzer(fileInfo)
   }

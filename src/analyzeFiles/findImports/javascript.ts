@@ -1,12 +1,12 @@
 import * as babelParser from '@babel/parser'
 import requirePathFilter from './requirePathFilter'
-import { RequireInfo } from '../types'
+import { ImportInfo } from '../types'
 import { relativeImport } from '../requireInfo'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type BabelToken = any
 
-export default (contents: string, _filename: string): RequireInfo[] => {
+export default (contents: string, _filename: string): ImportInfo[] => {
   contents = handleShebang(contents)
   try {
     return babelFinder(contents)
@@ -16,7 +16,7 @@ export default (contents: string, _filename: string): RequireInfo[] => {
   }
 }
 
-function regexFinder(contents: string): RequireInfo[] {
+function regexFinder(contents: string): ImportInfo[] {
   const lines = contents.split('\n')
   const requires = []
   const importRegex = /((import|export) (.+? from)?|require\s*\()\s*['"`]/g
@@ -43,7 +43,7 @@ function regexFinder(contents: string): RequireInfo[] {
   return requires
 }
 
-function babelFinder(contents: string): RequireInfo[] {
+function babelFinder(contents: string): ImportInfo[] {
   // kitchen-sink approach, since we just want to find requires/imports/etc.
   const bbl = babelParser.parse(contents, {
     sourceType: 'unambiguous',
@@ -82,7 +82,7 @@ function babelFinder(contents: string): RequireInfo[] {
     ],
   })
 
-  const requires: RequireInfo[] = []
+  const requires: ImportInfo[] = []
   scan(bbl.tokens || [], requires)
   return requires
 }
@@ -95,7 +95,7 @@ function isString(token: BabelToken) {
   return token.type.label === 'string'
 }
 
-function scan(tokens: BabelToken[], requires: RequireInfo[]) {
+function scan(tokens: BabelToken[], requires: ImportInfo[]) {
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i]
     const type = token.type
@@ -119,7 +119,7 @@ function scan(tokens: BabelToken[], requires: RequireInfo[]) {
   }
 }
 
-function addIfMatch(requires: RequireInfo[], pathToken: BabelToken) {
+function addIfMatch(requires: ImportInfo[], pathToken: BabelToken) {
   if (!(pathToken && pathToken.value)) return
   if (!requirePathFilter(pathToken.value)) return
   const loc = pathToken.loc

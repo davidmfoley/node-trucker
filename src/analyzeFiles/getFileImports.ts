@@ -1,14 +1,14 @@
-import { RequireLocation, RequireInfo } from './types'
+import { ImportLocation, ImportInfo } from './types'
 
 export interface ImportStatement {
   filePath: string
   importPath: string
-  loc: RequireLocation
+  loc: ImportLocation
 }
 
 type FindImports = (contents: string, filePath: string) => ImportStatement[]
-type ProcessImport = (statement: ImportStatement) => RequireInfo
-type ImportFilter = (info: RequireInfo) => boolean
+type ProcessImport = (statement: ImportStatement) => ImportInfo
+type ImportFilter = (info: ImportInfo) => boolean
 
 export const getFileImports =
   (

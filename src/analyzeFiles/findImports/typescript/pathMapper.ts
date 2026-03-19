@@ -1,7 +1,7 @@
 import micromatch from 'micromatch'
 
 import path from 'path'
-import { FileRequireInfo } from '../../types'
+import { FileImportInfo } from '../../types'
 import { ImportStatement } from '../../getFileImports'
 import { ImportResolver } from '../importResolver'
 
@@ -9,11 +9,11 @@ type MapperPaths = {
   [key: string]: string[]
 }
 
-export type PathMapper = (im: ImportStatement) => FileRequireInfo | undefined
+export type PathMapper = (im: ImportStatement) => FileImportInfo | undefined
 
 const buildMapper =
   (pattern: string, destinations: string[], resolver: ImportResolver) =>
-  (im: ImportStatement): FileRequireInfo | undefined => {
+  (im: ImportStatement): FileImportInfo | undefined => {
     const result = micromatch.capture(pattern.replace('*', '**'), im.importPath)
 
     if (result) {

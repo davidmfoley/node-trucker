@@ -113,6 +113,7 @@ describe('RequireFinder', () => {
           loc,
           filePath: '/example/file/path.ts',
           fullPath: '/example/full/path',
+          mapping: { alias: '', destination: '' },
         })
       )
       const code = `import { Foo } from '~/foo/bar';`

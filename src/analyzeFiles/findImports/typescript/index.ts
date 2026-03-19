@@ -1,5 +1,5 @@
 import requirePathFilter from '../requirePathFilter'
-import { RequireInfo } from '../../types'
+import { ImportInfo } from '../../types'
 import { TsConfig } from './tsConfig'
 import { getPathMapper, PathMapper } from './pathMapper'
 import { getFileImports } from '../../getFileImports'
@@ -7,7 +7,7 @@ import { getImportStatements } from './getImportStatements'
 import importResolver from '../importResolver'
 
 export const FindRequires = (pathMapper: PathMapper) => {
-  const filterTsImport = (item: RequireInfo) =>
+  const filterTsImport = (item: ImportInfo) =>
     requirePathFilter(item.relativePath)
 
   return getFileImports(getImportStatements, pathMapper, filterTsImport)

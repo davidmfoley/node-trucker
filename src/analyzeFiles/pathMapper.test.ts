@@ -2,7 +2,7 @@ import assert from 'node:assert'
 import { describe, test } from 'mocha'
 import { expect } from 'chai'
 
-import { getPathMapper } from './findRequires/typescript/pathMapper'
+import { getPathMapper } from './findImports/typescript/pathMapper'
 import { RequireLocation } from '../analyzeFiles'
 
 const exampleLoc: RequireLocation = {
