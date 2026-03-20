@@ -9,7 +9,7 @@ interface SourceFile {
   requires: FileRequireInfo[]
 }
 
-export interface ChangedRequire {
+export interface ChangedImport {
   filePath: string
   newPath: string
   loc: RequireLocation
@@ -19,7 +19,7 @@ export interface ChangedRequire {
 export default (
   f: SourceFile,
   getNewLocation: LocationCalculator
-): ChangedRequire[] => {
+): ChangedImport[] => {
   const changedImports = []
   const newFileLocation = getNewLocation(f.fullPath)
 

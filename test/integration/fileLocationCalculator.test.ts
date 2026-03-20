@@ -32,6 +32,7 @@ describe('FileLocationCalculator', () => {
       const newLoc = calc(path.join(examplesPath, from))
       expect(newLoc.isMoved).to.equal(false)
     }
+
     describe('moving a file with explicit "to"', () => {
       before(() => {
         whenLocationsAre('stark/eddard.js', 'stark/ned.js')

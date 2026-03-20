@@ -1,5 +1,5 @@
 import * as babelParser from '@babel/parser'
-import requirePathFilter from './requirePathFilter'
+import importPathFilter from './importPathFilter'
 import { ImportInfo } from '../types'
 import { relativeImport } from '../requireInfo'
 
@@ -27,7 +27,7 @@ function regexFinder(contents: string): ImportInfo[] {
       if (!result) return
       const location = result.index + result[0].length
       const requirePath = line.substring(location).split(/['"`]/)[0]
-      if (requirePathFilter(requirePath)) {
+      if (importPathFilter(requirePath)) {
         requires.push({
           relativePath: requirePath,
           loc: {
@@ -121,7 +121,7 @@ function scan(tokens: BabelToken[], requires: ImportInfo[]) {
 
 function addIfMatch(requires: ImportInfo[], pathToken: BabelToken) {
   if (!(pathToken && pathToken.value)) return
-  if (!requirePathFilter(pathToken.value)) return
+  if (!importPathFilter(pathToken.value)) return
   const loc = pathToken.loc
 
   requires.push(
