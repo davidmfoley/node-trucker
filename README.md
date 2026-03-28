@@ -6,11 +6,11 @@ Trucker is a tool that helps manage dependencies between javascript files
 
 It has three main functions:
 
-1. Show all inbound and outbound dependencies for javascript and coffeescript source files. (```trucker --info filename.js``` or ```trucker -i filename.js```)
+1. Show all inbound and outbound dependencies for javascript and coffeescript source files. (`trucker --info filename.js` or `trucker -i filename.js`
 
-1. Move/rename source files while fixing up the paths used in imports. (```trucker --move source destination``` or ```trucker -m source destination```)
+1. Move/rename source files while fixing up the paths used in imports. (`trucker --move source destination` or `trucker -m source destination`
 
-1. Find unused files (files that are not importd by any other files). (```trucker --unused``` or ```trucker -u```)
+1. Find unused files (files that are not importd by any other files). (`trucker --unused` or `trucker -u`
 
 Why is it called trucker? Because it hauls your files around without breaking them.
 
@@ -18,9 +18,7 @@ Why is it called trucker? Because it hauls your files around without breaking th
 
 ## Languages
 
-* Javascript, as parsed by babel (up to ES7)
-
-* Coffeescript
+* Javascript
 
 * Typescript
 
@@ -28,15 +26,15 @@ Why is it called trucker? Because it hauls your files around without breaking th
 ## Module systems
 
 
-* CommonJS 6 - i.e. ```module.exports``` and ```require()```.
+* CommonJS 6 - i.e. `module.exports` and `require()`
 
-* ECMAScript 6 - i.e. ```export``` and ```import```.
+* ECMAScript 6 - i.e. `export` and `import`
 
-* TypeScript - i.e. ```export``` and ```import```.
+* TypeScript - i.e. `export` and `import`
 
 # Installation
 
-```npm install -g trucker```
+`npm install -g trucker`
 
 Trucker runs on node.js 10 or greater.
 
@@ -46,22 +44,22 @@ Trucker runs on node.js 10 or greater.
 
 To move files:
 
-```trucker  --move [flags] source [additional sources...] destination```
+`trucker  --move [flags] source [additional sources...] destination`
 
 ### Get dependency info about files
 
 To get info about files:
 
-```trucker --info [optional file paths]```
+`trucker --info [optional file paths]`
 
-If no paths are passed, trucker will spit out information for all files in the `base` path (see options below).
+If no paths are passed, `trucker --info` will spit out information for all files in the `base` path (see options below).
 
 ###  Build a graph of dependencies using graphviz
 (experimental)
 
 To get info about files:
 
-```trucker --info --format dot [optional file paths]```
+`trucker --info --format dot [optional file paths]`
 
 This will output a [graphviz](http://www.graphviz.org/)-compatible dot file that can be rendered into an image file by the `dot` tool that is part of graphviz.
 
@@ -85,43 +83,43 @@ dot -Tsvg -o ./trucker-graph.svg <(trucker --exclude test --info --format dot)
 
 Find files that are not importd by any other source files in given path
 
-```trucker --unused [path]```
+`trucker --unused [path]`
 
 ## Examples
 
-in the examples directory (provided), you can try the following (add ```-n``` for dry run mode if desired):
+in the examples directory (provided), you can try the following (add `n` for dry run mode if desired):
 
 - Get info about all dependencies in the current directory and all sub directories
-```trucker --info```
+`trucker --info`
 
 - Get dependencies for just one subdirectory
-```trucker -i stark/```
+`trucker -i stark/`
 
 - Move a single file:
-```trucker --move stark/eddard.js deceased/```
+`trucker --move stark/eddard.js deceased/`
 
 - Move a single file, specifying destination path:
-```trucker -m stark/eddard.js deceased/ned.js```
+`trucker -m stark/eddard.js deceased/ned.js`
 
 - Move multiple files explicitly
-```trucker -m stark/eddard.js tully/catelyn.js deceased/```
+`trucker -m stark/eddard.js tully/catelyn.js deceased/`
 
 - Move a directory:
-```trucker -m stark deceased/stark```
+`trucker -m stark deceased/stark`
 
 - Paths are automatically created:
-```trucker -m stark/eddard.js deceased/in/book1/```
+`trucker -m stark/eddard.js deceased/in/book1/`
 
 ## Options
-```-h, --help``` prints the help
+`h, --help` prints the help
 
-```-n, --dry-run``` tells trucker not to move any files, but to instead print out a list of all of the changes that would have been made if this option was not set.
+`n, --dry-run` tells trucker not to move any files, but to instead print out a list of all of the changes that would have been made if this option was not set.
 
-```-s, --scope``` can be used to expand or contract the set of files that trucker searches for dependencies. This defaults to the present working directory. If you have a very large project you may wish to constrain the scope for performance reasons (analysis takes time), or in some cases you may wish to expand the scope beyond the current directory. Use ```--scope``` for this.
+`s, --scope` can be used to expand or contract the set of files that trucker searches for dependencies. This defaults to the present working directory. If you have a very large project you may wish to constrain the scope for performance reasons (analysis takes time), or in some cases you may wish to expand the scope beyond the current directory. Use `scope` for this.
 
-```-q, --quiet``` suppress output
+`q, --quiet` suppress output
 
-```-e, --exclude``` Add file glob pattern to ignore to those found in the `.gitignore` file. Repeat this options to add many patterns.
+`e, --exclude` Add file glob pattern to ignore to those found in the `.gitignore` file. Repeat this options to add many patterns.
 
 # Ignored files
 
@@ -131,16 +129,18 @@ See too the `--exclude` option above.
 
 # Limitations
 
-## Tested on OSX
-
-Should also work on other platforms. Let me know if you have a problem.
-
-## dynamic import/require syntax
+## Dynamic import/require syntax
 
 Trucker does not resolve dynamic require and import statements.
 
-Trucker doesn't recognize this, for example:
+Trucker can't recognize dynamic requires or imports that consiste of more than just a simple path string, for example:
 ```javascript
 var x = '../foo/bar';
 var y = require(x);
 ```
+
+## Moving other, non-source-code files
+
+When moving a folder, trucker does *not* move other non-javascript/typescript files that exist in the folder, next to the source files.
+
+
