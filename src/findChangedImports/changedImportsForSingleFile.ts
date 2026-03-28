@@ -38,13 +38,10 @@ export default (
       const isFile = fileInfo.isFile(r.fullPath)
       if (!isFile) {
         newRelativePath = newRelativePath.replace(
-          /\/index\.(js|jsx|coffee|ts|tsx|mjs)$/,
+          /\/index\.(js|jsx|ts|tsx|mjs)$/,
           ''
         )
-        newRelativePath = newRelativePath.replace(
-          /\.(js|jsx|coffee|ts|tsx|mjs)$/,
-          ''
-        )
+        newRelativePath = newRelativePath.replace(/\.(js|jsx|ts|tsx|mjs)$/, '')
       }
 
       newRelativePath = newRelativePath.replace(/\\/g, '/')

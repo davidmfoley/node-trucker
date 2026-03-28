@@ -111,7 +111,7 @@ describe('FileLocationCalculator', () => {
 
     describe('moving multiple files', () => {
       before(() => {
-        whenLocationsAre(['stark/eddard.js', 'stark/robb.coffee'], 'deceased/')
+        whenLocationsAre(['stark/eddard.js', 'stark/robb.ts'], 'deceased/')
       })
 
       it('returns new location for eddard', () => {
@@ -119,7 +119,7 @@ describe('FileLocationCalculator', () => {
       })
 
       it('returns new location for robb', () => {
-        expectMove('stark/robb.coffee', 'deceased/robb.coffee', 'deceased/robb')
+        expectMove('stark/robb.ts', 'deceased/robb.ts', 'deceased/robb')
       })
 
       it('throws if multiple froms and to is a file', () => {
@@ -128,7 +128,7 @@ describe('FileLocationCalculator', () => {
             {
               from: [
                 path.join(starkPath, '/eddard.js'),
-                path.join(starkPath, '/robb.coffee'),
+                path.join(starkPath, '/robb.ts'),
               ],
               to: path.join(starkPath, '/eddard.js'),
             },

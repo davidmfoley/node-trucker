@@ -36,11 +36,10 @@ function weCareAboutDirectory(name: string) {
   return ignore.indexOf(name) === -1
 }
 function weCareAboutFile(name: string) {
-  return /\.(js|jsx|coffee|mjs|ts|tsx)$/.exec(name)
+  return /\.(js|jsx|mjs|ts|tsx)$/.exec(name)
 }
 
 function getFiletype(name: string) {
-  if (/coffee$/.exec(name)) return 'coffee'
   if (/ts(x?)$/.exec(name)) return 'ts'
   return 'js'
 }

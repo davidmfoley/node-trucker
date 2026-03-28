@@ -34,7 +34,7 @@ export default (fs = nodeFs, resolve = requireResolve) =>
       // nothing
     }
 
-    const exts = ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.coffee']
+    const exts = ['.js', '.jsx', '.mjs', '.ts', '.tsx']
 
     if (isValidFile(fullPath)) return buildResult(fullPath)
 

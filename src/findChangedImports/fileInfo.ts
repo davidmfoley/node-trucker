@@ -10,8 +10,6 @@ export default {
     const stat = fs.existsSync(f) && fs.statSync(f)
     if (stat) return stat.isFile()
     const extname = path.extname(f)
-    return (
-      ['.js', '.coffee', '.jsx', '.mjs', '.ts', '.tsx'].indexOf(extname) >= 0
-    )
+    return ['.js', '.jsx', '.mjs', '.ts', '.tsx'].indexOf(extname) >= 0
   },
 }
