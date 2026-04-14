@@ -6,11 +6,11 @@ Trucker is a tool that helps manage dependencies between javascript files
 
 It has three main functions:
 
-1. Show all inbound and outbound dependencies for javascript and coffeescript source files. (`trucker --info filename.js` or `trucker -i filename.js`
+1. Show all inbound and outbound dependencies for matching source files. (`trucker --info filename.js` or `trucker -i filename.js`)
 
-1. Move/rename source files while fixing up the paths used in imports. (`trucker --move source destination` or `trucker -m source destination`
+1. Move/rename source files while fixing up the paths used in imports. (`trucker --move source destination` or `trucker -m source destination`)
 
-1. Find unused files (files that are not importd by any other files). (`trucker --unused` or `trucker -u`
+1. Find unused files (files that are not importd by any other files). (`trucker --unused` or `trucker -u`)
 
 Why is it called trucker? Because it hauls your files around without breaking them.
 
