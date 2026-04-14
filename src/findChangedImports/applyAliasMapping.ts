@@ -2,20 +2,23 @@ import path from 'path'
 
 export const applyAliasMapping = (
   mapping: { alias: string; destination: string },
-  relativePath: string
+  absolutePath: string
 ) => {
   const relativePathFromAliasToTarget = path.relative(
-    mapping.destination,
-    relativePath
+    mapping.destination.replace('*', ''),
+    absolutePath
   )
   if (relativePathFromAliasToTarget.startsWith('..')) {
     return {
       result: 'no-match',
-      path: relativePath,
+      path: absolutePath,
     }
   }
   return {
     result: 'match',
-    path: path.join(mapping.alias, relativePathFromAliasToTarget),
+    path: path.join(
+      mapping.alias.replace('*', ''),
+      relativePathFromAliasToTarget
+    ),
   }
 }
