@@ -4,7 +4,7 @@ import trucker from '.'
 const cli = () => {
   const options = optimist
     .usage(
-      `Move CommonJS source files or directories without breaking your imports.\nSupports typescript, javascript and coffeescript files.
+      `Move CommonJS source files or directories without breaking your imports.\nSupports typescript and javascript.
 
 Move files:
 trucker -m [sources...] destination

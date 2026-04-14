@@ -6,7 +6,10 @@ import { SourceFile, ImportInfo, FileImportInfo } from './types'
 const requireResolve = (path: string, opts: unknown) =>
   require.resolve(path, opts)
 
-export default (fs = nodeFs, resolve = requireResolve) =>
+export default (
+    fs: Pick<typeof nodeFs, 'statSync' | 'existsSync'> = nodeFs,
+    resolve = requireResolve
+  ) =>
   (fileInfo: SourceFile, req: ImportInfo): FileImportInfo => {
     const isValidFile = (path: string) => {
       return fs.existsSync(path) && fs.statSync(path).isFile()

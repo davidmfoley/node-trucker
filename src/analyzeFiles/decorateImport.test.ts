@@ -8,6 +8,7 @@ describe('decorateRequire', () => {
       {
         filetype: '',
         fullPath: '/src',
+        relativePath: '',
       },
       {
         relativePath: './example',
@@ -89,13 +90,11 @@ describe('decorateRequire', () => {
       '/example.mjs',
       '/example.ts',
       '/example.tsx',
-      '/example.coffee',
       '/example/index.js',
       '/example/index.jsx',
       '/example/index.mjs',
       '/example/index.ts',
       '/example/index.tsx',
-      '/example/index.coffee',
     ])
   })
 })
