@@ -26,7 +26,6 @@
   "description": "Hauls your files around without breaking your imports",
   "dependencies": {
     "@babel/parser": "^7.11.4",
-    "coffeescript": "^2.5.1",
     "ignore": "3.3.x",
     "jschardet": "^2.2.1",
     "micromatch": "^4.0.4",
@@ -44,16 +43,16 @@
     "@types/node": "^22.0.0",
     "@types/optimist": "^0.0.30",
     "@types/progress": "^2.0.4",
-    "typescript-eslint": "^8.56.0",
     "chai": "^4.2.0",
     "concurrently": "^6.2.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^6.15.0",
-    "mocha": "^11.7.5",
+    "mocha": "^11.3.0",
     "mocha-concise-reporter": "^1.2.0",
     "nodemon": "^3.1.11",
     "prettier": "^2.1.0",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript-eslint": "^8.56.0"
   },
   "engines": {
     "node": ">=10.0.0"
