@@ -119,12 +119,12 @@ function scan(tokens: BabelToken[], requires: ImportInfo[]) {
   }
 }
 
-function addIfMatch(requires: ImportInfo[], pathToken: BabelToken) {
+function addIfMatch(imports: ImportInfo[], pathToken: BabelToken) {
   if (!(pathToken && pathToken.value)) return
   if (!importPathFilter(pathToken.value)) return
   const loc = pathToken.loc
 
-  requires.push(
+  imports.push(
     relativeImport(pathToken.value, {
       line: loc.start.line,
       start: loc.start.column + 2,

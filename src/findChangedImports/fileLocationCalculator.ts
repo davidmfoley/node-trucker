@@ -7,10 +7,8 @@ export default (
     from: string[]
     to: string
   }[],
-  fileInfo?: typeof FileInfo
+  fileInfo = FileInfo
 ): LocationCalculator => {
-  fileInfo = fileInfo || FileInfo
-
   let mappers: ((path: string) => string | undefined)[] = []
 
   for (const { from, to } of moves) {
@@ -30,13 +28,25 @@ export default (
 
   return function (fullPath) {
     const mapped = mappers.map((mapper) => mapper(fullPath))
-    const matches = mapped.filter((x) => !!x)
+    const match = mapped.find((x) => !!x)
 
-    if (matches.length) {
-      return moveInfo(true, matches[0])
+    if (!match) {
+      return {
+        isMoved: false,
+        basenameChanged: false,
+        dirnameChanged: false,
+        fullPath,
+        requirePath: requirePath(path.normalize(fullPath)),
+      }
     }
 
-    return moveInfo(false, fullPath)
+    return {
+      isMoved: true,
+      basenameChanged: path.basename(fullPath) != path.basename(match),
+      dirnameChanged: path.dirname(fullPath) !== path.dirname(match),
+      fullPath: match,
+      requirePath: requirePath(match),
+    }
   }
 }
 
@@ -68,17 +78,11 @@ const requirePath = (filePath: string): string => {
     filePath.length - path.extname(filePath).length
   )
 
-  if (basename.split('.')[0] === 'index') {
+  const dotDelimited = basename.split('.')
+
+  // shorten index.ts but not index.server.ts
+  if (dotDelimited.length === 2 && dotDelimited[0] === 'index') {
     return path.dirname(req)
   }
   return req
-}
-
-const moveInfo = (isMoved: boolean, fullPath: string) => {
-  const filePath = path.normalize(fullPath)
-  return {
-    isMoved,
-    fullPath: filePath,
-    requirePath: requirePath(filePath),
-  }
 }

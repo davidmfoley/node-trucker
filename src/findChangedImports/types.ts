@@ -1,5 +1,7 @@
 export interface FileAction {
   isMoved: boolean
+  basenameChanged: boolean
+  dirnameChanged: boolean
   fullPath: string
   requirePath: string
 }
