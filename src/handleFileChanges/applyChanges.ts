@@ -7,20 +7,22 @@ import { TruckerMoveJob } from '../TruckerJob'
 import { FileModification } from '../FileModification'
 
 const applyChanges = (job: TruckerMoveJob, changes: FileModification[]) => {
-  let to: string
   if (!job.quiet) printChanges(job, changes)
 
   for (const move of job.moves) {
-    const toIsDirectory =
+    const toIsExistingDirectory =
       fs.existsSync(move.to) && fs.statSync(move.to).isDirectory()
 
+    const toLooksLikeDirectory = move.to.endsWith('/') || move.to.endsWith('\\')
+
     for (const from of move.from) {
+      let to = move.to
       const fromIsFile = fs.statSync(from).isFile()
 
-      if (fromIsFile && toIsDirectory) {
-        to = path.join(move.to, path.basename(from))
-      } else {
-        to = move.to
+      if (fromIsFile) {
+        if (toIsExistingDirectory || toLooksLikeDirectory) {
+          to = path.join(move.to, path.basename(from))
+        }
       }
 
       mkdirp.sync(path.dirname(to))
