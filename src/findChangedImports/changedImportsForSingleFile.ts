@@ -27,16 +27,15 @@ export default (
     const newRequireLocation = getNewLocation(r.filePath)
 
     if (newFileLocation.isMoved || newRequireLocation.isMoved) {
-      const extname = path.extname(r.filePath)
-
       let newRelativePath = path.relative(
         path.dirname(newFileLocation.fullPath),
-        newRequireLocation.requirePath + extname
+        newRequireLocation.fullPath
       )
       if (newRelativePath[0] !== '.') newRelativePath = './' + newRelativePath
 
-      const isFile = fileInfo.isFile(r.fullPath)
-      if (!isFile) {
+      const isExactPathFileImport = fileInfo.isFile(r.fullPath)
+
+      if (!isExactPathFileImport) {
         newRelativePath = newRelativePath.replace(
           /\/index\.(js|jsx|ts|tsx|mjs)$/,
           ''
@@ -49,7 +48,7 @@ export default (
       if (newRelativePath !== r.relativePath) {
         const newPath =
           r.kind === 'alias'
-            ? applyAliasMapping(r.mapping, r.fullPath).path
+            ? applyAliasMapping(r.mapping, newRequireLocation.requirePath).path
             : newRelativePath
 
         if (newPath !== r.text) {
