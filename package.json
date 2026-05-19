@@ -59,7 +59,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "check": "npm run build && npm run test && npm run lint && npm run prettier",
+    "check": "npm run build && npm run test && npm run lint && npm run prettier && npm audit --omit=dev",
     "clean": "rm -rf ./lib/",
     "fix": "prettier --write '{src,test}/**/*.ts'",
     "lint": "eslint src/ test/",
