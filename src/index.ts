@@ -1,7 +1,7 @@
 import buildJob from './buildJob'
 import printUnused from './printUnused'
 
-import changedRequiresByFile from './findChangedImports'
+import changedImportsByFile from './findChangedImports'
 import handleFileChanges from './handleFileChanges'
 
 import findSourceFiles from './findSourceFiles'
@@ -27,7 +27,7 @@ function getAction(job: TruckerJob) {
 }
 
 function moveFiles(job: TruckerJob) {
-  const changes = changedRequiresByFile(job)
+  const changes = changedImportsByFile(job)
   const handler = handleFileChanges(job.dryRun)
   handler(job, changes)
 }

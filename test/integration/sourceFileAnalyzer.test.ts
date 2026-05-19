@@ -4,11 +4,11 @@ import path from 'path'
 import sourceFileAnalyzer, {
   SourceFileAnalyzer,
 } from '../../src/analyzeFiles/sourceFileAnalyzer'
-import { FileRequireInfo } from '../../src/analyzeFiles'
+import { FileImportInfo } from '../../src/analyzeFiles'
 import { examplesPath } from './examplesPath'
 
 describe('sourceFileAnalyzer', () => {
-  let requires: FileRequireInfo[]
+  let requires: FileImportInfo[]
   let result: ReturnType<SourceFileAnalyzer>
 
   describe('analyzing a sourcefile', () => {

@@ -2,7 +2,7 @@ import path from 'path'
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 
-import changedRequiresByFile from '../../src/findChangedImports'
+import changedImportsByFile from '../../src/findChangedImports'
 
 import { FileModification } from '../../src/FileModification'
 import { examplesPath } from './examplesPath'
@@ -26,15 +26,15 @@ function moveJob(from: string, to: string) {
 const sortByFrom = (a: FileModification, b: FileModification) =>
   a.from > b.from ? 1 : -1
 
-describe('changedRequiresByFile', () => {
+describe('changedImportsByFile', () => {
   describe('moving a file', () => {
     it('has the correct fixes', () => {
-      const files = changedRequiresByFile(moveJob('stark/robb.ts', 'deceased/'))
+      const files = changedImportsByFile(moveJob('stark/robb.ts', 'deceased/'))
       expect(files.length).to.equal(3)
     })
 
     it('fixes the outbound require in the file', () => {
-      const files = changedRequiresByFile(
+      const files = changedImportsByFile(
         moveJob('stark/robb.ts', 'deceased/')
       ).sort(sortByFrom)
 
@@ -44,7 +44,7 @@ describe('changedRequiresByFile', () => {
       expect(outbound.newPath).to.equal('../stark/eddard')
     })
     it('fixes the inbound require in a referencing file', () => {
-      const files = changedRequiresByFile(
+      const files = changedImportsByFile(
         moveJob('stark/robb.ts', 'deceased/')
       ).sort(sortByFrom)
 
@@ -54,7 +54,7 @@ describe('changedRequiresByFile', () => {
       expect(inbound.newPath).to.equal('../deceased/robb')
     })
     it('keeps the extension in a referencing file', () => {
-      const files = changedRequiresByFile(
+      const files = changedImportsByFile(
         moveJob('stark/robb.ts', 'deceased/')
       ).sort(sortByFrom)
       expect(files[2].requires.length).to.equal(1)
@@ -66,7 +66,7 @@ describe('changedRequiresByFile', () => {
 
   describe('moving a directory', () => {
     it('fixes the inbound require in a referencing file', () => {
-      const files = changedRequiresByFile(moveJob('tully/', 'deceased')).sort(
+      const files = changedImportsByFile(moveJob('tully/', 'deceased')).sort(
         sortByFrom
       )
       expect(files.length).to.equal(2)
@@ -77,7 +77,7 @@ describe('changedRequiresByFile', () => {
       expect(inbound.newPath).to.equal('../deceased/catelyn')
     })
     it('includes the file that is moving', () => {
-      const files = changedRequiresByFile(moveJob('tully/', 'deceased')).sort(
+      const files = changedImportsByFile(moveJob('tully/', 'deceased')).sort(
         sortByFrom
       )
       expect(files.length).to.equal(2)
@@ -86,7 +86,7 @@ describe('changedRequiresByFile', () => {
   })
   describe('moving a directory outside the base', () => {
     it('fixes the inbound require in a referencing file', () => {
-      const files = changedRequiresByFile(moveJob('tully/', '/../tully')).sort(
+      const files = changedImportsByFile(moveJob('tully/', '/../tully')).sort(
         sortByFrom
       )
       expect(files[0].requires.length).to.equal(1)
@@ -95,7 +95,7 @@ describe('changedRequiresByFile', () => {
       expect(inbound.newPath).to.equal('../../tully/catelyn')
     })
     it('fixes the outbound require', () => {
-      const files = changedRequiresByFile(moveJob('tully/', '/../tully')).sort(
+      const files = changedImportsByFile(moveJob('tully/', '/../tully')).sort(
         sortByFrom
       )
       expect(files[1].requires.length).to.equal(1)

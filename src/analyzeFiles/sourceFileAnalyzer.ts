@@ -1,10 +1,10 @@
 import sourceFile from '../sourceFile'
 import findImports from './findImports'
-import DecorateRequire from './decorateImport'
+import DecorateImport from './decorateImport'
 import { TruckerJob } from '../TruckerJob'
 import { ImportInfo, SourceFileWithImports, SourceFile } from './types'
 
-const decorateRequire = DecorateRequire()
+const decorateImport = DecorateImport()
 
 const sourceFileAnalyzer = (job: TruckerJob) => {
   const finder = findImports(job)
@@ -19,8 +19,8 @@ const sourceFileAnalyzer = (job: TruckerJob) => {
       printAnalyzeError(fileInfo, err)
     }
 
-    const decorate = (require: ImportInfo) => {
-      return decorateRequire(fileInfo, require)
+    const decorate = (imp: ImportInfo) => {
+      return decorateImport(fileInfo, imp)
     }
 
     return {

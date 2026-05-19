@@ -1,43 +1,43 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import FindRequires from '../findImports'
+import FindImports from '../findImports'
 
 const exampleName = 'example.js'
 
-const findRequires = FindRequires({} as any)
+const findImports = FindImports({} as any)
 
-describe('RequireFinder', () => {
+describe('find javascript imports', () => {
   describe('with es6 imports', () => {
-    it('handles a file with no requires', () => {
-      expect(findRequires('js', '', exampleName)).to.eql([])
+    it('handles a file with no foundImports', () => {
+      expect(findImports('js', '', exampleName)).to.eql([])
     })
 
     it('handles a single require', () => {
       const code = "import * as x from './y';"
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./y')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./y')
     })
 
     it('handles unassigned import', () => {
       const code = "import './y';"
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./y')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./y')
     })
 
     it('handles immediately exported import', () => {
       const code = "export * from './y';"
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./y')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./y')
     })
 
     it('ignores a jsx tag on same line as export', () => {
       const code = `import React from 'react'
 export default () => <a href="/">Test</a>;`
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(0)
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(0)
     })
 
     it('handles flow and js imports on multiline', () => {
@@ -46,22 +46,22 @@ export default () => <a href="/">Test</a>;`
         type FlowTypeB
       } from './MyModule'
       `
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./MyModule')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./MyModule')
     })
 
     it('ignores npm modules that are required', () => {
       const code = "import bar from 'bar';\nimport foo from './foo' ;\n"
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./foo')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./foo')
     })
 
     it('sets location correctly', () => {
       const code = "import * as foo from './foo'"
-      const requires = findRequires('js', code, exampleName)
-      const req = requires[0]
+      const foundImports = findImports('js', code, exampleName)
+      const req = foundImports[0]
       expect(req.loc.line).to.equal(1)
       expect(req.loc.start).to.equal(23)
       expect(req.loc.length).to.equal(5)
@@ -76,9 +76,9 @@ export default () => <a href="/">Test</a>;`
       const example = './MyModule';
       `
 
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./MyModule')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./MyModule')
     })
 
     // cheese factor high
@@ -90,10 +90,10 @@ var theThing = require('./thing');
 import theOther from   './other';
 this is garbage ())((((/.
 `
-        const requires = findRequires('js', code, exampleName)
-        expect(requires.length).to.eql(2)
+        const foundImports = findImports('js', code, exampleName)
+        expect(foundImports.length).to.eql(2)
 
-        const [thing, other] = requires
+        const [thing, other] = foundImports
 
         expect(thing.relativePath).to.equal('./thing')
         expect(thing.loc.line).to.equal(3)
@@ -106,16 +106,16 @@ this is garbage ())((((/.
         expect(other.loc.length).to.equal(7)
       })
 
-      it('handles unassigned imports and requires', () => {
+      it('handles unassigned imports and foundImports', () => {
         const code = `use strict;
 import   './thing';
 require( './other' );
 this is garbage ())((((/.
 `
-        const requires = findRequires('js', code, exampleName)
-        expect(requires.length).to.eql(2)
+        const foundImports = findImports('js', code, exampleName)
+        expect(foundImports.length).to.eql(2)
 
-        const [thing, other] = requires
+        const [thing, other] = foundImports
 
         expect(thing.relativePath).to.equal('./thing')
         expect(thing.loc.line).to.equal(2)
@@ -135,9 +135,9 @@ var theThing = require('./thing');
 var module = require('module');
 this is garbage ())((((/.
 `
-        const requires = findRequires('js', code, exampleName)
-        expect(requires.length).to.eql(1)
-        const req = requires[0]
+        const foundImports = findImports('js', code, exampleName)
+        expect(foundImports.length).to.eql(1)
+        const req = foundImports[0]
         expect(req.relativePath).to.equal('./thing')
         expect(req.loc.line).to.equal(3)
         expect(req.loc.start).to.equal(25)
@@ -159,9 +159,9 @@ export const fetchLookup = query =>
   }
     `
 
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./foo')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./foo')
     })
 
     it('handles flow annotations', () => {
@@ -173,24 +173,24 @@ import moduleB from './module-b'
 
 export default (a: string): Object => moduleB(moduleA(a))
       `
-      const requires = findRequires('js', code, exampleName)
+      const foundImports = findImports('js', code, exampleName)
 
-      expect(requires.length).to.eql(2)
-      expect(requires[0].relativePath).to.equal('./module-a')
-      expect(requires[1].relativePath).to.equal('./module-b')
+      expect(foundImports.length).to.eql(2)
+      expect(foundImports[0].relativePath).to.equal('./module-a')
+      expect(foundImports[1].relativePath).to.equal('./module-b')
     })
   })
 
   describe('with javascript', () => {
-    it('handles a file with no requires', () => {
-      expect(findRequires('js', '', exampleName)).to.eql([])
+    it('handles a file with no foundImports', () => {
+      expect(findImports('js', '', exampleName)).to.eql([])
     })
 
     it('handles a javascript file with a single require', () => {
       const code = "var foo = require( './foo' );\n"
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./foo')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./foo')
     })
 
     it("handles import in a file that babylon can't fully parse", () => {
@@ -199,10 +199,10 @@ import z from './z';
 let foo;
 foo = foo || () => {}; //babylon can't handle this for some reason
       `
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(2)
-      expect(requires[0].relativePath).to.equal('./y')
-      expect(requires[1].relativePath).to.equal('./z')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(2)
+      expect(foundImports[0].relativePath).to.equal('./y')
+      expect(foundImports[1].relativePath).to.equal('./z')
     })
 
     it("handles require in a file that babylon can't fully parse", () => {
@@ -211,31 +211,31 @@ const z = require('./z');
 let foo;
 foo = foo || () => {}; //babylon can't handle this for some reason
       `
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(2)
-      expect(requires[0].relativePath).to.equal('./y')
-      expect(requires[1].relativePath).to.equal('./z')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(2)
+      expect(foundImports[0].relativePath).to.equal('./y')
+      expect(foundImports[1].relativePath).to.equal('./z')
     })
 
     it('handles a shebanged javascript file', () => {
       const code = "#! /usr/bin/env node\nvar foo = require( './foo' );\n"
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./foo')
-      expect(requires[0].loc.line).to.equal(2)
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./foo')
+      expect(foundImports[0].loc.line).to.equal(2)
     })
 
     it('ignores npm modules that are required', () => {
       const code = "var bar = require('bar');\nvar foo = require( './foo' );\n"
-      const requires = findRequires('js', code, exampleName)
-      expect(requires.length).to.eql(1)
-      expect(requires[0].relativePath).to.equal('./foo')
+      const foundImports = findImports('js', code, exampleName)
+      expect(foundImports.length).to.eql(1)
+      expect(foundImports[0].relativePath).to.equal('./foo')
     })
 
     it('sets location correctly', () => {
       const code = "var foo = require( './foo' );\n"
-      const requires = findRequires('js', code, exampleName)
-      const req = requires[0]
+      const foundImports = findImports('js', code, exampleName)
+      const req = foundImports[0]
       expect(req.loc.line).to.equal(1)
       expect(req.loc.start).to.equal(21)
       expect(req.loc.length).to.equal(5)

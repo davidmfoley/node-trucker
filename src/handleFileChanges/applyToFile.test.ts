@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import applyToFile from './applyToFile'
-import { ChangedRequire } from '../findChangedImports'
+import { ChangedImport } from '../findChangedImports'
 
 describe('applyToFile', function () {
   let contents: string
@@ -31,7 +31,7 @@ describe('applyToFile', function () {
         },
         newPath: './bar/baz42',
       },
-    ] as ChangedRequire[]
+    ] as ChangedImport[]
     applyToFile('foo.js', exampleEdits, fs)
     expect(writtenEncoding).to.equal('utf-8')
   })
@@ -47,7 +47,7 @@ describe('applyToFile', function () {
         },
         newPath: './bar/baz42',
       },
-    ] as ChangedRequire[]
+    ] as ChangedImport[]
     applyToFile('foo.js', exampleEdits, fs)
     expect(written).to.equal("\nvar foo = require('./bar/baz42');\n")
   })
@@ -72,7 +72,7 @@ describe('applyToFile', function () {
         },
         newPath: '../bar/baz42',
       },
-    ] as ChangedRequire[]
+    ] as ChangedImport[]
     applyToFile('foo.js', exampleEdits, fs)
     expect(written).to.equal(
       "\nvar foo = require('../foo/baz42'), bar = require('../bar/baz42');\nfunction blah(){}"

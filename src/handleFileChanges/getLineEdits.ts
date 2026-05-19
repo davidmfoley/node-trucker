@@ -1,7 +1,7 @@
-import { ChangedRequire } from '../findChangedImports'
+import { ChangedImport } from '../findChangedImports'
 
-export default function getLineEdits(requires: ChangedRequire[]) {
-  const byLine = {} as Record<number, ChangedRequire[]>
+export default function getLineEdits(requires: ChangedImport[]) {
+  const byLine = {} as Record<number, ChangedImport[]>
   requires.forEach(function (r) {
     const line = r.loc.line
     byLine[line] = byLine[line] || []

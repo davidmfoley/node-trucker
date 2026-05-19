@@ -3,9 +3,9 @@ import findSourceFiles from '../findSourceFiles'
 import moveCalculator from './fileMoveCalculator'
 import { TruckerMoveJob } from '../TruckerJob'
 import { FileModification } from '../FileModification'
-export type { ChangedImport as ChangedRequire } from './changedImportsForSingleFile'
+export type { ChangedImport } from './changedImportsForSingleFile'
 
-const changedRequiresByFile = (job: TruckerMoveJob): FileModification[] => {
+const changedImportsByFile = (job: TruckerMoveJob): FileModification[] => {
   const locationCalculator = fileLocationCalculator(job.moves)
 
   const files = findSourceFiles(job)
@@ -13,4 +13,4 @@ const changedRequiresByFile = (job: TruckerMoveJob): FileModification[] => {
   return moveCalculator(files, locationCalculator)
 }
 
-export default changedRequiresByFile
+export default changedImportsByFile

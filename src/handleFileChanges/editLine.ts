@@ -1,6 +1,6 @@
-import { ChangedRequire } from '../findChangedImports'
+import { ChangedImport } from '../findChangedImports'
 
-export default function editLine(contents: string, edits: ChangedRequire[]) {
+export default function editLine(contents: string, edits: ChangedImport[]) {
   if (!edits || edits.length === 0) {
     return contents
   }

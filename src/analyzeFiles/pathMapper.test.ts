@@ -3,9 +3,9 @@ import { describe, test } from 'mocha'
 import { expect } from 'chai'
 
 import { getPathMapper } from './findImports/typescript/pathMapper'
-import { RequireLocation } from '../analyzeFiles'
+import { ImportLocation } from '../analyzeFiles'
 
-const exampleLoc: RequireLocation = {
+const exampleLoc: ImportLocation = {
   line: 1,
   start: 2,
   length: 3,

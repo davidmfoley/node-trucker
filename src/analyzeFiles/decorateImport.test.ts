@@ -2,7 +2,7 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import decorateImport from './decorateImport'
 
-describe('decorateRequire', () => {
+describe('decorateImport', () => {
   it('uses require.resolve location if found', function () {
     const result = decorateImport({} as any, () => 'src/example.js')(
       {

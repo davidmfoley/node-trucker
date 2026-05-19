@@ -1,4 +1,4 @@
-import { SourceFileWithRequires } from '../analyzeFiles'
+import { SourceFileWithImports } from '../analyzeFiles'
 import { TruckerJob } from '../TruckerJob'
 import { printStandard } from './printStandard'
 import { printViz } from './printViz'
@@ -9,7 +9,7 @@ const printerByFormat = {
 }
 
 export default function printDependencies(
-  files: SourceFileWithRequires[],
+  files: SourceFileWithImports[],
   job: TruckerJob
 ) {
   const printer = printerByFormat[job.format]

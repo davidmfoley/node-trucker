@@ -1,18 +1,18 @@
 import path from 'path'
 import fileInfo from './fileInfo'
 import { LocationCalculator } from './types'
-import { FileRequireInfo, RequireLocation } from '../analyzeFiles'
+import { FileImportInfo, ImportLocation } from '../analyzeFiles'
 import { applyAliasMapping } from './applyAliasMapping'
 
 interface SourceFile {
   fullPath: string
-  requires: FileRequireInfo[]
+  requires: FileImportInfo[]
 }
 
 export interface ChangedImport {
   filePath: string
   newPath: string
-  loc: RequireLocation
+  loc: ImportLocation
   path: string
 }
 
@@ -24,12 +24,12 @@ export default (
   const newFileLocation = getNewLocation(f.fullPath)
 
   for (const r of f.requires) {
-    const newRequireLocation = getNewLocation(r.filePath)
+    const newImportLocation = getNewLocation(r.filePath)
 
-    if (newFileLocation.isMoved || newRequireLocation.isMoved) {
+    if (newFileLocation.isMoved || newImportLocation.isMoved) {
       let newRelativePath = path.relative(
         path.dirname(newFileLocation.fullPath),
-        newRequireLocation.fullPath
+        newImportLocation.fullPath
       )
       if (newRelativePath[0] !== '.') newRelativePath = './' + newRelativePath
 
@@ -48,7 +48,7 @@ export default (
       if (newRelativePath !== r.relativePath) {
         const newPath =
           r.kind === 'alias'
-            ? applyAliasMapping(r.mapping, newRequireLocation.requirePath).path
+            ? applyAliasMapping(r.mapping, newImportLocation.requirePath).path
             : newRelativePath
 
         if (newPath !== r.text) {

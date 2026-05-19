@@ -6,7 +6,7 @@ import { getFileImports } from '../../getFileImports'
 import { getImportStatements } from './getImportStatements'
 import importResolver from '../importResolver'
 
-export const FindRequires = (pathMapper: PathMapper) => {
+export const FindImports = (pathMapper: PathMapper) => {
   const filterTsImport = (item: ImportInfo) =>
     importPathFilter(item.relativePath)
 
@@ -18,5 +18,5 @@ export default (tsconfig: TsConfig) => {
     tsconfig,
     importResolver(['.ts', '.tsx', '.js', '.jsx', '.mjs'])
   )
-  return FindRequires(mapper)
+  return FindImports(mapper)
 }

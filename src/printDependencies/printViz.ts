@@ -1,5 +1,5 @@
 import path from 'path'
-import { SourceFileWithRequires } from '../analyzeFiles'
+import { SourceFileWithImports } from '../analyzeFiles'
 import { TruckerJob } from '../TruckerJob'
 
 type FolderTree = {
@@ -8,7 +8,7 @@ type FolderTree = {
 }
 
 export const printViz = (
-  files: SourceFileWithRequires[],
+  files: SourceFileWithImports[],
   job: TruckerJob,
   write = console.log
 ) => {

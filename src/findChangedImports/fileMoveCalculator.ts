@@ -1,23 +1,23 @@
-import changedRequiresForSingleFile from './changedImportsForSingleFile'
+import changedImportsForSingleFile from './changedImportsForSingleFile'
 import { LocationCalculator } from './types'
-import { SourceFileWithRequires } from '../analyzeFiles'
+import { SourceFileWithImports } from '../analyzeFiles'
 import { FileModification } from '../FileModification'
 
 export default (
-  fileInfos: SourceFileWithRequires[],
+  fileInfos: SourceFileWithImports[],
   getNewLocation: LocationCalculator
 ): FileModification[] => {
   const files: FileModification[] = []
 
   fileInfos.forEach(function (f) {
     const newFileLocation = getNewLocation(f.fullPath)
-    const changedRequires = changedRequiresForSingleFile(f, getNewLocation)
+    const changedImports = changedImportsForSingleFile(f, getNewLocation)
 
-    if (changedRequires.length || newFileLocation.isMoved) {
+    if (changedImports.length || newFileLocation.isMoved) {
       files.push({
         from: f.fullPath,
         to: newFileLocation.fullPath,
-        requires: changedRequires,
+        requires: changedImports,
       })
     }
   })

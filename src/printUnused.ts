@@ -1,10 +1,10 @@
 import path from 'path'
-import { SourceFileWithRequires } from './analyzeFiles'
+import { SourceFileWithImports } from './analyzeFiles'
 import { TruckerJob } from './TruckerJob'
 
 export default function printUnused(
   job: TruckerJob,
-  files: SourceFileWithRequires[]
+  files: SourceFileWithImports[]
 ) {
   const byPath = {}
 

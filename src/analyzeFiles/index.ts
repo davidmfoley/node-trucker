@@ -8,12 +8,13 @@ import {
   ImportInfo,
   FileImportInfo,
 } from './types'
+
 export type {
   SourceFile,
-  SourceFileWithImports as SourceFileWithRequires,
-  ImportLocation as RequireLocation,
-  ImportInfo as RequireInfo,
-  FileImportInfo as FileRequireInfo,
+  SourceFileWithImports,
+  ImportLocation,
+  ImportInfo,
+  FileImportInfo,
 }
 
 type Analyze = (
