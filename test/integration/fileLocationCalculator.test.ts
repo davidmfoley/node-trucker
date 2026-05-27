@@ -19,12 +19,18 @@ describe('FileLocationCalculator', () => {
       calc = fileLocationCalculator([{ from, to: path.join(examplesPath, to) }])
     }
 
-    const expectMove = (from: string, toPath: string, toRequire?: string) => {
+    const expectMove = (
+      from: string,
+      toRelativePath: string,
+      toImportPath?: string
+    ) => {
       const newLoc = calc(path.join(examplesPath, from))
       expect(newLoc.isMoved).to.equal(true)
-      expect(newLoc.fullPath).to.equal(path.join(examplesPath, toPath))
-      if (toRequire) {
-        expect(newLoc.requirePath).to.equal(path.join(examplesPath, toRequire))
+      expect(newLoc.fullPath).to.equal(path.join(examplesPath, toRelativePath))
+      if (toImportPath) {
+        expect(newLoc.requirePath).to.equal(
+          path.join(examplesPath, toImportPath)
+        )
       }
     }
 
