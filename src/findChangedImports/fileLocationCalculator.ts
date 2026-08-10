@@ -36,7 +36,7 @@ export default (
         basenameChanged: false,
         dirnameChanged: false,
         fullPath,
-        requirePath: requirePath(path.normalize(fullPath)),
+        importPath: requirePath(path.normalize(fullPath)),
       }
     }
 
@@ -45,7 +45,7 @@ export default (
       basenameChanged: path.basename(fullPath) != path.basename(match),
       dirnameChanged: path.dirname(fullPath) !== path.dirname(match),
       fullPath: match,
-      requirePath: requirePath(match),
+      importPath: requirePath(match),
     }
   }
 }

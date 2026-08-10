@@ -3,7 +3,7 @@ export interface FileAction {
   basenameChanged: boolean
   dirnameChanged: boolean
   fullPath: string
-  requirePath: string
+  importPath: string
 }
 
 export type LocationCalculator = (fullPath: string) => FileAction

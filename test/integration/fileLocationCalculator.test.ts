@@ -28,7 +28,7 @@ describe('FileLocationCalculator', () => {
       expect(newLoc.isMoved).to.equal(true)
       expect(newLoc.fullPath).to.equal(path.join(examplesPath, toRelativePath))
       if (toImportPath) {
-        expect(newLoc.requirePath).to.equal(
+        expect(newLoc.importPath).to.equal(
           path.join(examplesPath, toImportPath)
         )
       }

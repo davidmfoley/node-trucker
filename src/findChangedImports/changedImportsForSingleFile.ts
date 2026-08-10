@@ -48,7 +48,7 @@ export default (
       if (newRelativePath !== r.relativePath) {
         const newPath =
           r.kind === 'alias'
-            ? applyAliasMapping(r.mapping, newImportLocation.requirePath).path
+            ? applyAliasMapping(r.mapping, newImportLocation.importPath).path
             : newRelativePath
 
         if (newPath !== r.text) {

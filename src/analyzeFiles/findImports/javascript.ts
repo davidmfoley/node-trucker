@@ -26,14 +26,14 @@ function regexFinder(contents: string): ImportInfo[] {
     while (result) {
       if (!result) return
       const location = result.index + result[0].length
-      const requirePath = line.substring(location).split(/['"`]/)[0]
-      if (importPathFilter(requirePath)) {
+      const importPath = line.substring(location).split(/['"`]/)[0]
+      if (importPathFilter(importPath)) {
         requires.push({
-          relativePath: requirePath,
+          relativePath: importPath,
           loc: {
             line: i + 1,
             start: location + 1,
-            length: requirePath.length,
+            length: importPath.length,
           },
         })
       }
